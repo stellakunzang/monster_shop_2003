@@ -3,9 +3,6 @@ class UsersController < ApplicationController
   def login
   end
 
-  def register
-
-class UsersController<ApplicationController
   def new
   end
 
