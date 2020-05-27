@@ -1,4 +1,8 @@
-class UsersController<ApplicationController
+
+class UsersController < ApplicationController
+  def login
+  end
+
   def new
   end
 
@@ -21,5 +25,6 @@ class UsersController<ApplicationController
 
   def user_params
     params.permit(:name,:address,:city,:state,:zip, :email,:password)
+
   end
 end
