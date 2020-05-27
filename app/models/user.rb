@@ -5,7 +5,9 @@ class User<ApplicationRecord
                         :address,
                         :city,
                         :state,
-                        :zip
+                        :zip,
+                        :role
+
 
   has_secure_password
 
