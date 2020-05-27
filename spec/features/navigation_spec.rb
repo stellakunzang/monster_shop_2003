@@ -75,51 +75,51 @@ RSpec.describe 'Site Navigation' do
       end
     end
   end
-  describe "As a Default user" do
-    it "I see all links, plus profile and logout links. I do NOT see login or register links" do
-      visit '/merchants'
-
-      within 'nav' do
-        click_link 'All Items'
-      end
-
-      expect(current_path).to eq('/items')
-
-      within 'nav' do
-        click_link 'All Merchants'
-      end
-
-      expect(current_path).to eq('/merchants')
-
-      within 'nav' do
-        click_link 'Home'
-      end
-
-      expect(current_path).to eq('/merchants')
-
-      within 'nav' do
-        click_link 'Cart'
-      end
-
-      expect(current_path).to eq('/cart')
-
-      within 'nav' do
-        click_link 'Profile'
-      end
-
-      expect(current_path).to eq('/profile')
-
-      within 'nav' do
-        click_link 'Logout'
-      end
-
-      expect(current_path).to eq('/logout')
-
-      within 'nav' do
-        expect(page).to_not have_link 'Login'
-        expect(page).to_not have_link 'Register'
-      end
-
-    end
-  end
+  # describe "As a Default user" do
+  #   it "I see all links, plus profile and logout links. I do NOT see login or register links" do
+  #     visit '/merchants'
+  #
+  #     within 'nav' do
+  #       click_link 'All Items'
+  #     end
+  #
+  #     expect(current_path).to eq('/items')
+  #
+  #     within 'nav' do
+  #       click_link 'All Merchants'
+  #     end
+  #
+  #     expect(current_path).to eq('/merchants')
+  #
+  #     within 'nav' do
+  #       click_link 'Home'
+  #     end
+  #
+  #     expect(current_path).to eq('/merchants')
+  #
+  #     within 'nav' do
+  #       click_link 'Cart'
+  #     end
+  #
+  #     expect(current_path).to eq('/cart')
+  #
+  #     within 'nav' do
+  #       click_link 'Profile'
+  #     end
+  #
+  #     expect(current_path).to eq('/profile')
+  #
+  #     within 'nav' do
+  #       click_link 'Logout'
+  #     end
+  #
+  #     expect(current_path).to eq('/logout')
+  #
+  #     within 'nav' do
+  #       expect(page).to_not have_link 'Login'
+  #       expect(page).to_not have_link 'Register'
+  #     end
+  #
+  #   end
+  # end
 end
