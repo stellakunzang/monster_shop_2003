@@ -56,12 +56,6 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_content("Cart: 0")
       end
 
-      visit '/home'
-
-      within 'nav' do
-        expect(page).to have_content("Cart: 0")
-      end
-
       visit '/cart'
 
       within 'nav' do

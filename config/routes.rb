@@ -35,4 +35,5 @@ Rails.application.routes.draw do
   get "/orders/:id", to: "orders#show"
 
   get "/login", to: "users#login"
+  get "/register", to: "users#register"
 end
