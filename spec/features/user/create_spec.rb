@@ -24,39 +24,39 @@ RSpec.describe "User registration form" do
     click_on "Create User"
 
     expect(current_path).to eq("/profile")
-    
-    expect(page).to have_content("Welcome, George!")
+
+    expect(page).to have_content("Welcome, George! You are now registered, and logged in.")
   end
 
 
-  xit "will not create user with incorrect info" do
+  it "will not create user with missing info" do
+
+    visit "/register"
 
     email =  "georgef@gmail.com"
     password = "grillingiscool"
 
     fill_in :name, with: "George"
-    fill_in :street_address, with: "3 Main st."
-    fill_in :city, with: "Boston"
+    fill_in :address, with: "3 Main st."
     fill_in :state, with: "MA"
-    fill_in :zipcode, with: "12345"
+    fill_in :zip, with: "12345"
     fill_in :email, with: email
-    fill_in :password, with: bad_password
-    fill_in :confirm_password, with: bad_password
+    fill_in :password, with: password
     click_on "Create User"
 
+    expect(page).to have_content("City can't be blank")
 
     fill_in :name, with: "George"
-    fill_in :street_address, with: "3 Main st."
-    fill_in :city, with: "Boston"
+    fill_in :address, with: "3 Main st."
     fill_in :state, with: "MA"
-    fill_in :zipcode, with: "12345"
-    fill_in :email, with: "georgeofthejungle@gmail.com"
+    fill_in :city, with: "Boston"
+    fill_in :zip, with: "12345"
+    fill_in :email, with: email
     fill_in :password, with: password
-    fill_in :confirm_password, with: password
-
     click_on "Create User"
 
     expect(current_path).to eq("/profile")
-    expect(page).to have_content("Welcome, #{:name}!")
+    expect(page).to have_content("Welcome, George! You are now registered, and logged in.")
+    save_and_open_page
   end
 end
