@@ -22,6 +22,11 @@
           <p>Inactive</p>
         <% end %>
       </section>
-    <% end %> 
+    <% end %>
   <% end %>
 </section>
+
+<%= "Top 5 Most Popular Items:" %>
+<% @items.top_5.each do |item| %>
+  <%= "#{item.name} (Total Purchased = #{item.quantity_bought})" %>
+<% end %>

@@ -25,4 +25,8 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def self.top_5
+    item_orders.joins(:items).group(:item_id).sum(:quantity)
+  end
+
 end
