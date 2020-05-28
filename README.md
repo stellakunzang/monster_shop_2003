@@ -114,7 +114,7 @@ You will need to set up some basic routing and empty controller actions and empt
 
 
 ```
-[ ] done
+[ X ] done
 
 User Story 2, Visitor Navigation
 
@@ -132,7 +132,7 @@ Next to the shopping cart link I see a count of the items in my cart
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 3, User Navigation
 
@@ -149,7 +149,7 @@ I also see text that says "Logged in as Mike Dao" (or whatever my name is)
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 4, Merchant Navigation
 
@@ -160,7 +160,7 @@ Plus the following links:
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 5, Admin Navigation
 
@@ -175,7 +175,7 @@ Minus the following links/info
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 6, Visitor Navigation Restrictions
 
@@ -198,7 +198,7 @@ When I try to access any path that begins with the following, then I see a 404 e
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 8, Merchant Navigation Restrictions
 
@@ -208,7 +208,7 @@ When I try to access any path that begins with the following, then I see a 404 e
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 9, Admin Navigation Restrictions
 
@@ -225,7 +225,7 @@ This series of stories will allow a user to register on the site.
 
 
 ```
-[ ] done
+[ X ] done
 
 User Story 10, User Registration
 
@@ -251,7 +251,7 @@ I see a flash message indicating that I am now registered and logged in
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 11, User Registration Missing Details
 
@@ -263,7 +263,7 @@ And I see a flash message indicating that I am missing required fields
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 12, Registration Email must be unique
 
@@ -284,7 +284,7 @@ Our application wouldn't be much use if users could not log in to use it.
 
 
 ```
-[ ] done
+[ X ] done
 
 User Story 13, User can Login
 
@@ -299,7 +299,7 @@ And I see a flash message that I am logged in
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 14, User cannot log in with bad credentials
 
@@ -312,7 +312,7 @@ I am NOT told whether it was my email or password that was incorrect
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 15, Users who are logged in already are redirected
 
@@ -342,7 +342,7 @@ Any items I had in my shopping cart are deleted
 This is the main "catalog" page of the entire site where users will start their e-commerce experience. Visitors to the site, and regular users, will be able to view an index page of all items available for purchase and some basic statistics. Each item will also have a "show" page where more information is shown.
 
 ```
-[ ] done
+[ X ] done
 
 User Story 17, Items Index Page
 
@@ -354,7 +354,7 @@ The item image is a link to that item's show page
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 18, Items Index Page Statistics
 
@@ -376,7 +376,7 @@ When a user who is not a merchant nor an admin logs into the system, they are ta
 Admin users can access a namespaced route of "/admin/users" to see an index page  of all non-merchant/non-admin users, and from there see each user. This will allow the admin to perform every action on a user's account that the user themselves can perform. This functionality is taken care of in User Stories 53 & 54.
 
 ```
-[ ] done
+[ X ] done
 
 User Story 19, User Profile Show Page
 
@@ -387,7 +387,7 @@ And I see a link to edit my profile data
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 20, User Can Edit their Profile Data
 
