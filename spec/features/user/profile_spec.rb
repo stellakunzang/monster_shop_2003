@@ -40,7 +40,6 @@ RSpec.describe "User profile page" do
     expect(current_path).to eq('/profile')
     click_link("Edit My Profile")
     expect(current_path).to eq('/profile/edit')
-    save_and_open_page
 
    expect(page).to have_field(:name, :with => @regular_user.name)
    expect(page).to have_field(:address, :with => @regular_user.address)
