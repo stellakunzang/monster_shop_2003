@@ -20,6 +20,21 @@ tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never po
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 dog_bone = dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
+bone = dog_shop.items.create(name: "Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+
+toy = dog_shop.items.create(name: "Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+
+order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+
+ItemOrder.create!(order_id: order.id, price: 1.0, item_id: dog_bone.id, quantity: 5)
+ItemOrder.create!(order_id: order.id, price: 1.0, item_id: pull_toy.id, quantity: 1)
+ItemOrder.create!(order_id: order.id, price: 1.0, item_id: tire.id, quantity: 4)
+ItemOrder.create!(order_id: order.id, price: 1.0, item_id: toy.id, quantity: 3)
+ItemOrder.create!(order_id: order.id, price: 1.0, item_id: bone.id, quantity: 2)
+ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: dog_bone.id, quantity: 3)
+ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: pull_toy.id, quantity: 4)
+
 #users with (role: set manually)
 default_1 = User.create(name: "Hank Hill", address: "801 N Alamo St", city: "Arlen", state: "Texas", zip: "61109", email: "ProPAIN@aol.com", password: "W33dWacker", role: 0)
 merchant_1 = User.create(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1)
