@@ -1,7 +1,11 @@
 class AdminsController <ApplicationController
 
   def show
-    @user = User.find(session[:user_id])
+    if current_user == nil or current_user.role != "admin"
+      redirect_to "/error404"
+    else
+      @user = User.find(session[:user_id])
+    end
   end
 
   def create

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   patch "/merchants/:id", to: "merchants#update"
   delete "/merchants/:id", to: "merchants#destroy"
 
-  get "/merchant", to: "merchants#show"
+  get "/merchant", to: "merch#show"
 
   #items
   get "/items", to: "items#index"
@@ -57,5 +57,8 @@ Rails.application.routes.draw do
 
   #admins
   get "/admin", to: "admins#show"
+
+  #errors
+  get "error404", to: "errors#show"
 
 end
