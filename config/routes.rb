@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   patch "/merchants/:id", to: "merchants#update"
   delete "/merchants/:id", to: "merchants#destroy"
 
+  get "/merchant", to: "merchants#show"
+
   #items
   get "/items", to: "items#index"
   get "/items/:id", to: "items#show"
@@ -51,4 +53,6 @@ Rails.application.routes.draw do
   post "/users", to: "users#create"
   get "/profile", to: "users#show"
 
+  #admin
+  # get "/admin", to: "???#???"
 end
