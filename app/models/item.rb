@@ -27,6 +27,11 @@ class Item <ApplicationRecord
 
   def self.top_5
     top_5_data = ItemOrder.find_by_sql ["SELECT items.name, item_id, SUM(quantity) AS total_purchased FROM item_orders JOIN items ON item_orders.item_id = items.id GROUP BY item_id, items.name ORDER BY total_purchased DESC LIMIT 5"]
+    # Item.joins(:item_orders)
+    #     .select('items.id, items.name, sum(item_orders.quantity)')
+    #     .group('items.id')
+    #     .order('sum(item_orders.quantity)')
+    #     .limit(5)
     keys = top_5_data.pluck(:name)
     values = top_5_data.pluck(:total_purchased)
     top_5 = Hash[keys.zip(values)]
