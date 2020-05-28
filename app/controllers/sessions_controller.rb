@@ -25,27 +25,6 @@ class SessionsController < ApplicationController
   end
 
   def determine_route(user)
-    # WHEN YOU ARE CHECKING _DIFFERENT_ VALUES IN YOUR CONDITION
-    # if (role == "admin") {
-    #   # route
-    # } elsif (role == "merchant") {
-    #   # route
-    # } elsif (role == "default") {
-    #   # route
-    # }
-
-    # WHEN EACH RETURN STATEMENT DOES MORE LOGIC
-    # case (role)
-    # when "admin"
-    #   # TODO: get right route for admin
-    #   # "/admin"
-    # when "merchant"
-    #   "/merchants/:id"
-    # when "default"
-    #   "/users/:id"
-
-    # FOR ONE TIME LOOKUP
-    # KEY MATCHING TO A STATIC VALUE
     {
       "admin" => "/admin",
       "merchant" => "/merchant",
