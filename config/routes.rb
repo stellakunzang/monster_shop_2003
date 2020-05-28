@@ -53,6 +53,7 @@ Rails.application.routes.draw do
 
   get "/profile/edit", to: "users#edit"
   post "/profile", to: "users#update"
+  get "/password/edit", to: "users#editpass"
 
   get "/admin/users", to: "users#index"
 
