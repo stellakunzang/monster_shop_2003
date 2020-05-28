@@ -1,6 +1,11 @@
 class SessionsController < ApplicationController
 
   def new  
+    if current_user
+      route = determine_route(current_user)
+
+      redirect_to route
+    end
   end
 
   def create
