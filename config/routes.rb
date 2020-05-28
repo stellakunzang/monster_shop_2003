@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   get "/items/:id", to: "items#show"
   get "/items/:id/edit", to: "items#edit"
   patch "/items/:id", to: "items#update"
+  get "/merchant", to: "merchants#show"
   get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
@@ -45,5 +46,7 @@ Rails.application.routes.draw do
   get "/register", to: "users#new"
   post "/users", to: "users#create"
   get "/profile", to: "users#show"
+
+  get "/admin", to: "admins#show"
 
 end
