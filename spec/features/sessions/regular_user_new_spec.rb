@@ -19,7 +19,7 @@ RSpec.describe "Logging in" do
 
         click_on "Login!"
 
-        expect(current_path).to eq('/')
+        expect(current_path).to eq('/profile')
 
         expect(page).to have_content("Welcome, #{@regular_user.name}")
         expect(page).to have_link("Log out")

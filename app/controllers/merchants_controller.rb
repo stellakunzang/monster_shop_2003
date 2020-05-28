@@ -5,7 +5,7 @@ class MerchantsController <ApplicationController
   end
 
   def show
-    @merchant = Merchant.find(params[:id])
+    @merchant = User.find_by(id: session[:user_id])&.merchant || Merchant.find_by(id: params[:id])
   end
 
   def new

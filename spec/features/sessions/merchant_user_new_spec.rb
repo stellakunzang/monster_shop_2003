@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "Logging in" do
     before(:each) do
-        @regular_user = User.create(name: "Willy Wonka", address: "123 St", city: "Denver", state: "CO", zip: "12345", email: "chocolateguy1@gmail.com", password: "loco123", role: 0)
-        @merchant_1 = User.create(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1)
+      # require 'pry', binding.pry
+      @merchant_1 = Merchant.create(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726")
+      @regular_user = User.create(name: "Willy Wonka", address: "123 St", city: "Denver", state: "CO", zip: "12345", email: "chocolateguy1@gmail.com", password: "loco123", role: 1, merchant_id: @merchant_1.id)
+      # @regular_user.merchant = @merchant_1
     end
 
     it "I see a field to enter my email address and password for regular user with logged in flash" do
@@ -14,18 +16,18 @@ RSpec.describe "Logging in" do
 
         expect(current_path).to eq('/login')
 
-        fill_in :email, with: @merchant_1.email
-        fill_in :password, with: @merchant_1.password
+        fill_in :email, with: @regular_user.email
+        fill_in :password, with: @regular_user.password
         # how to test becrypt authentication
 
         click_on "Login!"
 
-        expect(current_path).to eq('/')
-
-        expect(page).to have_content("Welcome, #{@merchant_1.name}")
+        expect(current_path).to eq('/merchant')
+        
+        expect(page).to have_content("Welcome, #{@regular_user.name}")
         expect(page).to have_link("Log out")
         expect(page).to have_content("You are now logged in.")
-        expect(page).to_not have_link("Sign up")
+        expect(page).to_not have_link("Register")
         expect(page).to_not have_link("Sign in")
     end
 end
