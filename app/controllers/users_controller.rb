@@ -28,12 +28,16 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(session[:user_id])
-    user.update!(user_params, password: user.password)
+    user.update!(new_user_params)
     flash[:notice]= "Your data has been updated."
     redirect_to('/profile')
   end
 
   private
+
+  def new_user_params
+    params.permit(:name, :address, :city, :state, :zip, :email, password_digest: user.password)
+  end
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password)
