@@ -27,6 +27,11 @@
 </section>
 
 <%= "Top 5 Most Popular Items:" %>
-<% @items.top_5.each do |item_id, quantity| %>
-  <%= "#{(Item.find_by(id: item_id).name} (Total Purchased = #{quantity})" %>
+<% @items.top_5.each do |name, quantity| %>
+  <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
+<% end %>
+
+<%= "5 Least Popular Items:" %>
+<% @items.worst_5.each do |name, quantity| %>
+  <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
 <% end %>
