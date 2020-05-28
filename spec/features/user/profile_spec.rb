@@ -40,36 +40,30 @@ RSpec.describe "User profile page" do
     expect(current_path).to eq('/profile')
     click_link("Edit My Profile")
     expect(current_path).to eq('/profile/edit')
+    save_and_open_page
 
-    expect(page).to have_content(@regular_user.name)
-    expect(page).to have_content(@regular_user.email)
-    expect(page).to have_content(@regular_user.address)
-    expect(page).to have_content(@regular_user.city)
-    expect(page).to have_content(@regular_user.state)
-    expect(page).to have_content(@regular_user.zip)
-    expect(page).to have_content(@regular_user.email)
+   expect(page).to have_field(:name, :with => @regular_user.name)
+   expect(page).to have_field(:address, :with => @regular_user.address)
+   expect(page).to have_field(:city, :with => @regular_user.city)
+   expect(page).to have_field(:state, :with => @regular_user.state)
+   expect(page).to have_field(:zip, :with => @regular_user.zip)
+   expect(page).to have_field(:email, :with => @regular_user.email)
+   expect(page).to_not have_field(:password)
 
     fill_in :city, with: "Boston"
     fill_in :state, with: "MA"
     fill_in :zip, with: "12345"
     click_button("Submit")
     expect(current_path).to eq('/profile')
-
-    expect(page).to have_content("Your data has been udpated.")
+    expect(page).to have_content("Your data has been updated.")
     expect(page).to have_content(@regular_user.name)
     expect(page).to have_content(@regular_user.email)
     expect(page).to have_content(@regular_user.address)
+    expect(@regular_user.reload.city).to eq ("Boston")
+
     expect(page).to have_content("Boston")
     expect(page).to have_content("MA")
     expect(page).to have_content("12345")
     expect(page).to have_content(@regular_user.email)
-
+  end
 end
-
-
-# User Story 19, User Profile Show Page
-#
-# As a registered user
-# When I visit my profile page
-# Then I see all of my profile data on the page except my password
-# And I see a link to edit my profile data

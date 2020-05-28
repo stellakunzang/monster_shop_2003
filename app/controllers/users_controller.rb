@@ -1,6 +1,6 @@
 
 class UsersController < ApplicationController
-  
+
   def login
   end
 
@@ -20,6 +20,17 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(session[:user_id])
+  end
+
+  def edit
+    @user = User.find(session[:user_id])
+  end
+
+  def update
+    user = User.find(session[:user_id])
+    user.update!(user_params, password: user.password)
+    flash[:notice]= "Your data has been updated."
+    redirect_to('/profile')
   end
 
   private

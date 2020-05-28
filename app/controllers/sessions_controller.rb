@@ -1,11 +1,11 @@
 class SessionsController < ApplicationController
 
-  def new  
+  def new
   end
 
   def create
     user = User.find_by(email: params[:email])
-    
+
     if user.authenticate(params[:password])
       session[:user_id] = user.id
       flash[:success] = "Welcome, #{user.name}! You are now logged in."
@@ -21,7 +21,7 @@ class SessionsController < ApplicationController
   def determine_route(user)
     # WHEN YOU ARE CHECKING _DIFFERENT_ VALUES IN YOUR CONDITION
     # if (role == "admin") {
-    #   # route 
+    #   # route
     # } elsif (role == "merchant") {
     #   # route
     # } elsif (role == "default") {
@@ -33,7 +33,7 @@ class SessionsController < ApplicationController
     # when "admin"
     #   # TODO: get right route for admin
     #   # "/admin"
-    # when "merchant" 
+    # when "merchant"
     #   "/merchants/:id"
     # when "default"
     #   "/users/:id"
