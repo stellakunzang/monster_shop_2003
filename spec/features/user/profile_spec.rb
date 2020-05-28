@@ -22,7 +22,6 @@ RSpec.describe "User profile page" do
     expect(page).to have_content(@regular_user.city)
     expect(page).to have_content(@regular_user.state)
     expect(page).to have_content(@regular_user.zip)
-    expect(page).to have_content(@regular_user.role)
     expect(page).to have_content(@regular_user.email)
     expect(page).to have_link("Edit My Profile")
 
@@ -30,6 +29,41 @@ RSpec.describe "User profile page" do
     expect(page).to_not have_link("Sign up")
     expect(page).to_not have_link("Sign in")
   end
+
+  it "Allows user to edit profile info" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Login!"
+
+    expect(current_path).to eq('/profile')
+    click_link("Edit My Profile")
+    expect(current_path).to eq('/profile/edit')
+
+    expect(page).to have_content(@regular_user.name)
+    expect(page).to have_content(@regular_user.email)
+    expect(page).to have_content(@regular_user.address)
+    expect(page).to have_content(@regular_user.city)
+    expect(page).to have_content(@regular_user.state)
+    expect(page).to have_content(@regular_user.zip)
+    expect(page).to have_content(@regular_user.email)
+
+    fill_in :city, with: "Boston"
+    fill_in :state, with: "MA"
+    fill_in :zip, with: "12345"
+    click_button("Submit")
+    expect(current_path).to eq('/profile')
+
+    expect(page).to have_content("Your data has been udpated.")
+    expect(page).to have_content(@regular_user.name)
+    expect(page).to have_content(@regular_user.email)
+    expect(page).to have_content(@regular_user.address)
+    expect(page).to have_content("Boston")
+    expect(page).to have_content("MA")
+    expect(page).to have_content("12345")
+    expect(page).to have_content(@regular_user.email)
+
 end
 
 
