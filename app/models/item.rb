@@ -26,10 +26,17 @@ class Item <ApplicationRecord
   end
 
   def self.top_5
-    ItemOrder.group(:item_id).sum(:quantity)
-    # returns hash with key of item_id and value of quantity_bought
-    # need to be able to order by quantity
-    # need to limit to 5 once ordered
+    top_5_data = ItemOrder.find_by_sql ["SELECT items.name, item_id, SUM(quantity) AS total_purchased FROM item_orders JOIN items ON item_orders.item_id = items.id GROUP BY item_id, items.name ORDER BY total_purchased DESC LIMIT 5"]
+    keys = top_5_data.pluck(:name)
+    values = top_5_data.pluck(:total_purchased)
+    top_5 = Hash[keys.zip(values)]
+  end
+
+  def self.worst_5
+    worst_5_data = ItemOrder.find_by_sql ["SELECT items.name, item_id, SUM(quantity) AS total_purchased FROM item_orders JOIN items ON item_orders.item_id = items.id GROUP BY item_id, items.name ORDER BY total_purchased LIMIT 5"]
+    keys = worst_5_data.pluck(:name)
+    values = worst_5_data.pluck(:total_purchased)
+    worst_5 = Hash[keys.zip(values)]
   end
 
 end
