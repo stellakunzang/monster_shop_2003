@@ -26,7 +26,10 @@ class Item <ApplicationRecord
   end
 
   def self.top_5
-    item_orders.joins(:items).group(:item_id).sum(:quantity)
+    ItemOrder.group(:item_id).sum(:quantity)
+    # returns hash with key of item_id and value of quantity_bought
+    # need to be able to order by quantity
+    # need to limit to 5 once ordered
   end
 
 end
