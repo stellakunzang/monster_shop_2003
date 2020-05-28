@@ -30,6 +30,7 @@ RSpec.describe "Logging in" do
         expect(page).to_not have_link("Register")
         expect(page).to_not have_link("Sign in")
     end
+ 
 end
 
 # When I visit the login path
