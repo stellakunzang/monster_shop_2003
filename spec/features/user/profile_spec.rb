@@ -65,4 +65,23 @@ RSpec.describe "User profile page" do
     expect(page).to have_content("12345")
     expect(page).to have_content(@regular_user.email)
   end
+
+  it "Allows user to update their password" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Login!"
+
+    expect(current_path).to eq('/profile')
+    click_link("Edit My Password")
+    expect(current_path).to eq('/password/edit')
+
+    fill_in :password, with: @regular_user.new_password
+    fill_in :confirmation_password, with: @regular_user.new_password
+    click_link("Submit")
+    expect(current_path).to eq('/profile')
+    expect(page).to have_content("Your password has been updated.")
+
+  end
 end
