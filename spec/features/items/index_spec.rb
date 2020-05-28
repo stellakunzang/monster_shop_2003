@@ -60,10 +60,10 @@ RSpec.describe "Items Index Page" do
 
     end
 
-    xit "All users can click image and link to item's show page" do
+    it "All users can click image and link to item's show page" do
       visit '/items'
-      find("img[alt='#{@tire.name}']").click
-      expect(current_path).to eq("items/#{@tire.id}")
+      click_link("#{@tire.name}")
+      expect(current_path).to eq("/items/#{@tire.id}")
     end
 
     it "All users can see top 5 most popular, including quantity purchased" do
