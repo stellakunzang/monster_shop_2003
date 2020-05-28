@@ -74,6 +74,18 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_content("Cart: 0")
       end
     end
+    
+    it "gives a 404 when accessing /profile, /merchant, or /admin" do
+
+      visit "/"
+
+      visit "/profile"
+      expect(current_path).to eq('/error404')
+      visit "/merchant"
+      expect(current_path).to eq('/error404')
+      visit "/admin"
+      expect(current_path).to eq('/error404')
+    end
   end
   describe "As a Default user" do
     it "I see all links, plus profile and Log out links. I do NOT see login or register links" do

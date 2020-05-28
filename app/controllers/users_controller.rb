@@ -27,7 +27,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(session[:user_id])
+    if current_user == nil
+      redirect_to "/error404"
+    else
+      @user = User.find(session[:user_id])
+    end
   end
 
   private
