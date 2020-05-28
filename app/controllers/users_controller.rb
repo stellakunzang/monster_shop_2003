@@ -1,7 +1,15 @@
 
 class UsersController < ApplicationController
 
+  def index
+    @users = User.all
+  end
+
   def login
+  end
+
+  def logout
+    redirect_to "/"
   end
 
   def new
@@ -19,7 +27,11 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(session[:user_id])
+    if current_user == nil
+      redirect_to "/error404"
+    else
+      @user = User.find(session[:user_id])
+    end
   end
 
   def edit
