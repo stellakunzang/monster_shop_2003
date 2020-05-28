@@ -26,12 +26,16 @@
   <% end %>
 </section>
 
-<%= "Top 5 Most Popular Items:" %>
-<% @items.top_5.each do |name, quantity| %>
-  <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
-<% end %>
+<div class=top_5>
+  <%= "Top 5 Most Popular Items:" %>
+  <% @items.top_5.each do |name, quantity| %>
+    <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
+  <% end %>
+</div>
 
-<%= "5 Least Popular Items:" %>
-<% @items.worst_5.each do |name, quantity| %>
-  <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
-<% end %>
+<div class=worst_5>
+  <%= "5 Least Popular Items:" %>
+  <% @items.worst_5.each do |name, quantity| %>
+    <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
+  <% end %>
+</div>
