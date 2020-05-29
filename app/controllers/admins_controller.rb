@@ -25,6 +25,7 @@ class AdminsController <ApplicationController
 
   def disable
     merchant = Merchant.find(params[:id])
+    merchant.items.each {|item| item.update_attribute(:active?, false)}
     merchant.update_attribute(:active?, false)
     redirect_to "/admin/merchants"
     flash[:notice] = "disabled #{merchant.name}"
@@ -32,6 +33,7 @@ class AdminsController <ApplicationController
 
   def enable
     merchant = Merchant.find(params[:id])
+    merchant.items.each {|item| item.update_attribute(:active?, true)}
     merchant.update_attribute(:active?, true)
     redirect_to "/admin/merchants"
     flash[:notice] = "enabled #{merchant.name}"
