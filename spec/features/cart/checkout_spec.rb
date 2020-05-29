@@ -58,8 +58,8 @@ RSpec.describe 'Cart show' do
       visit "/cart"
       
       expect(page).to have_link("Checkout")
-
-      within("#cart-#{@tire.inventory}") do
+      
+      within(".cart-#{@tire.id}") do
         click_link "+"
       end
 

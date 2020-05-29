@@ -37,8 +37,16 @@ class CartController < ApplicationController
   end
 
   def update_quantity
-    require 'pry', binding.pry
-    item.update_attribute(:quantity)
+    item_id = params[:item_id]
+    # TODO: can only add to quantity if we have enough inventory 
+    has_inventory = 
+    if params[:add] == "true" && has_inventory
+      cart.contents[item_id] += 1
+    elsif params[:add] == "false"
+      cart.contents[item_id] -= 1
+    end
+    
+    # item.update_attribute(:quantity)
   end
 
 
