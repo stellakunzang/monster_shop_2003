@@ -3,7 +3,8 @@ class MerchController <ApplicationController
     if current_user == nil || current_user.role != "merchant"
       redirect_to "/error404"
     else
-      @merch = User.find_by(id: session[:user_id])&.merchant
+      @merchant = User.find_by(id: session[:user_id])&.merchant
+      @orders = @merchant.orders_with_my_items 
     end
   end
 end
