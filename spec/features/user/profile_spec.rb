@@ -103,8 +103,30 @@ RSpec.describe "User profile page" do
 
     expect(current_path).to eq('/profile/edit')
     expect(page).to have_content("Email address is already in use.")
-
-
   end
 
+  it "displays link for orders if orders have been placed" do
+    order = @regular_user.order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+    ItemOrder.create!(order_id: order.id, price: 1.0, item_id: dog_bone.id, quantity: 5)
+    ItemOrder.create!(order_id: order.id, price: 1.0, item_id: pull_toy.id, quantity: 1)
+    ItemOrder.create!(order_id: order.id, price: 1.0, item_id: tire.id, quantity: 4)
+
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Login!"
+
+    expect(current_path).to eq('/profile')
+    click_link("My Orders")
+    expect(current_path).to eq('/profile/orders')
+  end
 end
+
+# User Story 27, User Profile displays Orders link
+#
+# As a registered user
+# When I visit my Profile page
+# And I have orders placed in the system
+# Then I see a link on my profile page called "My Orders"
+# When I click this link my URI path is "/profile/orders"
