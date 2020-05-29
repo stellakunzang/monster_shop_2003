@@ -116,10 +116,10 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/cart')
         click_link 'Profile'
         expect(current_path).to eq('/profile')
-        click_link 'Log out'
-        expect(current_path).to eq('/')
         expect(page).to_not have_link 'Login'
         expect(page).to_not have_link 'Register'
+        click_link 'Log out'
+        expect(current_path).to eq('/')
       end
     end
 
@@ -179,10 +179,10 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/cart')
         click_link 'Profile'
         expect(current_path).to eq('/profile')
-        click_link 'Log out'
-        expect(current_path).to eq('/')
         click_link 'Merchant Dashboard'
         expect(current_path).to eq('/merchant')
+        click_link 'Log out'
+        expect(current_path).to eq('/')
       end
     end
     it "gives a 404 when accessing /admin" do
@@ -237,12 +237,12 @@ RSpec.describe 'Site Navigation' do
         expect(current_path).to eq('/')
         click_link 'Profile'
         expect(current_path).to eq('/profile')
-        click_link 'Log out'
-        expect(current_path).to eq('/')
         click_link 'Admin Dashboard'
         expect(current_path).to eq('/admin')
         click_link 'All Users'
         expect(current_path).to eq('/admin/users')
+        click_link 'Log out'
+        expect(current_path).to eq('/')
       end
     end
 
