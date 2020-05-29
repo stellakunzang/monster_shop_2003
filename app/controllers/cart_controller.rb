@@ -36,5 +36,10 @@ class CartController < ApplicationController
     end
   end
 
+  def update_quantity
+    require 'pry', binding.pry
+    item.update_attribute(:quantity)
+  end
+
 
 end
