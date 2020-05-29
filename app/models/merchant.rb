@@ -28,12 +28,30 @@ class Merchant <ApplicationRecord
   end
 
   def orders_with_my_items
-    x = items.joins(:item_orders, :orders)
-         .select('orders.id, orders.created_at, item_orders.price, item_orders.quantity')
-         .group('item_orders.order_id')
-         .sum('item_orders.price')
-         # currently returns sum of price of items without first getting sum of quantity! returns a hash with order_id => price
-         binding.pry
+    orders_with_data = Hash.new { |hash, key| hash[key] = {date: 0, quantity_sum: 0, price_sum: 0} }
+    find_quantities.each do |id, quantity|
+      orders_with_data[id][:quantity_sum] = quantity
+      orders_with_data[id][:date] = Order.find_by(id: id).created_at.strftime('%m/%d/%Y')
+    end
+    find_prices.each do |id, price|
+      orders_with_data[id][:price_sum] = price
+    end
+    orders_with_data
   end
 
+  def find_prices
+    items.joins(:item_orders, :orders)
+         .select('orders.id, item_orders.price, items.merchant_id')
+         .where('items.merchant_id =?', self.id)
+         .group('item_orders.order_id')
+         .sum('item_orders.price')
+  end
+
+  def find_quantities
+    items.joins(:item_orders, :orders)
+         .select('orders.id, item_orders.quantity, orders.created_at, items.merchant_id')
+         .where('items.merchant_id =?', self.id)
+         .group('item_orders.order_id')
+         .sum('item_orders.quantity')
+  end
 end
