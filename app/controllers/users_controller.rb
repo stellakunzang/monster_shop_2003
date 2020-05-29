@@ -66,6 +66,9 @@ class UsersController < ApplicationController
    end
   end
 
+  def orders
+  end
+
 
   private
 
