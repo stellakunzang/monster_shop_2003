@@ -27,10 +27,12 @@ class Merchant <ApplicationRecord
   end
 
   def orders_with_my_items
-    item_orders.joins(:order)
-          .select('orders.id, sum(item_orders.price), sum(item_orders.quantity)')
-          .where('item_orders.merchant_id =?', self.id)
-          .group('items_orders.order_id')
+    x = items.joins(:item_orders, :orders)
+         .select('orders.id, orders.created_at, item_orders.price, item_orders.quantity')
+         .group('item_orders.order_id')
+         .sum('item_orders.price')
+         # currently returns sum of price of items without first getting sum of quantity! returns a hash with order_id => price 
+         binding.pry
   end
 
 end
