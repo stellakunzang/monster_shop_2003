@@ -38,6 +38,17 @@ class UsersController < ApplicationController
     @user = User.find(session[:user_id])
   end
 
+  def update
+    user = User.find(session[:user_id])
+    if user.update(user_params)
+      flash[:notice]= "Your data has been updated."
+      redirect_to('/profile')
+    else
+      flash[:error]= "Email address is already in use."
+      redirect_to('/profile/edit')
+    end
+  end
+
   def edit_pass
     @user = User.find(session[:user_id])
   end
@@ -52,12 +63,6 @@ class UsersController < ApplicationController
    end
   end
 
-  def update
-    user = User.find(session[:user_id])
-    user.update!(user_params)
-    flash[:notice]= "Your data has been updated."
-    redirect_to('/profile')
-  end
 
   private
 

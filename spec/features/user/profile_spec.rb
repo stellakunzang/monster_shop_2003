@@ -86,7 +86,7 @@ RSpec.describe "User profile page" do
   end
 
   it "Denies ability to update email address to one that is already in use" do
-    User.create(name: "Fake Willy", address: "123 St", city: "Boulder", state: "CO", zip: "12346", email: "wannabechocolateguy1@gmail.com", password: "loco123", role: 0)
+    User.create(name: "Fake Willy", address: "123 St", city: "Boulder", state: "CO", zip: "12346", email: "wannabechocolateguy1@gmail.com", password: "loco321", role: 0)
 
     visit '/login'
 
@@ -97,7 +97,10 @@ RSpec.describe "User profile page" do
     expect(current_path).to eq('/profile')
     click_link("Edit My Profile")
     expect(current_path).to eq('/profile/edit')
+
     fill_in :email, with: "wannabechocolateguy1@gmail.com"
+    click_button("Submit")
+
     expect(current_path).to eq('/profile/edit')
     expect(page).to have_content("Email address is already in use.")
 
