@@ -92,9 +92,4 @@ RSpec.describe "Logging in" do
     end
 end
 
-# As a registered user, merchant, or admin
-# When I visit the logout path
-# I am redirected to the welcome / home page of the site
-# And I see a flash message that indicates I am logged out
-# Any items I had in my shopping cart are deleted
 

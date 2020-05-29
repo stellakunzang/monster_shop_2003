@@ -53,18 +53,3 @@ RSpec.describe "Logging in" do
     end
 end
 
-
-# As a registered user, merchant, or admin
-# When I visit the login path
-# If I am a regular user, I am redirected to my profile page
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that tells me I am already logged in
-
-# When I visit the login path
-# I see a field to enter my email address and password
-# When I submit valid information
-# If I am a regular user, I am redirected to my profile page
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that I am logged in
