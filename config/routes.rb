@@ -57,6 +57,8 @@ Rails.application.routes.draw do
 
   #admins
   get "/admin", to: "admins#show"
+  get "/admin/merchants", to: "admins#index"
+  get "/admin/disable/:id", to: "admins#disable"
 
   #errors
   get "error404", to: "errors#show"
