@@ -2,3 +2,11 @@
 <h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
 <p class="address"><%= @merchant.address %></p>
 <p class="address"><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
+
+<h3>Pending Orders</h3>
+<% @orders.each do |order| %>
+  <p>Order Id: <%= order.id %></p>
+  <p>Date Order Place: <%= order.created_at %><p>
+  <p>Total Quantity: <%= order.quantity_sum %><p>
+  <p>Total Value: <%= order.price_sum %><p>  
+<% end %>
