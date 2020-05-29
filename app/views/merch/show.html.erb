@@ -4,9 +4,9 @@
 <p class="address"><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
 
 <h3>Pending Orders</h3>
-<% @orders.each do |order| %>
-  <p>Order Id: <%= order.id %></p>
-  <p>Date Order Place: <%= order.created_at %><p>
-  <p>Total Quantity: <%= order.quantity_sum %><p>
-  <p>Total Value: <%= order.price_sum %><p>
+<% @merchant.orders_with_my_items.each do |order_id, data| %>
+  <p>Order Id: <%= link_to "#{order_id}", "/orders/#{order_id}" %></p>
+  <p>Date Order Place: <%= data[:date] %><p>
+  <p>Total Quantity: <%= data[:quantity_sum] %><p>
+  <p>Total Value: <%= number_to_currency(data[:price_sum], :unit => "$") %><p>
 <% end %>
