@@ -77,9 +77,9 @@ RSpec.describe "User profile page" do
     click_link("Edit My Password")
     expect(current_path).to eq('/password/edit')
 
-    fill_in :password, with: @regular_user.new_password
-    fill_in :confirmation_password, with: @regular_user.new_password
-    click_link("Submit")
+    fill_in :password, with: "hellokitty"
+    fill_in :password_confirmation, with: "hellokitty"
+    click_button("Submit")
     expect(current_path).to eq('/profile')
     expect(page).to have_content("Your password has been updated.")
 

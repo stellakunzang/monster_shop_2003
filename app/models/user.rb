@@ -10,6 +10,7 @@ class User <ApplicationRecord
                         :state,
                         :zip,
                         :role
+                        
 
   has_secure_password
 
