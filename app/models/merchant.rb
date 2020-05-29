@@ -26,4 +26,11 @@ class Merchant <ApplicationRecord
     item_orders.distinct.joins(:order).pluck(:city)
   end
 
+  def orders_with_my_items
+    item_orders.joins(:order)
+          .select('orders.id, sum(item_orders.price), sum(item_orders.quantity)')
+          .where('item_orders.merchant_id =?', self.id)
+          .group('items_orders.order_id')
+  end
+
 end
