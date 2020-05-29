@@ -32,8 +32,11 @@ class Item <ApplicationRecord
     #     .group('items.id')
     #     .order('sum(item_orders.quantity)')
     #     .limit(5)
+    Item.joins(:item_orders).select('items.id, items.name').group('items.id').order('sum(item_orders.quantity)').limit(5)
+
     keys = top_5_data.pluck(:name)
     values = top_5_data.pluck(:total_purchased)
+    # values = top_5_data.pluck(:quantity_sum)?
     top_5 = Hash[keys.zip(values)]
   end
 
