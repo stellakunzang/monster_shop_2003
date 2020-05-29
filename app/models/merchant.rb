@@ -38,18 +38,20 @@ class Merchant <ApplicationRecord
     end
     orders_with_data
   end
+  # also still haven't added pending status!
+  # still not multiplying by the quantity
 
   def find_prices
-    items.joins(:item_orders, :orders)
-         .select('orders.id, item_orders.price, items.merchant_id')
+    items.joins(:item_orders)
+         .select('item_orders.order_id, item_orders.price, items.merchant_id')
          .where('items.merchant_id =?', self.id)
          .group('item_orders.order_id')
          .sum('item_orders.price')
   end
 
   def find_quantities
-    items.joins(:item_orders, :orders)
-         .select('orders.id, item_orders.quantity, orders.created_at, items.merchant_id')
+    items.joins(:item_orders)
+         .select('item_orders.order_id, item_orders.quantity, item_orders.created_at, items.merchant_id')
          .where('items.merchant_id =?', self.id)
          .group('item_orders.order_id')
          .sum('item_orders.quantity')
