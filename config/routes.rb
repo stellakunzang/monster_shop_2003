@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   #sessions
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 
   #merchants
   get "/merchants", to: "merchants#index"
@@ -50,6 +51,12 @@ Rails.application.routes.draw do
   get "/register", to: "users#new"
   post "/users", to: "users#create"
   get "/profile", to: "users#show"
+
+  get "/profile/edit", to: "users#edit"
+  post "/profile", to: "users#update"
+  get "/password/edit", to: "users#edit_pass"
+  post "/password", to: "users#update_pass"
+
   get "/admin/users", to: "users#index"
 
   #merch
@@ -57,6 +64,9 @@ Rails.application.routes.draw do
 
   #admins
   get "/admin", to: "admins#show"
+  get "/admin/merchants", to: "admins#index"
+  get "/admin/disable/:id", to: "admins#disable"
+  get "/admin/enable/:id", to: "admins#enable"
 
   #errors
   get "error404", to: "errors#show"

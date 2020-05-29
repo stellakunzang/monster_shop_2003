@@ -23,7 +23,7 @@
           <%= link_to "All Items", "/items"%>
           <%= link_to "Cart: #{cart.total_items}", "/cart" %>
           <%= link_to "Profile", "/profile"%>
-          <%= link_to "Log out", "/logout"%>
+          <%= link_to "Log out", logout_path, method: "delete" %>
           <%= "logged in as: #{current_user.name}" %>
       <% elsif current_user.role == "merchant" %>
           <%= link_to "Home", "/"%>
@@ -31,7 +31,7 @@
           <%= link_to "All Items", "/items"%>
           <%= link_to "Cart: #{cart.total_items}", "/cart" %>
           <%= link_to "Profile", "/profile"%>
-          <%= link_to "Log out", "/logout"%>
+          <%= link_to "Log out", logout_path, method: "delete" %>
           <%= link_to "Merchant Dashboard", "/merchant"%>
           <%= "logged in as: #{current_user.name}" %>
       <% else %>
@@ -39,7 +39,7 @@
           <%= link_to "All Merchants", "/merchants"%>
           <%= link_to "All Items", "/items"%>
           <%= link_to "Profile", "/profile"%>
-          <%= link_to "Log out", "/logout"%>
+          <%= link_to "Log out", logout_path, method: "delete" %>
           <%= link_to "Admin Dashboard", "/admin"%>
           <%= link_to "All Users", "/admin/users"%>
           <%= "logged in as: #{current_user.name}" %>

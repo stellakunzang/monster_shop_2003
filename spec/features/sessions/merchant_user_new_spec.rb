@@ -8,11 +8,11 @@ RSpec.describe "Logging in" do
 
     it "I see a field to enter my email address and password for regular user with logged in flash" do
 
-        visit "/"
+      visit "/"
 
-        click_on "Sign in"
+      click_on "Sign in"
 
-        expect(current_path).to eq('/login')
+      expect(current_path).to eq('/login')
 
         fill_in :email, with: @regular_user.email
         fill_in :password, with: @regular_user.password
@@ -26,5 +26,26 @@ RSpec.describe "Logging in" do
         expect(page).to_not have_link("Register")
         expect(page).to_not have_link("Sign in")
     end
+    it "Users who are logged in already are redirected" do
 
+      visit "/"
+
+      click_on "Sign in"
+
+      fill_in :email, with: @regular_user.email
+      fill_in :password, with: @regular_user.password
+
+      click_on "Login!"
+
+      expect(current_path).to eq('/merchant')
+
+      visit "/login"
+
+      expect(current_path).to eq('/merchant')
+
+      expect(page).to have_content("Merchant Dashboard")
+      expect(page).to have_link("Log out")
+      expect(page).to_not have_link("Register")
+      expect(page).to_not have_link("Sign in")
+    end
 end

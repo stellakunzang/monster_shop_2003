@@ -31,4 +31,12 @@ class SessionsController < ApplicationController
       "default" => "/profile"
     }[user.role]
   end
+
+  def destroy
+    session.delete(:user_id)
+    current_user = nil
+    
+    redirect_to "/"
+    flash[:success] = "You are now logged out."
+  end
 end

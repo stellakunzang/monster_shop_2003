@@ -26,4 +26,26 @@ RSpec.describe "Logging in" do
         expect(page).to_not have_link("Sign up")
         expect(page).to_not have_link("Sign in")
     end
+    it "Users who are logged in already are redirected" do
+
+      visit "/"
+
+      click_on "Sign in"
+
+      fill_in :email, with: @admin_1.email
+      fill_in :password, with: @admin_1.password
+
+      click_on "Login!"
+
+      expect(current_path).to eq('/admin')
+
+      visit "/login"
+
+      expect(current_path).to eq('/admin')
+
+      expect(page).to have_content("Admin Dashboard")
+      expect(page).to have_link("Log out")
+      expect(page).to_not have_link("Register")
+      expect(page).to_not have_link("Sign in")
+    end
 end

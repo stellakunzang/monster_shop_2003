@@ -7,7 +7,8 @@ class Merchant <ApplicationRecord
                         :address,
                         :city,
                         :state,
-                        :zip
+                        :zip,
+                        :active?
 
 
   def no_orders?
@@ -31,7 +32,7 @@ class Merchant <ApplicationRecord
          .select('orders.id, orders.created_at, item_orders.price, item_orders.quantity')
          .group('item_orders.order_id')
          .sum('item_orders.price')
-         # currently returns sum of price of items without first getting sum of quantity! returns a hash with order_id => price 
+         # currently returns sum of price of items without first getting sum of quantity! returns a hash with order_id => price
          binding.pry
   end
 
