@@ -22,7 +22,7 @@ RSpec.describe "Merchant employee dashboard show page" do
     click_on "Login!"
   end
 
-  xit "displays name and address of merchant employer" do
+  it "displays name and address of merchant employer" do
 
     visit '/merchant'
 
