@@ -15,7 +15,6 @@ RSpec.describe "Logging in" do
 
         fill_in :email, with: @admin_1.email
         fill_in :password, with: @admin_1.password
-        # how to test becrypt authentication
 
         click_on "Login!"
 
@@ -28,15 +27,3 @@ RSpec.describe "Logging in" do
         expect(page).to_not have_link("Sign in")
     end
 end
-
-# When I visit the login path
-# I see a field to enter my email address and password
-# When I submit valid information
-# If I am a regular user, I am redirected to my profile page
-# If I am a merchant user, I am redirected to my merchant dashboard page
-# If I am an admin user, I am redirected to my admin dashboard page
-# And I see a flash message that I am logged in
-
-# Questions
-# A visitor should not be able to delete a merchant? in a spec given to us
-# in destroy spec
