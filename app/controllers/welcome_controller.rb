@@ -1,11 +1,6 @@
 class WelcomeController < ApplicationController
 
   def index
-    # if current_user
-    #   route = determine_route(current_user)
-    #
-    #   redirect_to route
-    # end
   end
 
   def determine_route(user)
@@ -15,4 +10,5 @@ class WelcomeController < ApplicationController
       "default" => "/profile"
     }[user.role]
   end
+
 end
