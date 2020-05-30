@@ -98,6 +98,10 @@ RSpec.describe 'Cart show' do
       within(".cart-#{@tire.id}") do
         click_link "-"
       end
+
+      within(".cart-#{@tire.id}") do
+        click_link "-"
+      end
       
       expect(page).to have_content("You have changed your cart quantity.")
       expect(page).to have_content(@paper.name)
@@ -109,11 +113,3 @@ end
 
 
 
-# User Story 24, Decreasing Item Quantity from Cart
-
-# As a visitor
-# When I have items in my cart
-# And I visit my cart
-# Next to each item in my cart
-# I see a button or link to decrement the count of items I want to purchase
-# If I decrement the count to 0 the item is immediately removed from my cart
