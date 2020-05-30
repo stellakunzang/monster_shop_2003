@@ -73,6 +73,10 @@ Rails.application.routes.draw do
   get "/admin/disable/:id", to: "admins#disable"
   get "/admin/enable/:id", to: "admins#enable"
 
+  namespace :admin do
+    get '/merchants/:merchant_id', to: 'merchants#show'
+  end
+
   #errors
   get "error404", to: "errors#show"
 
