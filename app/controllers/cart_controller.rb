@@ -61,7 +61,8 @@ class CartController < ApplicationController
     elsif params[:add] == "false"
       flash[:success] = "You have changed your cart quantity."
       if cart.contents[item_id] == 0
-        flash[:error] = "Cart Empty"
+        session[:cart].delete(params[:item_id])
+        flash[:error] = "Item removed"
       else
         flash[:success] = "You have changed your cart quantity."
         cart.contents[item_id] -= 1
