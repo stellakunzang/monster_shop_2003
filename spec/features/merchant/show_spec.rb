@@ -40,7 +40,7 @@ RSpec.describe "Merchant employee dashboard show page" do
 
     expect(page).to have_content(@order.id)
     click_on @order.id
-    expect(current_path).to eq("merchant/orders/#{@order.id}")
+    expect(current_path).to eq("/merchant/orders/#{@order.id}")
   end
 
   it "displays assorted informaton about pending orders" do
