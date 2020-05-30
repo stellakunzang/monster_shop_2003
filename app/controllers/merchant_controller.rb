@@ -1,4 +1,4 @@
-class MerchController <ApplicationController
+class MerchantController <ApplicationController
 
   def show
     if current_user == nil || current_user.role != "merchant"
