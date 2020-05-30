@@ -31,6 +31,15 @@ describe Order, type: :model do
     it '#grandtotal' do
       expect(@order_1.grandtotal).to eq(230)
     end
+
+    it '#quantity_sum_per_merchant' do
+      expect(@order_1.quantity_sum_per_merchant(@meg)).to eq(2)
+    end
+
+    it '#value_sum_per_merchant' do
+      expect(@order_1.value_sum_per_merchant(@meg)).to eq(200)
+    end
+
   end
 
   describe 'class methods' do
@@ -47,8 +56,8 @@ describe Order, type: :model do
       @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
 
-    it '.order_date' do
-      expect(Order.order_date(@order_1.id)).to eq(@order_1.created_at.strftime('%m/%d/%Y'))
+    it '.find_order' do
+      expect(Order.find_order(@order_1.id)).to eq(@order_1)
     end
   end
 
