@@ -9,4 +9,9 @@ class Order <ApplicationRecord
   def grandtotal
     item_orders.sum('price * quantity')
   end
+
+  def self.order_date(order_id)
+    order = Order.find_by(id: order_id)
+    order.created_at.strftime('%m/%d/%Y')
+  end
 end
