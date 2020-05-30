@@ -39,14 +39,22 @@ class CartController < ApplicationController
   def update_quantity
     item_id = params[:item_id]
     # TODO: can only add to quantity if we have enough inventory 
-    has_inventory = 
+    # a boolean to indicate whether or not there is enough inventory 
+    # to add one to the cart
+    has_inventory = Item.find(item_id).inventory >= 0 
+    # require 'pry', binding.pry
     if params[:add] == "true" && has_inventory
+      flash[:success] = "You have changed your cart quantity."
       cart.contents[item_id] += 1
+    elsif params[:add] == "true" && !has_inventory
+      flash[:error] = "Not enough in inventory"
+      redirect_to '/cart'
     elsif params[:add] == "false"
+      flash[:success] = "You have changed your cart quantity."
       cart.contents[item_id] -= 1
     end
-    
-    # item.update_attribute(:quantity)
+
+    redirect_to '/cart'
   end
 
 

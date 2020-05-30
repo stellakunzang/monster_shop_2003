@@ -64,6 +64,13 @@ RSpec.describe 'Cart show' do
       end
 
       expect(page).to have_content("You have changed your cart quantity.")
+      expect(page).to have_content("2")
+    end
+
+    it "cannot add more to the cart than there is inventory for" do 
+      # add the max inventory to cart 
+      # ensure flash error message comes up 
+      # ensure cart item quantity can be greater than total inventory available
     end
   end
 end
