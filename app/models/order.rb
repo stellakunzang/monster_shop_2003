@@ -6,12 +6,24 @@ class Order <ApplicationRecord
 
   enum status: %w(default pending)
 
+  def self.find_order(order_id)
+    Order.find_by(id: order_id)
+  end
+
   def grandtotal
     item_orders.sum('price * quantity')
   end
 
-  def self.order_date(order_id)
-    order = Order.find_by(id: order_id)
-    order.created_at.strftime('%m/%d/%Y')
+  def quantity_sum_per_merchant(merchant)
+    items.joins(:item_orders).where('items.merchant_id =?', merchant.id).sum('item_orders.quantity')
   end
+
+  def value_sum_per_merchant(merchant)
+    items.joins(:item_orders)
+         .where('items.merchant_id =?', merchant.id)
+         .group('item_orders.quantity')
+         .sum('item_orders.price')
+         .inject(0) {|result, (key, value)| result += (key * value)}
+  end
+
 end
