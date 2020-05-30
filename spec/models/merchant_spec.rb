@@ -52,7 +52,7 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Hershey")
     end
 
-    it 'orders_with_my_items' do
+    it 'merchant_orders' do
 
       dog_shop = Merchant.create(name: "Meg's Dog Shop", address: '123 Dog Rd.', city: 'Hershey', state: 'PA', zip: 80203)
       chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22)
@@ -70,9 +70,9 @@ describe Merchant, type: :model do
 
       order_3.item_orders.create!(item: ball, price: ball.price, quantity: 1)
 
-      expect(@meg.orders_with_my_items).to eq( {order_1.id => {:date => order_1.created_at.strftime('%m/%d/%Y'), :quantity_sum => 2, :price_sum => 140}, order_2.id => {date: order_2.created_at.strftime('%m/%d/%Y'), quantity_sum: 1, price_sum: 40} } )
+      expect(@meg.merchant_orders).to eq([order_1.id, order_2.id])
+      # expect(@meg.orders_with_my_items).to eq( {order_1.id => {:date => order_1.created_at.strftime('%m/%d/%Y'), :quantity_sum => 2, :price_sum => 140}, order_2.id => {date: order_2.created_at.strftime('%m/%d/%Y'), quantity_sum: 1, price_sum: 40} } )
 
-      # I think this method is working, but adds an extra chain for some reason to each order's quantity and price?
     end
 
   end
