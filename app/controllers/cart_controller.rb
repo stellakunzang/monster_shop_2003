@@ -2,8 +2,17 @@ class CartController < ApplicationController
   def add_item
     if current_user == nil || current_user.role != "admin"
       item = Item.find(params[:item_id])
-      cart.add_item(item.id.to_s)
-      flash[:success] = "#{item.name} was successfully added to your cart"
+      item_inventory = item.inventory
+
+      has_inventory = item_inventory > 0 
+      if has_inventory 
+        cart.add_item(item.id.to_s)
+        item.update(inventory: item_inventory - 1)
+        flash[:success] = "#{item.name} was successfully added to your cart"
+      else
+        flash[:error] = "Not enough in inventory"
+      end
+
       redirect_to "/items"
     else
       redirect_to "/error404"
@@ -21,6 +30,7 @@ class CartController < ApplicationController
   def empty
     if current_user == nil || current_user.role != "admin"
       session.delete(:cart)
+      # TODO: release inventory for all items in the cart and updates inventory to what it was
       redirect_to '/cart'
     else
       redirect_to "/error404"
@@ -38,20 +48,25 @@ class CartController < ApplicationController
 
   def update_quantity
     item_id = params[:item_id]
-    # TODO: can only add to quantity if we have enough inventory 
-    # a boolean to indicate whether or not there is enough inventory 
-    # to add one to the cart
-    has_inventory = Item.find(item_id).inventory >= 0 
-    # require 'pry', binding.pry
+    item = Item.find(item_id)
+    item_inventory = item.inventory
+    
+    has_inventory = item_inventory > 0 
     if params[:add] == "true" && has_inventory
       flash[:success] = "You have changed your cart quantity."
       cart.contents[item_id] += 1
+      item.update(inventory: item_inventory - 1)
     elsif params[:add] == "true" && !has_inventory
       flash[:error] = "Not enough in inventory"
-      redirect_to '/cart'
     elsif params[:add] == "false"
       flash[:success] = "You have changed your cart quantity."
-      cart.contents[item_id] -= 1
+      if cart.contents[item_id] == 0
+        flash[:error] = "Cart Empty"
+      else
+        flash[:success] = "You have changed your cart quantity."
+        cart.contents[item_id] -= 1
+        item.update(inventory: item_inventory + 1)
+      end
     end
 
     redirect_to '/cart'
