@@ -6,8 +6,8 @@
 <h3>Pending Orders</h3>
 <% @merchant.merchant_orders.each do |order_id| %>
   <p>Order Id: <%= link_to "#{order_id}", "/orders/#{order_id}" %></p>
-  <p>Date Order Placed: <%=  Order.order_date(order_id) %><p>
+  <% order = Order.find_order(order_id) %>
+  <p>Date Order Placed: <%=  order.created_at.strftime('%m/%d/%Y') %><p>
+  <p>Total Quantity: <%=  order.quantity_sum_per_merchant(@merchant) %><p>
+  <p>Total Value: <%= number_to_currency( order.value_sum_per_merchant(@merchant), :unit => "$") %><p>
 <% end %>
-
-  <p>Total Quantity: <%=  %><p>
-  <!-- <p>Total Value: <#%= number_to_currency( , :unit => "$") %><p> -->
