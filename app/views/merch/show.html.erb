@@ -4,9 +4,10 @@
 <p class="address"><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
 
 <h3>Pending Orders</h3>
-<% @merchant.orders_with_my_items.each do |order_id, data| %>
+<% @merchant.merchant_orders.each do |order_id| %>
   <p>Order Id: <%= link_to "#{order_id}", "/orders/#{order_id}" %></p>
-  <p>Date Order Place: <%= data[:date] %><p>
-  <p>Total Quantity: <%= data[:quantity_sum] %><p>
-  <p>Total Value: <%= number_to_currency(data[:price_sum], :unit => "$") %><p>
+  <p>Date Order Placed: <%=  Order.order_date(order_id) %><p>
 <% end %>
+
+  <p>Total Quantity: <%=  %><p>
+  <!-- <p>Total Value: <#%= number_to_currency( , :unit => "$") %><p> -->
