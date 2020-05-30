@@ -40,8 +40,7 @@ RSpec.describe "Merchant employee dashboard show page" do
 
     expect(page).to have_content(@order.id)
     click_on @order.id
-    expect(current_path).to eq("/orders/#{@order.id}")
-    # technically this needs to route to the orders show page for a merchant, but at the moment I don't understand how that works and its not built yet. Nested resources? ("/merchant/orders/:order_id")
+    expect(current_path).to eq("merchant/orders/#{@order.id}")
   end
 
   it "displays assorted informaton about pending orders" do
@@ -49,6 +48,5 @@ RSpec.describe "Merchant employee dashboard show page" do
     expect(page).to have_content(@order.created_at.strftime('%m/%d/%Y'))
     expect(page).to have_content("Total Quantity: 6")
     expect(page).to have_content("Total Value: $6.00")
-    
   end
 end
