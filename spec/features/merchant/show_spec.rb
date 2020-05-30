@@ -49,4 +49,11 @@ RSpec.describe "Merchant employee dashboard show page" do
     expect(page).to have_content("Total Quantity: 6")
     expect(page).to have_content("Total Value: $6.00")
   end
+
+  it "has link to view item index page for my items" do
+    visit "/merchant"
+    click_on "View All My Items"
+    expect(current_path).to eq("/merchant/items")
+  end
+  
 end
