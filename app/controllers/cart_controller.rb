@@ -72,5 +72,4 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
-
 end
