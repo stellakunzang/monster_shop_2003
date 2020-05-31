@@ -25,7 +25,7 @@ RSpec.describe "User registration form" do
 
     expect(current_path).to eq("/profile")
 
-    expect(page).to have_content("Welcome, George! You are now registered, and logged in.")
+    expect(page).to have_content("Welcome, George!")
   end
 
   it "will not create user with missing info" do
@@ -55,7 +55,7 @@ RSpec.describe "User registration form" do
     click_on "Create User"
 
     expect(current_path).to eq("/profile")
-    expect(page).to have_content("Welcome, George! You are now registered, and logged in.")
+    expect(page).to have_content("Welcome, George!")
   end
 
   it "will not create user with incorrect info" do
@@ -89,6 +89,6 @@ RSpec.describe "User registration form" do
     click_on "Create User"
 
     expect(current_path).to eq("/profile")
-    expect(page).to have_content("Welcome, George! You are now registered, and logged in.")
+    expect(page).to have_content("Welcome, George!")
   end
 end
