@@ -32,18 +32,29 @@ RSpec.describe "Merchant employee view of order show page" do
 
   it "displays recipient's name and address" do
     visit "/merchant/orders/#{@order.id}"
+
+    expect(page).to have_content(@order.name)
+    expect(page).to have_content(@order.address)
   end
 
   it "displays only my items from this order" do
     visit "/merchant/orders/#{@order.id}"
+
+    expect(page).to_not have_content(@tire.name)
   end
 
   it "each item displays name of item which is a link to it's show page" do
     visit "/merchant/orders/#{@order.id}"
+
+    click_link "#{@dog_bone.name}"
+
+    expect(current_path).to eq("/items/#{@dog_bone.id}")
   end
 
   it "displays each item's image, price, and quantity user wants to purchase" do
     visit "/merchant/orders/#{@order.id}"
+
+    
   end
 
 end
