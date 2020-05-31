@@ -39,7 +39,7 @@ RSpec.describe "Merchant employee dashboard show page" do
     visit "/merchant"
 
     expect(page).to have_content(@order.id)
-    click_on @order.id
+    click_on "#{@order.id}"
     expect(current_path).to eq("/merchant/orders/#{@order.id}")
   end
 
@@ -55,5 +55,5 @@ RSpec.describe "Merchant employee dashboard show page" do
     click_on "View All My Items"
     expect(current_path).to eq("/merchant/items")
   end
-  
+
 end
