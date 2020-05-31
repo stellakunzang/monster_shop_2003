@@ -1,5 +1,9 @@
 class OrdersController <ApplicationController
 
+  def index
+    @orders = Order.all
+  end
+
   def new
 
   end
@@ -18,6 +22,7 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
+      flash[:success] = "Your order has been created"
       session.delete(:cart)
       redirect_to "/orders/#{order.id}"
     else
