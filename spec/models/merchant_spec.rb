@@ -71,8 +71,6 @@ describe Merchant, type: :model do
       order_3.item_orders.create!(item: ball, price: ball.price, quantity: 1)
 
       expect(@meg.merchant_orders).to eq([order_1.id, order_2.id])
-      # expect(@meg.orders_with_my_items).to eq( {order_1.id => {:date => order_1.created_at.strftime('%m/%d/%Y'), :quantity_sum => 2, :price_sum => 140}, order_2.id => {date: order_2.created_at.strftime('%m/%d/%Y'), quantity_sum: 1, price_sum: 40} } )
-
     end
 
   end
