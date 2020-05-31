@@ -9,6 +9,10 @@ describe Order, type: :model do
     it { should validate_presence_of :zip }
   end
 
+  describe "enum" do
+    it { should define_enum_for(:status).with_values([:pending, :packaged, :shipped, :cancelled]) }
+  end
+
   describe "relationships" do
     it {should have_many :item_orders}
     it {should have_many(:items).through(:item_orders)}

@@ -4,7 +4,7 @@ class Order <ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
 
-  enum status: %w(default pending)
+  enum status: %w(pending packaged shipped cancelled)
 
   def self.find_order(order_id)
     Order.find_by(id: order_id)
