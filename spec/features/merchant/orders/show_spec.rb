@@ -12,7 +12,7 @@ RSpec.describe "Merchant employee view of order show page" do
 
     @order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
 
-    ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
+    @item_order_1 = ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
     ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
     ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @tire.id, quantity: 4)
 
@@ -54,7 +54,9 @@ RSpec.describe "Merchant employee view of order show page" do
   it "displays each item's image, price, and quantity user wants to purchase" do
     visit "/merchant/orders/#{@order.id}"
 
-    
+    expect(page).to have_content("$1.00")
+    expect(page).to have_css("img[src*='#{@pull_toy.image}']")
+    expect(page).to have_content("#{@item_order_1.quantity}")
   end
 
 end
