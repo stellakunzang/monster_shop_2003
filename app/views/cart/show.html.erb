@@ -10,7 +10,7 @@
     <th>Quantity</th>
     <th>Subtotal</th>
   </tr>
-  <% @items.each do |item,quantity| %>
+  <% @items.each do |item, quantity| %>
     <tr id= "cart-item-<%=item.id%>">
       <td>
         <p align = "center">
@@ -30,8 +30,12 @@
       </td>
       <td>
         <center>
-          <p><%=quantity%></p>
+          <p><%= quantity %></p>
           <p><%= link_to "Remove", "/cart/#{item.id}",method: :delete %></p>
+          <section class="cart-<%= item.id %>">
+            <p><%= link_to "+", "/cart/update_quantity/#{item.id}?add=true", method: :post %></p>
+            <p><%= link_to "-", "/cart/update_quantity/#{item.id}?add=false", method: :post %></p>
+          </section>
         </center>
         </td>
       <td>
@@ -48,3 +52,4 @@
 <% end %>
 <table>
 </center>
+
