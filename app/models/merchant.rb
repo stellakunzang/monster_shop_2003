@@ -29,4 +29,9 @@ class Merchant <ApplicationRecord
   def merchant_orders
     items.joins(:orders).where('status =?', 0).distinct.pluck('order_id')
   end
+
+  def my_item_orders(order_id)
+    item_orders.joins(:item).where('order_id = ? AND items.merchant_id = ?', order_id, self.id)
+  end
+
 end
