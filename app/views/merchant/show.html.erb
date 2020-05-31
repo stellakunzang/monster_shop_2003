@@ -1,0 +1,15 @@
+<h1>Merchant Dashboard</h1>
+<h1><%= link_to @merchant.name, "/merchants/#{@merchant.id}" %></h1>
+<p class="address"><%= @merchant.address %></p>
+<p class="address"><%= @merchant.city %>, <%= @merchant.state %> <%= @merchant.zip %></p>
+
+<h3><%= link_to "View All My Items", "/merchant/items" %><h3>
+
+<h3>Pending Orders</h3>
+<% @merchant.merchant_orders.each do |order_id| %>
+  <p>Order Id: <%= link_to "#{order_id}", "/merchant/orders/#{order_id}" %></p>
+  <% order = Order.find_order(order_id) %>
+  <p>Date Order Placed: <%=  order.created_at.strftime('%m/%d/%Y') %><p>
+  <p>Total Quantity: <%=  order.quantity_sum_per_merchant(@merchant) %><p>
+  <p>Total Value: <%= number_to_currency( order.value_sum_per_merchant(@merchant), :unit => "$") %><p>
+<% end %>

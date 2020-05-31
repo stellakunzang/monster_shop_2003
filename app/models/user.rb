@@ -15,9 +15,5 @@ class User <ApplicationRecord
   has_secure_password
 
   enum role: %w(default merchant admin)
-end
 
-# TO DO LIST
-# create model spec for enum roles
-# password_digest? in schema
-# test conditional inclusion of merchant_id (not required)
+end

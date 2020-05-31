@@ -12,7 +12,7 @@ describe User, type: :model do
   end
 
   describe "enum" do
-    it { should define_enum_for(:role).with([:default, :merchant, :admin]) }
+    it { should define_enum_for(:role).with_values([:default, :merchant, :admin]) }
   end
 
   describe "roles" do

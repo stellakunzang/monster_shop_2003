@@ -61,13 +61,22 @@ Rails.application.routes.draw do
   get "/admin/users", to: "users#index"
 
   #merch
-  get "/merchant", to: "merch#show"
+  get "/merchant", to: "merchant#show"
+
+  namespace :merchant do
+    get '/orders/:order_id', to: 'orders#show'
+    get '/items', to: 'items#index'
+  end
 
   #admins
   get "/admin", to: "admins#show"
   get "/admin/merchants", to: "admins#index"
   get "/admin/disable/:id", to: "admins#disable"
   get "/admin/enable/:id", to: "admins#enable"
+
+  namespace :admin do
+    get '/merchants/:merchant_id', to: 'merchants#show'
+  end
 
   #errors
   get "error404", to: "errors#show"
