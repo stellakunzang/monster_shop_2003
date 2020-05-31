@@ -123,47 +123,25 @@ RSpec.describe("Order Creation") do
       click_link ("Current Orders")
       expect(current_path).to eq("/profile/orders")
 
-      expect(page).to have_content
+      expect(page).to have_content("Current Orders")
+      expect(page).to have_content("Bert")
+      expect(page).to have_content("123 Sesame St.")
+      expect(page).to have_content("NYC")
+      expect(page).to have_content("New York")
+      expect(page).to have_content(10001)
+    end
+    it "Non pending order doesnt display" do
+      order = Order.create!(name: "Easier", address: "Way", city: "Town", state: "OK", zip: 90210, status: 1, user_id: @user.id)
 
-      within '.shipping-address' do
-        expect(page).to have_content(name)
-        expect(page).to have_content(address)
-        expect(page).to have_content(city)
-        expect(page).to have_content(state)
-        expect(page).to have_content(zip)
-      end
+      visit "/profile/orders"
 
-      within "#item-#{@paper.id}" do
-        expect(page).to have_link(@paper.name)
-        expect(page).to have_link("#{@paper.merchant.name}")
-        expect(page).to have_content("$#{@paper.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$40")
-      end
+      expect(page).to have_content("Current Orders")
+      expect(page).to_not have_content("Easier")
+      expect(page).to_not have_content("Way")
+      expect(page).to_not have_content("Town")
+      expect(page).to_not have_content("OK")
+      expect(page).to_not have_content(90210)
 
-      within "#item-#{@tire.id}" do
-        expect(page).to have_link(@tire.name)
-        expect(page).to have_link("#{@tire.merchant.name}")
-        expect(page).to have_content("$#{@tire.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$100")
-      end
-
-      within "#item-#{@pencil.id}" do
-        expect(page).to have_link(@pencil.name)
-        expect(page).to have_link("#{@pencil.merchant.name}")
-        expect(page).to have_content("$#{@pencil.price}")
-        expect(page).to have_content("1")
-        expect(page).to have_content("$2")
-      end
-
-      within "#grandtotal" do
-        expect(page).to have_content("Total: $142")
-      end
-
-      within "#datecreated" do
-        expect(page).to have_content(new_order.created_at)
-      end
     end
 
   end

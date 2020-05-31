@@ -71,7 +71,17 @@ RSpec.configure do |config|
 end
 
 def login_user
-  user = User.create(name: "Willy Wonka", address: "123 St", city: "Denver", state: "CO", zip: "12345", email: "chocolateguy1@gmail.com", password: "loco123", role: 0)
-  allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
+  @user = User.create(name: "Willy Wonka", address: "123 St", city: "Denver", state: "CO", zip: "12345", email: "chocolateguy1@gmail.com", password: "loco123", role: 0)
+  allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@user)
+end
+
+def login_merchant
+  @m_user = User.create(name: "Silly Wonka", address: "123 St", city: "Denver", state: "CO", zip: "12345", email: "chocolategal1@gmail.com", password: "loco123", role: 1)
+  allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
+end
+
+def login_admin
+  @m_user = User.create(name: "Silly Wonka", address: "123 St", city: "Denver", state: "CO", zip: "12345", email: "chocolategal1@gmail.com", password: "loco123", role: 1)
+  allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@m_user)
 end
 

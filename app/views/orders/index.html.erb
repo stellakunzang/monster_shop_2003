@@ -7,7 +7,7 @@
     <th>State</th>
     <th>Zip</th>
   </tr>
-    <% @orders.each do |order| %>
+    <% @orders.pending_orders.each do |order| %>
       <tr>
         <td><p><%= order.name %> </p></td>
         <td><p><%= order.address %> </p></td>
