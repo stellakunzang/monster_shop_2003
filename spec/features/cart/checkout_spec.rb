@@ -108,8 +108,27 @@ RSpec.describe 'Cart show' do
       expect(page).to have_content(@pencil.name)
       expect(page).to_not have_content(@tire.name)
     end
+
+    it "Visitors must register or log in to check out" do 
+      visit "/cart"
+
+      expect(page).to have_link("Login")
+      expect(page).to have_link("Register")
+      expect(page).to have_link("Empty Cart")
+      expect(page).to have_link("Checkout")
+      expect(page).to have_content("Please, log in or register to complete order")
+    end
   end
 end
 
 
 
+# User Story 25, Visitors must register or log in to check out
+
+# As a visitor
+# When I have items in my cart
+# And I visit my cart
+# I see information telling me I must register or log in to 
+# finish the checkout process
+# The word "register" is a link to the registration page
+# The words "log in" is a link to the login page
