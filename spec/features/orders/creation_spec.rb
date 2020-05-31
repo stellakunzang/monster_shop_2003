@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 RSpec.describe("Order Creation") do
   describe "When I check out from my cart" do
     before(:each) do
@@ -37,7 +39,7 @@ RSpec.describe("Order Creation") do
       click_button "Create Order"
 
       new_order = Order.last
-
+      
       expect(current_path).to eq("/orders/#{new_order.id}")
 
       within '.shipping-address' do
