@@ -117,6 +117,12 @@ RSpec.describe 'Cart show' do
       expect(page).to have_link("Empty Cart")
       expect(page).to have_link("Checkout")
       expect(page).to have_content("Please, log in or register to complete order")
+
+      click_link("Empty Cart")
+
+      expect(page).to_not have_link("Empty Cart")
+      expect(page).to_not have_link("Checkout")
+      expect(page).to_not have_content("Please, log in or register to complete order")
     end
   end
 end
