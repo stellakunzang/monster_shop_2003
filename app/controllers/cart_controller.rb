@@ -1,4 +1,5 @@
 class CartController < ApplicationController
+  
   def add_item
     if current_user == nil || current_user.role != "admin"
       item = Item.find(params[:item_id])

@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Cart show' do
   describe 'When I have added items to my cart' do
     before(:each) do
+      login_user
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
@@ -21,7 +22,6 @@ RSpec.describe 'Cart show' do
     it 'Theres a link to checkout' do
       visit "/cart"
 
-      expect(page).to have_link("Checkout")
 
       click_on "Checkout"
 
@@ -57,8 +57,6 @@ RSpec.describe 'Cart show' do
     it "I see a button or link to increment the count of items I want to purchase" do 
       visit "/cart"
       
-      expect(page).to have_link("Checkout")
-      
       within(".cart-#{@tire.id}") do
         click_link "+"
       end
@@ -70,7 +68,6 @@ RSpec.describe 'Cart show' do
     it "cannot add more to the cart than there is inventory for" do 
       visit "/cart"
 
-      expect(page).to have_link("Checkout")
       expect(page).to have_link("Empty Cart")
  
       within(".cart-#{@tire.id}") do
@@ -92,7 +89,6 @@ RSpec.describe 'Cart show' do
     it "Decreasing Item Quantity from Cart and hit 0 item removed from cart" do
       visit "/cart"
 
-      expect(page).to have_link("Checkout")
       expect(page).to have_link("Empty Cart")
 
       within(".cart-#{@tire.id}") do
@@ -115,13 +111,13 @@ RSpec.describe 'Cart show' do
       expect(page).to have_link("Login")
       expect(page).to have_link("Register")
       expect(page).to have_link("Empty Cart")
-      expect(page).to have_link("Checkout")
       expect(page).to have_content("Please, log in or register to complete order")
 
-      click_link("Empty Cart")
-
-      expect(page).to_not have_link("Empty Cart")
-      expect(page).to_not have_link("Checkout")
+      login_user
+      visit "/cart"
+      
+      expect(page).to have_link("Empty Cart")
+      expect(page).to have_link("Checkout")
       expect(page).to_not have_content("Please, log in or register to complete order")
     end
   end
@@ -129,7 +125,7 @@ end
 
 
 
-# User Story 25, Visitors must register or log in to check out
+
 
 # As a visitor
 # When I have items in my cart

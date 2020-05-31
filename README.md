@@ -468,7 +468,7 @@ If I decrement the count to 0 the item is immediately removed from my cart
 ```
 
 ```
-[  ] done
+[ X ] done
 
 User Story 25, Visitors must register or log in to check out
 
@@ -490,6 +490,7 @@ When I add items to my cart
 And I visit my cart
 I see a button or link indicating that I can check out
 And I click the button or link to check out and fill out order info and click create order
+
 An order is created in the system, which has a status of "pending"
 That order is associated with my user
 I am taken to my orders page ("/profile/orders")
