@@ -1,4 +1,4 @@
-class AdminsController <ApplicationController
+class AdminsController < ApplicationController
 
   def index
     @merchants = Merchant.all

@@ -4,6 +4,8 @@ class Order <ApplicationRecord
   has_many :item_orders
   has_many :items, through: :item_orders
 
+  belongs_to :user
+
   enum status: %w(pending packaged shipped cancelled)
 
   def self.find_order(order_id)
@@ -24,6 +26,10 @@ class Order <ApplicationRecord
          .group('item_orders.quantity')
          .sum('item_orders.price')
          .inject(0) {|result, (key, value)| result += (key * value)}
+  end
+
+  def self.pending_orders
+    Order.where(status: "pending")
   end
 
 end

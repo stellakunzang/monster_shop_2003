@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe "Items Index Page" do
   describe "When I visit the items index page" do
     before(:each) do
+      login_user
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
@@ -72,8 +73,8 @@ RSpec.describe "Items Index Page" do
 
       toy = @brian.items.create(name: "A Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-      order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
-      order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+      order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
+      order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
 
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
@@ -108,8 +109,8 @@ RSpec.describe "Items Index Page" do
 
       toy = @brian.items.create(name: "A Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-      order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
-      order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+      order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
+      order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
 
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)

@@ -11,6 +11,10 @@ describe User, type: :model do
     it { should validate_presence_of :password}
   end
 
+  describe "relationships" do
+    it {should have_many :orders}
+  end
+
   describe "enum" do
     it { should define_enum_for(:role).with_values([:default, :merchant, :admin]) }
   end
