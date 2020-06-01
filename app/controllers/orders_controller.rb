@@ -1,5 +1,9 @@
 class OrdersController <ApplicationController
 
+  def index
+    @orders = Order.where(user_id: current_user[:id])
+  end
+
   def new
 
   end
@@ -9,6 +13,7 @@ class OrdersController <ApplicationController
   end
 
   def create
+    params[:user_id] = current_user.id
     order = Order.create(order_params)
     if order.save
       cart.items.each do |item,quantity|
@@ -18,6 +23,7 @@ class OrdersController <ApplicationController
           price: item.price
           })
       end
+      flash[:success] = "Your order has been created"
       session.delete(:cart)
       redirect_to "/orders/#{order.id}"
     else
@@ -30,6 +36,6 @@ class OrdersController <ApplicationController
   private
 
   def order_params
-    params.permit(:name, :address, :city, :state, :zip)
+    params.permit(:name, :address, :city, :state, :zip, :user_id)
   end
 end

@@ -15,7 +15,6 @@ RSpec.describe "Logging in" do
 
         fill_in :email, with: @regular_user.email
         fill_in :password, with: @regular_user.password
-        # how to test becrypt authentication
 
         click_on "Login!"
 
@@ -27,7 +26,7 @@ RSpec.describe "Logging in" do
         expect(page).to_not have_link("Sign up")
         expect(page).to_not have_link("Sign in")
     end
-    it "I submit invalid information, redirected to the login page with flash" do 
+    it "I submit invalid information, redirected to the login page with flash" do
 
         visit "/"
 
@@ -43,7 +42,7 @@ RSpec.describe "Logging in" do
 
         expect(page).to have_content("Sorry, your credentials were incorrect.")
     end
-    it "Users who are logged in already are redirected" do 
+    it "Users who are logged in already are redirected" do
 
         visit "/"
 
@@ -53,11 +52,11 @@ RSpec.describe "Logging in" do
         fill_in :password, with: @regular_user.password
 
         click_on "Login!"
-        
+
         expect(current_path).to eq('/profile')
 
         visit "/login"
-        
+
         expect(current_path).to eq('/profile')
 
         expect(page).to have_content("Welcome, #{@regular_user.name}")

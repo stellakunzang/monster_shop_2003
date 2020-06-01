@@ -1,3 +1,5 @@
+require "rails_helper"
+
 RSpec.describe("New Order Page") do
   describe "When I check out from my cart" do
     before(:each) do
@@ -17,6 +19,7 @@ RSpec.describe("New Order Page") do
       click_on "Add To Cart"
     end
     it "I see all the information about my current cart" do
+      login_user
       visit "/cart"
 
       click_on "Checkout"
@@ -49,6 +52,8 @@ RSpec.describe("New Order Page") do
     end
 
     it "I see a form where I can enter my shipping info" do
+      login_user
+
       visit "/cart"
       click_on "Checkout"
 

@@ -12,7 +12,6 @@ class Item <ApplicationRecord
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
 
-
   def average_review
     reviews.average(:rating)
   end
@@ -25,23 +24,24 @@ class Item <ApplicationRecord
     item_orders.empty?
   end
 
+  def update_inventory(quantity)
+    update_attributes(inventory: (inventory - quantity))
+  end
+
   def self.top_5
-    top_5_data = ItemOrder.find_by_sql ["SELECT items.name, item_id, SUM(quantity) AS total_purchased FROM item_orders JOIN items ON item_orders.item_id = items.id GROUP BY item_id, items.name ORDER BY total_purchased DESC LIMIT 5"]
-    # Item.joins(:item_orders)
-    #     .select('items.id, items.name, sum(item_orders.quantity)')
-    #     .group('items.id')
-    #     .order('sum(item_orders.quantity)')
-    #     .limit(5)
-    keys = top_5_data.pluck(:name)
-    values = top_5_data.pluck(:total_purchased)
-    top_5 = Hash[keys.zip(values)]
+    Item.joins(:item_orders)
+        .group('items.name')
+        .order('sum(item_orders.quantity) desc')
+        .limit(5)
+        .sum('item_orders.quantity')
   end
 
   def self.worst_5
-    worst_5_data = ItemOrder.find_by_sql ["SELECT items.name, item_id, SUM(quantity) AS total_purchased FROM item_orders JOIN items ON item_orders.item_id = items.id GROUP BY item_id, items.name ORDER BY total_purchased LIMIT 5"]
-    keys = worst_5_data.pluck(:name)
-    values = worst_5_data.pluck(:total_purchased)
-    worst_5 = Hash[keys.zip(values)]
+    Item.joins(:item_orders)
+        .group('items.name')
+        .order('sum(item_orders.quantity)')
+        .limit(5)
+        .sum('item_orders.quantity')
   end
 
 end

@@ -9,12 +9,20 @@
 Merchant.destroy_all
 Item.destroy_all
 
+
+
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 dog_shop = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
 
+#users with (role: set manually)
+default_1 = User.create(name: "Hank Hill", address: "801 N Alamo St", city: "Arlen", state: "Texas", zip: "61109", email: "ProPAIN@aol.com", password: "W33dWacker", role: 0)
+merchant_1 = User.create(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1, merchant_id: dog_shop.id)
+admin_1 = User.create(name: "Kurt Cobain", address: "666 Lake Washington Bldv", city: "Seattle", state: "Washington", zip: "32786", email: "GrungeIsDead@gmail.com", password: "Forever27", role: 2)
 #bike_shop items
 tire = bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+tassels = bike_shop.items.create(name: "Handle Bar Tassels", description: "WEEEEeee!!!", active?: true, price: 15, image: "https://images.freeimages.com/images/large-previews/0ba/i-love-pasta-1-1566263.jpg", inventory: 6)
+seat = bike_shop.items.create(name: "Bike Seat", description: "Not for human consumption!", active?: true, price: 105, image: "https://media.istockphoto.com/photos/close-loose-toilet-seat-and-lid-isolated-on-white-picture-id598567074", inventory: 3)
 
 #dog_shop items
 pull_toy = dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
@@ -24,8 +32,8 @@ bone = dog_shop.items.create(name: "Bone", description: "They'll love it!", pric
 
 toy = dog_shop.items.create(name: "Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
-order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
-order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
+order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
 
 ItemOrder.create!(order_id: order.id, price: 1.0, item_id: dog_bone.id, quantity: 5)
 ItemOrder.create!(order_id: order.id, price: 1.0, item_id: pull_toy.id, quantity: 1)
@@ -34,8 +42,3 @@ ItemOrder.create!(order_id: order.id, price: 1.0, item_id: toy.id, quantity: 3)
 ItemOrder.create!(order_id: order.id, price: 1.0, item_id: bone.id, quantity: 2)
 ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: dog_bone.id, quantity: 3)
 ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: pull_toy.id, quantity: 4)
-
-#users with (role: set manually)
-default_1 = User.create(name: "Hank Hill", address: "801 N Alamo St", city: "Arlen", state: "Texas", zip: "61109", email: "ProPAIN@aol.com", password: "W33dWacker", role: 0)
-merchant_1 = User.create(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1)
-admin_1 = User.create(name: "Kurt Cobain", address: "666 Lake Washington Bldv", city: "Seattle", state: "Washington", zip: "32786", email: "GrungeIsDead@gmail.com", password: "Forever27", role: 2)

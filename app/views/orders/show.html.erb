@@ -40,7 +40,9 @@
     </tr>
   <% end %>
 </table>
-
+<section id="currentorders">
+  <p><%= link_to "Current Orders", "/profile/orders"%></p>
+</section>
 <section id="grandtotal">
   <p>Total: <%=number_to_currency(@order.grandtotal)%></p>
 </section>

@@ -7,8 +7,8 @@ class Merchant <ApplicationRecord
                         :address,
                         :city,
                         :state,
-                        :zip
-
+                        :zip,
+                        :active?
 
   def no_orders?
     item_orders.empty?
@@ -24,6 +24,14 @@ class Merchant <ApplicationRecord
 
   def distinct_cities
     item_orders.distinct.joins(:order).pluck(:city)
+  end
+
+  def merchant_orders
+    items.joins(:orders).where('status =?', 0).distinct.pluck('order_id')
+  end
+
+  def my_item_orders(order_id)
+    item_orders.joins(:item).where('order_id = ? AND items.merchant_id = ?', order_id, self.id)
   end
 
 end

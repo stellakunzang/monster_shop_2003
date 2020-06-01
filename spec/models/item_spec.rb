@@ -7,7 +7,7 @@ describe Item, type: :model do
     it { should validate_presence_of :price }
     it { should validate_presence_of :image }
     it { should validate_presence_of :inventory }
-    it { should validate_inclusion_of(:active?).in_array([true,false]) }
+    # it { should validate_inclusion_of(:active?).in_array([true,false]) }
   end
 
   describe "relationships" do
@@ -15,6 +15,36 @@ describe Item, type: :model do
     it {should have_many :reviews}
     it {should have_many :item_orders}
     it {should have_many(:orders).through(:item_orders)}
+  end
+
+  describe "class methods" do
+    before(:each) do
+      login_user
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+      @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      @bone = @brian.items.create(name: "A Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      @toy = @brian.items.create(name: "A Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
+      @order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
+      @order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
+      ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
+      ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
+      ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @tire.id, quantity: 4)
+      ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @toy.id, quantity: 3)
+      ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @bone.id, quantity: 2)
+      ItemOrder.create!(order_id: @order2.id, price: 1.0, item_id: @dog_bone.id, quantity: 3)
+      ItemOrder.create!(order_id: @order2.id, price: 1.0, item_id: @pull_toy.id, quantity: 4)
+    end
+
+    it ".top_5" do
+      expect(Item.top_5).to eq({ @dog_bone.name => 8, @pull_toy.name => 5, @tire.name => 4, @toy.name => 3, @bone.name => 2})
+    end
+
+    it ".worst_5" do
+      expect(Item.worst_5).to eq({ @bone.name => 2, @toy.name => 3, @tire.name => 4, @pull_toy.name => 5, @dog_bone.name => 8 })
+    end
   end
 
   describe "instance methods" do
@@ -29,11 +59,11 @@ describe Item, type: :model do
       @review_5 = @chain.reviews.create(title: "Okay place :/", content: "Brian's cool and all but just an okay selection of items", rating: 3)
     end
 
-    it "calculate average review" do
+    it "#calculate average review" do
       expect(@chain.average_review).to eq(3.0)
     end
 
-    it "sorts reviews" do
+    it "#sorts reviews" do
       top_three = @chain.sorted_reviews(3,:desc)
       bottom_three = @chain.sorted_reviews(3,:asc)
 
@@ -41,11 +71,17 @@ describe Item, type: :model do
       expect(bottom_three).to eq([@review_3,@review_4,@review_5])
     end
 
-    it 'no orders' do
+    it '#no orders' do
+      login_user
       expect(@chain.no_orders?).to eq(true)
-      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033)
+      order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user.id)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
+    end
+
+    it '#update_inventory' do
+      @chain.update_inventory(2)
+      expect(@chain.inventory).to eq(3)
     end
   end
 end
