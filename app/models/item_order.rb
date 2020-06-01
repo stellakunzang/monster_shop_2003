@@ -9,6 +9,6 @@ class ItemOrder <ApplicationRecord
   end
 
   def fulfill
-    self.update(fulfilled?: true)
+    update(fulfilled?: true)
   end
 end
