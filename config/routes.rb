@@ -7,6 +7,24 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
+  get "/admin", to: "admins#show"
+
+  namespace :admin do
+    get '/merchants/:merchant_id', to: "merchants#show"
+    get '/merchants', to: "merchants#index"
+    get "/merchants/disable/:id", to: "merchants#disable"
+    get "/merchants/enable/:id", to: "merchants#enable"
+    get '/users', to: 'users#index'
+  end
+
+  get "/merchant", to: "merchant#show"
+
+  namespace :merchant do
+    get '/orders/:order_id', to: 'orders#show'
+    patch '/orders/:order_id', to: 'orders#update'
+    get '/items', to: 'items#index'
+  end
+
   #merchants
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
@@ -59,27 +77,5 @@ Rails.application.routes.draw do
   get "/password/edit", to: "users#edit_pass"
   post "/password", to: "users#update_pass"
 
-  get "/admin/users", to: "users#index"
-
-  #merch
-  get "/merchant", to: "merchant#show"
-
-  namespace :merchant do
-    get '/orders/:order_id', to: 'orders#show'
-    get '/items', to: 'items#index'
-  end
-
-  #admins
-  get "/admin", to: "admins#show"
-  get "/admin/merchants", to: "admins#index"
-  get "/admin/disable/:id", to: "admins#disable"
-  get "/admin/enable/:id", to: "admins#enable"
-
-  namespace :admin do
-    get '/merchants/:merchant_id', to: 'merchants#show'
-  end
-
-  #errors
   get "error404", to: "errors#show"
-
 end
