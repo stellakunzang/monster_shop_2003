@@ -7,4 +7,8 @@ class ItemOrder <ApplicationRecord
   def subtotal
     price * quantity
   end
+
+  def fulfill
+    self.update(fulfilled?: true)
+  end
 end
