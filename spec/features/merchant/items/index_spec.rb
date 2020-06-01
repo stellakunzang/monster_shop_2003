@@ -45,5 +45,34 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
       end
     end
+    it "shows me a link to enable or disable for each item" do
+        visit "merchant/items"
+
+      within "#item-#{@tire.id}" do
+        click_link "disable"
+      end
+
+      within "#item-#{@chain.id}" do
+        click_link "disable"
+      end
+
+      within "#item-#{@shifter.id}" do
+        click_link "enable"
+      end
+
+      expect(page).to eq("/merchant/items")
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link("enable")
+      end
+
+      within "#item-#{@chain.id}" do
+        expect(page).to have_link("enable")
+      end
+
+      within "#item-#{@shifter.id}" do
+        expect(page).to have_link("disable")
+      end
+    end
   end
 end
