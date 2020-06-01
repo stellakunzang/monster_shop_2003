@@ -62,15 +62,16 @@ RSpec.describe "Merchant employee view of order show page" do
 
   it "if order is unfulfilled and the desired quantity is equal to or less than my inventory, I see fulfill button" do
     visit "/merchant/orders/#{@order.id}"
-    within dog_bones do
+    within "#item-#{@dog_bone.id}" do
       click_on "fulfill item"
     end
 
     expect(current_path).to eq("/merchant/orders/#{@order.id}")
+    @dog_bone.reload
     expect(@dog_bone.inventory).to eq(0)
-    expect(page).to have_content("#{@dog_bone.name} from order # #{@order.id} has been fulfilled.")
+    expect(page).to have_content("#{@dog_bone.name} from order #{@order.id} has been fulfilled.")
 
-    within dog_bones do
+    within "#item-#{@dog_bone.id}" do
       expect(page).to_not have_content("fulfill item")
       expect(page).to have_content("This item has already been fulfilled")
     end
@@ -84,7 +85,5 @@ RSpec.describe "Merchant employee view of order show page" do
 
     expect(page).to have_content("There is not enough inventory to fulfill this item")
   end
-
-
 
 end
