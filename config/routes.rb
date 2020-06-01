@@ -17,6 +17,14 @@ Rails.application.routes.draw do
     get '/users', to: 'users#index'
   end
 
+  get "/merchant", to: "merchant#show"
+
+  namespace :merchant do
+    get '/orders/:order_id', to: 'orders#show'
+    patch '/orders/:order_id', to: 'orders#update'
+    get '/items', to: 'items#index'
+  end
+
   #merchants
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
@@ -56,7 +64,7 @@ Rails.application.routes.draw do
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
   get "/profile/orders", to: "orders#index"
-  #namespace :profile do
+
   #users
   get "/login", to: "users#login"
   get '/logout', to: "users#logout"
@@ -68,15 +76,6 @@ Rails.application.routes.draw do
   post "/profile", to: "users#update"
   get "/password/edit", to: "users#edit_pass"
   post "/password", to: "users#update_pass"
-
-  #merch
-  get "/merchant", to: "merchant#show"
-
-  namespace :merchant do
-    get '/orders/:order_id', to: 'orders#show'
-    patch '/orders/:order_id', to: 'orders#update'
-    get '/items', to: 'items#index'
-  end
 
   get "error404", to: "errors#show"
 end
