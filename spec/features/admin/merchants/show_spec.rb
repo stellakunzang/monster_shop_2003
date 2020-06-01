@@ -14,10 +14,12 @@ RSpec.describe "Admin view of merchant dashboard" do
     click_on "Login!"
   end
 
-  xit "merchant index page links to show page" do
+  it "merchant index page links to show page" do
 
     visit "/merchants"
-    click_on @dog_shop.name
+
+    click_link @dog_shop.name
+
     expect(current_path).to eq("/admin/merchants/#{@dog_shop.id}")
   end
 
