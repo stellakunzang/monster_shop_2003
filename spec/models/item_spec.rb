@@ -38,11 +38,11 @@ describe Item, type: :model do
       ItemOrder.create!(order_id: @order2.id, price: 1.0, item_id: @pull_toy.id, quantity: 4)
     end
 
-    it "can find and order top 5 items" do
+    it ".top_5" do
       expect(Item.top_5).to eq({ @dog_bone.name => 8, @pull_toy.name => 5, @tire.name => 4, @toy.name => 3, @bone.name => 2})
     end
 
-    it "can find and order worst 5 items" do
+    it ".worst_5" do
       expect(Item.worst_5).to eq({ @bone.name => 2, @toy.name => 3, @tire.name => 4, @pull_toy.name => 5, @dog_bone.name => 8 })
     end
   end
@@ -59,11 +59,11 @@ describe Item, type: :model do
       @review_5 = @chain.reviews.create(title: "Okay place :/", content: "Brian's cool and all but just an okay selection of items", rating: 3)
     end
 
-    it "calculate average review" do
+    it "#calculate average review" do
       expect(@chain.average_review).to eq(3.0)
     end
 
-    it "sorts reviews" do
+    it "#sorts reviews" do
       top_three = @chain.sorted_reviews(3,:desc)
       bottom_three = @chain.sorted_reviews(3,:asc)
 
@@ -71,12 +71,17 @@ describe Item, type: :model do
       expect(bottom_three).to eq([@review_3,@review_4,@review_5])
     end
 
-    it 'no orders' do
+    it '#no orders' do
       login_user
       expect(@chain.no_orders?).to eq(true)
       order = Order.create(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user.id)
       order.item_orders.create(item: @chain, price: @chain.price, quantity: 2)
       expect(@chain.no_orders?).to eq(false)
+    end
+
+    it '#update_inventory' do
+      @chain.update_inventory(2)
+      expect(@chain.inventory).to eq(3)
     end
   end
 end
