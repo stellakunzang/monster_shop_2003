@@ -52,37 +52,37 @@ RSpec.describe "Merchant Items Index Page" do
         click_link "disable"
       end
 
-      expect(page).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/items")
 
       within "#item-#{@chain.id}" do
         click_link "disable"
       end
 
-      expect(page).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/items")
 
       within "#item-#{@shifter.id}" do
         click_link "enable"
       end
 
-      expect(page).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/items")
 
       within "#item-#{@tire.id}" do
         expect(page).to have_link("enable")
       end
 
-      expect(page).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/items")
 
       within "#item-#{@chain.id}" do
         expect(page).to have_link("enable")
       end
 
-      expect(page).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/items")
 
       within "#item-#{@shifter.id}" do
         expect(page).to have_link("disable")
       end
 
-      expect(page).to eq("/merchant/items")
+      expect(current_path).to eq("/merchant/items")
     end
   end
 end
