@@ -12,7 +12,6 @@ class Item <ApplicationRecord
   validates_inclusion_of :active?, :in => [true, false]
   validates_numericality_of :price, greater_than: 0
 
-
   def average_review
     reviews.average(:rating)
   end
@@ -23,6 +22,11 @@ class Item <ApplicationRecord
 
   def no_orders?
     item_orders.empty?
+  end
+
+  def update_inventory(quantity)
+    updated_inventory = inventory - quantity
+    update_attributes(inventory: updated_inventory)
   end
 
   def self.top_5
