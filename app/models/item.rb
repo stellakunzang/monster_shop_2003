@@ -25,8 +25,7 @@ class Item <ApplicationRecord
   end
 
   def update_inventory(quantity)
-    updated_inventory = inventory - quantity
-    update_attributes(inventory: updated_inventory)
+    update_attributes(inventory: (inventory - quantity))
   end
 
   def self.top_5
