@@ -73,7 +73,7 @@ describe Merchant, type: :model do
 
       order_3.item_orders.create!(item: ball, price: ball.price, quantity: 1)
 
-      expect(@meg.merchant_orders).to eq([order_1.id, order_2.id])
+      expect(@meg.merchant_orders.sort).to eq([order_1.id, order_2.id].sort)
     end
 
     it "#my_item_orders" do
