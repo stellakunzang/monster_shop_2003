@@ -12,6 +12,10 @@ class Order <ApplicationRecord
     Order.find_by(id: order_id)
   end
 
+  def self.pending_orders
+    Order.where(status: "pending")
+  end
+
   def grandtotal
     item_orders.sum('price * quantity')
   end
@@ -26,10 +30,6 @@ class Order <ApplicationRecord
          .group('item_orders.quantity')
          .sum('item_orders.price')
          .inject(0) {|result, (key, value)| result += (key * value)}
-  end
-
-  def self.pending_orders
-    Order.where(status: "pending")
   end
 
 end
