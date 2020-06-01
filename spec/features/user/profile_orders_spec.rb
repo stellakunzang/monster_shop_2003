@@ -8,10 +8,11 @@ RSpec.describe "User profile orders page" do
     @tire = @bike_shop.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
     @pull_toy = @dog_shop.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
     @dog_bone = @dog_shop.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
-    @order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
-    ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
-    ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
-    ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @tire.id, quantity: 4)
+    @order1 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+    @order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455)
+    ItemOrder.create!(order_id: @order1.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
+    ItemOrder.create!(order_id: @order1.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
+    ItemOrder.create!(order_id: @order2.id, price: 1.0, item_id: @tire.id, quantity: 4)
 
     visit '/login'
     fill_in :email, with: @regular_user.email
@@ -22,8 +23,13 @@ RSpec.describe "User profile orders page" do
   end
 
   it "displays every order user has made and order information" do
-    within "#{@order.id}" do
-      expect(page).to have_link("#{@order.id}")
+    within "#{@order1.id}" do
+      expect(page).to have_link("#{@order1.id}")
+      expect(page).to have_content("#{@order.timecreate}")
+      expect(page).to have_content("#{@order.modified time}")
+      expect(page).to have_content("#{@order.status}")
+      expect(page).to have_content("#{@order.total_quantity_of_items}")
+      expect(page).to have_content("#{@order.total_items}")
     end
   end
 end
