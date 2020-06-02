@@ -1,6 +1,8 @@
 <h1>All Users:</h1>
 
 <% @users.each do |user| %>
-  <%= user.name %>
-  <%= user.email %>
+  <p><%= link_to "#{user.name}", "/admin/profile/#{user.id}" %></p>
+  <p><%= user.email %></p>
+  <p><%= user.created_at %></p>
+  <p><%= user.role %></p>
 <% end %>
