@@ -24,7 +24,8 @@ class Merchant::ItemsController < ApplicationController
     else
       flash[:error] = item.errors.full_messages.to_sentence
       render :new
-
+    end
+  end
   def status
     if current_user == nil || current_user.role != "merchant"
       redirect_to "/error404"
@@ -64,8 +65,6 @@ class Merchant::ItemsController < ApplicationController
   private
 
   def item_params
-    
     params.permit(:name,:description,:price,:inventory,:image,:active?)
-
   end
 end
