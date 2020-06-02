@@ -45,5 +45,60 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
       end
     end
+
+    it "I see a button or link to delete the item next to each item that has never been ordered" do 
+      default_1 = User.create(name: "Hank Hill", address: "801 N Alamo St", city: "Arlen", state: "Texas", zip: "61109", email: "ProPAIN@aol.com", password: "W33dWacker", role: 0)
+      order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
+      ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 1)
+
+      visit "merchant/items"
+
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_content(@tire.name)
+        expect(page).to have_content("Price: $#{@tire.price}")
+        expect(page).to have_css("img[src*='#{@tire.image}']")
+        expect(page).to have_content("Active")
+        expect(page).to_not have_content(@tire.description)
+        expect(page).to have_content("Inventory: #{@tire.inventory}")
+        expect(page).to_not have_content("Delete")
+      end
+
+      within "#item-#{@chain.id}" do
+        expect(page).to have_content(@chain.name)
+        expect(page).to have_content("Price: $#{@chain.price}")
+        expect(page).to have_css("img[src*='#{@chain.image}']")
+        expect(page).to have_content("Active")
+        expect(page).to_not have_content(@chain.description)
+        expect(page).to have_content("Inventory: #{@chain.inventory}")
+        expect(page).to have_content("Delete")
+      end
+
+      within "#item-#{@chain.id}" do
+        click_link("Delete")
+      end
+      
+      expect(current_path).to eq("merchants/items")
+      expect(page).to have_content("Item Deleted")
+
+      expect(page).to_not have_content(@chain.name)
+      expect(page).to_not have_content("Price: $#{@chain.price}")
+      expect(page).to_not have_css("img[src*='#{@chain.image}']")
+      expect(page).to_not have_content("Active")
+      expect(page).to_not have_content(@chain.description)
+      expect(page).to_not have_content("Inventory: #{@chain.inventory}")
+      expect(page).to_not have_content("Delete")
+
+    end
   end
 end
+
+# User Story 44, Merchant deletes an item
+
+# As a merchant employee
+# When I visit my items page
+# I see a button or link to delete the item next to each item that has never been ordered
+# When I click on the "delete" button or link for an item
+# I am returned to my items page
+# I see a flash message indicating this item is now deleted
+# I no longer see this item on the page
