@@ -1,20 +1,33 @@
 <h1 align = "center">Current Orders</h1>
 <table>
   <tr>
+    <th>Id</th>
     <th>Name</th>
     <th>Address</th>
     <th>City</th>
     <th>State</th>
     <th>Zip</th>
+    <th>Created At</th>
+    <th>Updated At</th>
+    <th>Status</th>
+    <th>Quantity of Items</th>
+    <th>Grand Total</th>
   </tr>
-    <% @orders.pending_orders.each do |order| %>
-      <tr>
-        <td><p><%= order.name %> </p></td>
-        <td><p><%= order.address %> </p></td>
-        <td><p><%= order.city %> </p></td>
-        <td><p><%= order.state %> </p></td>
-        <td><p><%= order.zip %> </p></td>
-      </tr>
+    <% @orders.each do |order| %>
+      <section class = "order-<%=order.id%>">
+        <tr>
+          <td><p><%= link_to order.id, "/profile/orders/#{order.id}" %> </p></td>
+          <td><p><%= order.name %> </p></td>
+          <td><p><%= order.address %> </p></td>
+          <td><p><%= order.city %> </p></td>
+          <td><p><%= order.state %> </p></td>
+          <td><p><%= order.zip %> </p></td>
+          <td><p><%= order.created_at %> </p></td>
+          <td><p><%= order.updated_at %> </p></td>
+          <td><p><%= order.status %> </p></td>
+          <td><p><%= order.items.count %> </p></td>
+          <td><p><%= order.grandtotal %> </p></td>
+        </tr>
+      </section>
     <% end %>
 </table>
-
