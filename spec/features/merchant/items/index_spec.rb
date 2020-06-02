@@ -8,6 +8,7 @@ RSpec.describe "Merchant Items Index Page" do
       @chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
       @shifter = @meg.items.create(name: "Shimano Shifters", description: "It'll always shift!", active?: false, price: 180, image: "https://images-na.ssl-images-amazon.com/images/I/4142WWbN64L._SX466_.jpg", inventory: 2)
       @maude = @meg.users.create!(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1)
+      
       visit '/login'
       fill_in :email, with: @maude.email
       fill_in :password, with: @maude.password
@@ -51,7 +52,8 @@ RSpec.describe "Merchant Items Index Page" do
       order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 1)
 
-      visit "merchant/items"
+
+      visit "/merchant/items"
 
 
       within "#item-#{@tire.id}" do
@@ -78,17 +80,11 @@ RSpec.describe "Merchant Items Index Page" do
         click_link("Delete")
       end
       
-      expect(current_path).to eq("merchants/items")
+      expect(current_path).to eq("/merchant/items")
       expect(page).to have_content("Item Deleted")
 
-      expect(page).to_not have_content(@chain.name)
-      expect(page).to_not have_content("Price: $#{@chain.price}")
-      expect(page).to_not have_css("img[src*='#{@chain.image}']")
-      expect(page).to_not have_content("Active")
-      expect(page).to_not have_content(@chain.description)
-      expect(page).to_not have_content("Inventory: #{@chain.inventory}")
-      expect(page).to_not have_content("Delete")
-
+      expect(page).to_not have_css("#item-#{@chain.id}") 
+  
     end
   end
 end

@@ -14,7 +14,7 @@
         <p>Price: <%=number_to_currency(item.price) %> </p>
         <p>Inventory: <%= item.inventory %> </p>
         <% if item.no_orders? %>
-          <%= link_to "Delete", "/merchants/#{item.merchant.id}" %>
+          <%= link_to "Delete", "/merchant/items/#{item.id}", method: :delete %>
         <% end  %>
         <% if !@merchant %>
         <% end %>
