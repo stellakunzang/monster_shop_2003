@@ -28,7 +28,8 @@ class Merchant::ItemsController < ApplicationController
     @item = Item.find(params[:id])
     @item.update(item_params)
     if @item.save
-      redirect_to "/items/#{@item.id}"
+      flash[:notice] = "#{@item.name} has been updated!"
+      redirect_to "/merchant/items"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
       render :edit
