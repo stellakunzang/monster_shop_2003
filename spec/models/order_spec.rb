@@ -30,8 +30,8 @@ describe Order, type: :model do
 
       @order_1 = Order.create!(name: 'Meg', address: '123 Stang Ave', city: 'Hershey', state: 'PA', zip: 17033, user_id: @user.id)
 
-      @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
-      @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
+      @item_order1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
+      @item_order2 = @order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 3)
     end
 
     it '#grandtotal' do
@@ -44,6 +44,25 @@ describe Order, type: :model do
 
     it '#value_sum_per_merchant' do
       expect(@order_1.value_sum_per_merchant(@meg)).to eq(200)
+    end
+
+    it "#quantity_sum" do
+      expect(@order_1.quantity_sum).to eq(5)
+    end
+
+    it "#totally_fulfilled?" do
+      expect(@order_1.totally_fulfilled?).to eq(false)
+
+      @item_order1.update(fulfilled?: true)
+      @item_order2.update(fulfilled?: true)
+
+      expect(@order_1.totally_fulfilled?).to eq(true)
+    end
+
+    it "#cancel_order" do
+      @order_1.cancel_order
+      @order_1.reload
+      expect(@order_1.status).to eq("cancelled")
     end
 
   end
@@ -68,7 +87,7 @@ describe Order, type: :model do
       expect(Order.find_order(@order_1.id)).to eq(@order_1)
     end
 
-    it ".pending_orders" do 
+    it ".pending_orders" do
       expect(Order.pending_orders).to eq([@order_1])
     end
   end

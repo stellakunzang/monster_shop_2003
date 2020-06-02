@@ -11,4 +11,11 @@ class ItemOrder <ApplicationRecord
   def fulfill
     update(fulfilled?: true)
   end
+
+  def cancel_order
+    if fulfilled?
+      item.update(inventory: (item.inventory + quantity))
+      update(fulfilled?: false)
+    end
+  end
 end

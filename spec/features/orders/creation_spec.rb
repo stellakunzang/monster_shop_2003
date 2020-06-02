@@ -39,8 +39,8 @@ RSpec.describe("Order Creation") do
       click_button "Create Order"
 
       new_order = Order.last
-      
-      expect(current_path).to eq("/orders/#{new_order.id}")
+
+      expect(current_path).to eq("/profile/orders/#{new_order.id}")
 
       within '.shipping-address' do
         expect(page).to have_content(name)
@@ -102,7 +102,7 @@ RSpec.describe("Order Creation") do
       expect(page).to have_button("Create Order")
     end
 
-    it "Registered users can check out" do 
+    it "Registered users can check out" do
       name = "Bert"
       address = "123 Sesame St."
       city = "NYC"
@@ -119,7 +119,7 @@ RSpec.describe("Order Creation") do
 
       new_order = Order.last
 
-      expect(current_path).to eq("/orders/#{new_order.id}")
+      expect(current_path).to eq("/profile/orders/#{new_order.id}")
       expect(page).to have_content("Your order has been created")
 
       click_link ("Current Orders")
@@ -132,36 +132,6 @@ RSpec.describe("Order Creation") do
       expect(page).to have_content("New York")
       expect(page).to have_content(10001)
     end
-    it "Non pending order doesnt display" do
-      order = Order.create!(name: "Easier", address: "Way", city: "Town", state: "OK", zip: 90210, status: 1, user_id: @user.id)
-
-      visit "/profile/orders"
-
-      expect(page).to have_content("Current Orders")
-      expect(page).to_not have_content("Easier")
-      expect(page).to_not have_content("Way")
-      expect(page).to_not have_content("Town")
-      expect(page).to_not have_content("OK")
-      expect(page).to_not have_content(90210)
-
-    end
 
   end
 end
-
-# User Story 26, Registered users can check out
-
-# As a registered user
-# When I add items to my cart
-# And I visit my cart
-# I see a button or link indicating that I can check out
-# And I click the button or link to check out and fill out order info and click create order
-
-# An order is created in the system, which has a status of "pending"
-# That order is associated with my user
-# I am taken to my orders page ("/profile/orders")
-# I see a flash message telling me my order was created
-# I see my new order listed on my profile orders page
-# My cart is now empty
-
-# TODO make orders belongs to user otherwise all orders will be on profile page
