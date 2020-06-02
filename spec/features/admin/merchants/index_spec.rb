@@ -80,4 +80,24 @@ RSpec.describe "Admin from their index page (/admin/merchants)" do
     visit "/items/#{@item4.id}"
     expect(page).to have_content("Active")
   end
+
+  it "can see all merchants in the system" do
+    visit "/admin/merchants"
+    
+    expect(page).to have_content(@merchant1.name)
+    expect(page).to have_content(@merchant1.city)
+    expect(page).to have_content(@merchant1.state)
+
+    expect(page).to have_content(@merchant2.name)
+    expect(page).to have_content(@merchant2.city)
+    expect(page).to have_content(@merchant2.state)
+
+    expect(page).to have_content(@merchant3.name)
+    expect(page).to have_content(@merchant3.city)
+    expect(page).to have_content(@merchant3.state)
+
+    click_link "#{@merchant1.name}"
+
+    expect(current_path).to eq("/admin/merchants/#{@merchant1.id}")
+  end
 end

@@ -53,4 +53,12 @@ RSpec.describe "Orders show page" do
     expect(page).to have_content("#{@order1.quantity_sum}")
     expect(page).to have_content("#{@order1.grandtotal}")
   end
+
+  it "shipped orders cannot be cancelled" do
+    order3 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @regular_user.id, status: "shipped")
+
+    visit "/profile/orders/#{order3.id}"
+
+    expect(page).to_not have_content("Cancel Order")
+  end
 end
