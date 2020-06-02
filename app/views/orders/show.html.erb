@@ -18,11 +18,12 @@
   </table>
 </section>
 
-<h1 align = "center">Order Info</h1>
+<h1 align = "center">Order Info: <%= "#{@order.id}"%></h1>
 <center>
   <table>
     <tr>
       <th>Item</th>
+      <th>Merchant</th>
       <th>Description</th>
       <th>Thumbnail Image</th>
       <th>Price</th>
@@ -31,8 +32,9 @@
     </tr>
   <% @order.item_orders.each do |item_order|%>
     <tr>
-    <section id = "item-<%=item_order.item_id%>">
-        <td><p><%= item_order.item.name %></p></td>
+      <section id = "item-<%=item_order.item_id%>">
+        <td><p><%=link_to item_order.item.name, "/items/#{item_order.item_id}"%></p></td>
+        <td><p><%= link_to item_order.item.merchant.name, "/merchants/#{item_order.item.merchant.id}"%></p></td>
         <td><p><%= item_order.item.description %></p></td>
         <td><p><%= image_tag "#{item_order.item.image}", style: 'height:25%;width:auto;'%></p></td>
         <td><p><%= item_order.quantity%></p></td>
