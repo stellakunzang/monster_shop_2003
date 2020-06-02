@@ -6,6 +6,7 @@
     <p>User: <%= link_to "#{order.user.name}", "/admin/profile/#{order.user.id}" %></p>
     <p>Order Id: <%= "#{order.id}" %></p>
     <p>Date Order Placed: <%=  "#{order.created_at.strftime('%m/%d/%Y')}" %><p>
+    <p><%= link_to "Ship Order", "/admin/orders/#{order.id}", method: :patch %></p>
   <% end %>
 </section>
 
