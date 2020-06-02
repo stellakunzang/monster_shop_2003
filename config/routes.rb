@@ -24,10 +24,15 @@ Rails.application.routes.draw do
     get '/orders/:order_id', to: 'orders#show'
     patch '/orders/:order_id', to: 'orders#update'
     get '/items', to: 'items#index'
+    get '/items/:id/status', to: 'items#status'
+    get '/items/:id/edit', to: 'items#edit'
+    patch '/items/:id', to: 'items#update'
     delete '/items/:id', to: 'items#destroy'
     get '/items/new', to: 'items#new'
     post '/items', to: 'items#create'
   end
+
+
 
   #merchants
   get "/merchants", to: "merchants#index"

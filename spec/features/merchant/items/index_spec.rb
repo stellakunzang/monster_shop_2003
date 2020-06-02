@@ -8,7 +8,7 @@ RSpec.describe "Merchant Items Index Page" do
       @chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
       @shifter = @meg.items.create(name: "Shimano Shifters", description: "It'll always shift!", active?: false, price: 180, image: "https://images-na.ssl-images-amazon.com/images/I/4142WWbN64L._SX466_.jpg", inventory: 2)
       @maude = @meg.users.create!(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1)
-      
+
       visit '/login'
       fill_in :email, with: @maude.email
       fill_in :password, with: @maude.password
@@ -46,8 +46,61 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
       end
     end
+    it "shows me a link to enable or disable for each item" do
+      visit "merchant/items"
 
-    it "I see a button or link to delete the item next to each item that has never been ordered" do 
+      within "#item-#{@tire.id}" do
+        click_link "disable"
+      end
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("#{@tire.name} is now inactive!")
+
+      within "#item-#{@chain.id}" do
+        click_link "disable"
+      end
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("#{@chain.name} is now inactive!")
+
+      within "#item-#{@shifter.id}" do
+        click_link "enable"
+      end
+
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("#{@shifter.name} is now active!")
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link("enable")
+      end
+
+      within "#item-#{@chain.id}" do
+        expect(page).to have_link("enable")
+      end
+
+      within "#item-#{@shifter.id}" do
+        expect(page).to have_link("disable")
+      end
+    end
+
+    it "shows me a functioning 'edit' link next to each item" do
+      visit "merchant/items"
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link("edit")
+      end
+
+      within "#item-#{@chain.id}" do
+        expect(page).to have_link("edit")
+      end
+
+      within "#item-#{@shifter.id}" do
+        click_link "edit"
+      end
+
+      expect(current_path).to eq("/merchant/items/#{@shifter.id}/edit")
+    end
+    it "I see a button or link to delete the item next to each item that has never been ordered" do
       default_1 = User.create(name: "Hank Hill", address: "801 N Alamo St", city: "Arlen", state: "Texas", zip: "61109", email: "ProPAIN@aol.com", password: "W33dWacker", role: 0)
       order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 1)
@@ -61,7 +114,9 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
+
         expect(page).to have_content(@tire.description)
+
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to_not have_content("Delete")
       end
@@ -71,7 +126,9 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@chain.price}")
         expect(page).to have_css("img[src*='#{@chain.image}']")
         expect(page).to have_content("Active")
+
         expect(page).to have_content(@chain.description)
+
         expect(page).to have_content("Inventory: #{@chain.inventory}")
         expect(page).to have_content("Delete")
       end
@@ -79,12 +136,11 @@ RSpec.describe "Merchant Items Index Page" do
       within "#item-#{@chain.id}" do
         click_link("Delete")
       end
-      
+
       expect(current_path).to eq("/merchant/items")
       expect(page).to have_content("Item Deleted")
 
-      expect(page).to_not have_css("#item-#{@chain.id}") 
-  
+      expect(page).to_not have_css("#item-#{@chain.id}")
     end
     it "I see a link to add a new item" do 
       visit "/merchant/items"
@@ -121,21 +177,3 @@ RSpec.describe "Merchant Items Index Page" do
 end
 
 
-# User Story 45, Merchant adds an item
-
-# As a merchant employee
-# When I visit my items page
-# I see a link to add a new item
-# When I click on the link to add a new item
-# I see a form where I can add new information about an item, including:
-# - the name of the item, which cannot be blank
-# - a description for the item, which cannot be blank
-# - a thumbnail image URL string, which CAN be left blank
-# - a price which must be greater than $0.00
-# - my current inventory count of this item which is 0 or greater
-
-# When I submit valid information and submit the form
-# I am taken back to my items page
-# I see a flash message indicating my new item is saved
-# I see the new item on the page, and it is enabled and available for sale
-# If I left the image field blank, I see a placeholder image for the thumbnail
