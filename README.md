@@ -779,7 +779,7 @@ I see the item is now active
 ```
 
 ```
-[ ] done
+[ X ] done
 
 User Story 44, Merchant deletes an item
 

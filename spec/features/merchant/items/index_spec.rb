@@ -86,15 +86,54 @@ RSpec.describe "Merchant Items Index Page" do
       expect(page).to_not have_css("#item-#{@chain.id}") 
   
     end
+    it "I see a link to add a new item" do 
+      visit "/merchant/items"
+
+      expect(page).not_to have_content("Disco Ball")
+      expect(page).not_to have_content("Has a ghost from the 70s trapped inside")
+      expect(page).not_to have_css("img[src*='https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg']")
+      expect(page).not_to have_content("$100.00")
+      expect(page).not_to have_content("Current inventory count:" 1)
+      click_link("Create new item")
+
+      expect(current_path).to eq("/merchant/items/new")
+
+      fill_in 'Name', with: "Disco Ball"
+      fill_in 'Price', with: 100.00
+      fill_in 'Description', with: "Has a ghost from the 70s trapped inside"
+      fill_in 'Image', with: "https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg"
+      fill_in 'Inventory', with: 1
+      click_link("Create item")
+
+      expect(current_path).to eq("/merchant/items")
+
+      expect(page).to have_content("Disco Ball")
+      expect(page).to have_content("Has a ghost from the 70s trapped inside")
+      expect(page).to have_css("img[src*='https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg']")
+      expect(page).to have_content("$100.00")
+      expect(page).to have_content("Current inventory count:" 1)
+      expect(page).to have_content("Create new item")
+
+    end
   end
 end
 
-# User Story 44, Merchant deletes an item
+
+# User Story 45, Merchant adds an item
 
 # As a merchant employee
 # When I visit my items page
-# I see a button or link to delete the item next to each item that has never been ordered
-# When I click on the "delete" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is now deleted
-# I no longer see this item on the page
+# I see a link to add a new item
+# When I click on the link to add a new item
+# I see a form where I can add new information about an item, including:
+# - the name of the item, which cannot be blank
+# - a description for the item, which cannot be blank
+# - a thumbnail image URL string, which CAN be left blank
+# - a price which must be greater than $0.00
+# - my current inventory count of this item which is 0 or greater
+
+# When I submit valid information and submit the form
+# I am taken back to my items page
+# I see a flash message indicating my new item is saved
+# I see the new item on the page, and it is enabled and available for sale
+# If I left the image field blank, I see a placeholder image for the thumbnail
