@@ -44,19 +44,19 @@ RSpec.describe "editing a merchant item" do
       end
     end
 
-    # it "handles edge cases" do
-    #   visit "/merchant/items/#{@shifter.id}/edit"
-    #
-    #   within ".form" do
-    #     fill_in 'Price', with: "0.00"
-    #     fill_in 'Inventory', with: "0.00"
-    #     fill_in 'Image', with: ""
-    #
-    #     click_button "Update Item"
-    #   end
-    #   expect(current_path).to eq("/merchant/items")
-    #   expect(page).to have_content("Git Shifty has been updated!")
-    # end
+    it "handles edge cases" do
+      visit "/merchant/items/#{@shifter.id}/edit"
+
+      within ".form" do
+        fill_in 'Price', with: "0.00"
+        fill_in 'Inventory', with: "0.00"
+        fill_in 'Image', with: ""
+
+        click_button "Update Item"
+      end
+      expect(current_path).to eq("/merchant/items")
+      expect(page).to have_content("Shimano Shifters has been updated!")
+    end
   end
 
   context "when a form is filled out incorrectly" do
@@ -87,16 +87,16 @@ RSpec.describe "editing a merchant item" do
         click_button "Update Item"
       end
       expect(current_path).to eq("/merchant/items/#{@shifter.id}/edit")
-      expect(page).to have_content("Price must be greater than 0")
+      expect(page).to have_content("Price must be greater than -1")
 
-      # within ".form" do
-      #   fill_in 'Price', with: "3"
-      #   fill_in 'Inventory', with: "-1"
-      #
-      #   click_button "Update Item"
-      # end
-      # expect(current_path).to eq("/merchant/items/#{@shifter.id}/edit")
-      # expect(page).to have_content("Inventory must be greater than 0")
+      within ".form" do
+        fill_in 'Price', with: "3"
+        fill_in 'Inventory', with: "-1"
+
+        click_button "Update Item"
+      end
+      expect(current_path).to eq("/merchant/items/#{@shifter.id}/edit")
+      expect(page).to have_content("Inventory must be greater than -1")
     end
   end
 end
