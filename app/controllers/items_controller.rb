@@ -34,8 +34,10 @@ class ItemsController < ApplicationController
 
   def update
     @item = Item.find(params[:id])
+    params[:price] = params[:price].to_s.gsub(/[$,]/,'').to_f
     @item.update(item_params)
     if @item.save
+      flash[:success] = "#{@item.name} has been updated!"
       redirect_to "/items/#{@item.id}"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
@@ -45,9 +47,10 @@ class ItemsController < ApplicationController
 
   def destroy
     item = Item.find(params[:id])
-    Review.where(item_id: item.id).destroy_all
+    # Review.where(item_id: item.id).destroy_all
     item.destroy
-    redirect_to "/items"
+
+    redirect_to '/items'
   end
 
   private

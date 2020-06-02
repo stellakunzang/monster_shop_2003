@@ -7,10 +7,10 @@ class Item <ApplicationRecord
   validates_presence_of :name,
                         :description,
                         :price,
-                        :image,
                         :inventory
   validates_inclusion_of :active?, :in => [true, false]
-  validates_numericality_of :price, greater_than: 0
+  validates_numericality_of :price, greater_than: -1
+  validates_numericality_of :inventory, greater_than: -1
 
   def average_review
     reviews.average(:rating)
@@ -26,6 +26,11 @@ class Item <ApplicationRecord
 
   def update_inventory(quantity)
     update_attributes(inventory: (inventory - quantity))
+  end
+
+  def default_image
+    self.image = "https://images.freeimages.com/images/large-previews/c72/banana-2-1330039.jpg"
+    self.save
   end
 
   def self.top_5
