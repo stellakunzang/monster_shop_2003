@@ -59,24 +59,24 @@ Rails.application.routes.draw do
   delete "/cart/:item_id", to: "cart#remove_item"
   post "/cart/update_quantity/:item_id", to: "cart#update_quantity"
 
+  #users
+  get "/login", to: "users#login"
+  get '/logout', to: "users#logout"
+
+  get "/profile", to: "users#show"
+  get "/register", to: "users#new"
+  post "/users", to: "users#create"
+  get "/profile/edit", to: "users#edit"
+  post "/profile", to: "users#update"
+
+  get "/password/edit", to: "users#edit_pass"
+  post "/password", to: "users#update_pass"
+
   #orders
   get "/orders/new", to: "orders#new"
   post "/orders", to: "orders#create"
   get "/orders/:id", to: "orders#show"
   get "/profile/orders", to: "orders#index"
-
-  #users
-  get "/login", to: "users#login"
-  get '/logout', to: "users#logout"
-  get "/register", to: "users#new"
-  post "/users", to: "users#create"
-  get "/profile", to: "users#show"
-
-  get "/profile/edit", to: "users#edit"
-  post "/profile", to: "users#update"
-  get "/profile/orders", to: "users#orders"
-  get "/password/edit", to: "users#edit_pass"
-  post "/password", to: "users#update_pass"
 
   get "error404", to: "errors#show"
 end

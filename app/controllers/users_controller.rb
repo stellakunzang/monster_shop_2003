@@ -63,12 +63,8 @@ class UsersController < ApplicationController
       redirect_to('/profile')
     else
      flash[:error]= "Your passwords do not match"
-   end
+    end
   end
-
-  def orders
-  end
-
 
   private
 
