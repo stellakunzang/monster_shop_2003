@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   post "/orders", to: "orders#create"
   get "/profile/orders/:id", to: "orders#show"
   get "/profile/orders", to: "orders#index"
+  patch "/profile/orders/:id", to: "orders#update"
 
   get "error404", to: "errors#show"
 end
