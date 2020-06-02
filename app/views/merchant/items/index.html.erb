@@ -11,7 +11,7 @@
         <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
         <p>Info: <%="#{item.description}" %></p>
         <%= link_to image_tag(item.image, id: "#{item.name}"), "/items/#{item.id}" %>
-        <p> <%= item.description unless @merchant%> </p>
+        <p>Description: <%= item.description %> </p>
         <p>Price: <%=number_to_currency(item.price) %> </p>
         <p>Inventory: <%= item.inventory %> </p>
         <% if item.no_orders? %>
@@ -30,3 +30,5 @@
       </section>
   <% end %>
 </section>
+
+<%= link_to "Create new item", "/merchant/items/new" %>

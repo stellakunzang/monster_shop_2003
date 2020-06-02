@@ -114,6 +114,9 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
+
+        expect(page).to have_content(@tire.description)
+
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to_not have_content("Delete")
       end
@@ -123,6 +126,9 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@chain.price}")
         expect(page).to have_css("img[src*='#{@chain.image}']")
         expect(page).to have_content("Active")
+
+        expect(page).to have_content(@chain.description)
+
         expect(page).to have_content("Inventory: #{@chain.inventory}")
         expect(page).to have_content("Delete")
       end
@@ -136,15 +142,38 @@ RSpec.describe "Merchant Items Index Page" do
 
       expect(page).to_not have_css("#item-#{@chain.id}")
     end
+    it "I see a link to add a new item" do 
+      visit "/merchant/items"
+
+      expect(page).not_to have_content("Disco Ball")
+      expect(page).not_to have_content("Has a ghost from the 70s trapped inside")
+      expect(page).not_to have_css("img[src*='https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg']")
+      expect(page).not_to have_content("$991.00")
+      expect(page).not_to have_content("Inventory:999999")
+      click_link("Create new item")
+
+      expect(current_path).to eq("/merchant/items/new")
+
+      fill_in 'Name', with: "Disco Ball"
+      fill_in 'Price', with: 991
+      fill_in 'Description', with: "Has a ghost from the 70s trapped inside"
+      fill_in 'Image', with: "https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg"
+      fill_in 'Inventory', with: 1
+     
+      click_on("Create Item")
+
+      expect(current_path).to eq("/merchant/items")
+
+      expect(page).to have_content("Disco Ball")
+      expect(page).to have_content("Has a ghost from the 70s trapped inside")
+      expect(page).to have_css("img[src*='https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg']")
+      expect(page).to have_content("$991.00")
+      expect(page).to have_content("Inventory: 1")
+      expect(page).to have_content("Create new item")
+      expect(page).to have_content("Nailed it!")
+
+    end
   end
 end
 
-# User Story 44, Merchant deletes an item
 
-# As a merchant employee
-# When I visit my items page
-# I see a button or link to delete the item next to each item that has never been ordered
-# When I click on the "delete" button or link for an item
-# I am returned to my items page
-# I see a flash message indicating this item is now deleted
-# I no longer see this item on the page

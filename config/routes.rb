@@ -29,6 +29,8 @@ Rails.application.routes.draw do
     get '/items/:id/edit', to: 'items#edit'
     patch '/items/:id', to: 'items#update'
     delete '/items/:id', to: 'items#destroy'
+    get '/items/new', to: 'items#new'
+    post '/items', to: 'items#create'
   end
 
 
