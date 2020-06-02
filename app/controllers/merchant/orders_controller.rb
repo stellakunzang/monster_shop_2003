@@ -10,6 +10,9 @@ class Merchant::OrdersController < ApplicationController
     item_order = ItemOrder.find(params[:item_order_id])
     item_order.item.update_inventory(item_order.quantity)
     item_order.fulfill
+    if order.totally_fulfilled?
+      order.update(status: "packaged")
+    end
     flash[:success] = "#{item_order.item.name} from order #{order.id} has been fulfilled."
     redirect_to("/merchant/orders/#{order.id}")
   end
