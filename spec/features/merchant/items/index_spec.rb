@@ -81,5 +81,47 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_link("disable")
       end
     end
+
+    it "shows me a functioning 'edit' link next to each item" do
+      visit "merchant/items"
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link("edit")
+      end
+
+      within "#item-#{@chain.id}" do
+        expect(page).to have_link("edit")
+      end
+
+      within "#item-#{@shifter.id}" do
+        click_link "edit"
+      end
+
+      expect(current_path).to eq("/merchant/items/#{@shifter.id}/edit")
+
+      within ".form" do
+        expect(find_field('Name').value).to eq("Shimano Shifters")
+        expect(find_field('Description').value).to eq("It'll always shift!")
+        expect(find_field('Price').value).to eq("$180.00")
+        expect(find_field('Image').value).to eq(@shifter.image)
+        expect(find_field('Inventory').value).to eq("2")
+
+        fill_in 'Name', with: "Git Shifty"
+        fill_in 'Description', with: "Tastes BAD!"
+        fill_in 'Price', with: "150.00"
+        fill_in 'Image', with: ""
+        fill_in 'Inventory', with: "10"
+
+        click_button "Update Item"
+      end
+
+      within ".form" do
+        expect(find_field('Name').value).to eq("Git Shifty")
+        expect(find_field('Description').value).to eq("Tastes BAD!")
+        expect(find_field('Price').value).to eq("$150.00")
+        expect(find_field('Image').value).to eq("")
+        expect(find_field('Inventory').value).to eq("10")
+      end
+    end
   end
 end
