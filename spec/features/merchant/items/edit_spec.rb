@@ -26,7 +26,7 @@ RSpec.describe "editing a merchant item" do
 
         fill_in 'Name', with: "Git Shifty"
         fill_in 'Description', with: "Tastes BAD!"
-        fill_in 'Price', with: "150.00"
+        fill_in 'Price', with: "$150.00"
         fill_in 'Image', with: ""
         fill_in 'Inventory', with: "10"
 
