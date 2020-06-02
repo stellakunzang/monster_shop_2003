@@ -27,6 +27,11 @@ class Item <ApplicationRecord
     update_attributes(inventory: (inventory - quantity))
   end
 
+  def default_image
+    self.image = "https://images.freeimages.com/images/large-previews/c72/banana-2-1330039.jpg"
+    self.save
+  end
+
   def self.top_5
     Item.joins(:item_orders)
         .group('items.name')

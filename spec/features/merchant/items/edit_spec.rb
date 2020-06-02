@@ -39,6 +39,7 @@ RSpec.describe "editing a merchant item" do
         expect(page).to have_content("Git Shifty")
         expect(page).to have_content("Tastes BAD!")
         expect(page).to have_content("$150.00")
+        expect(page).to have_css("img[src*='https://images.freeimages.com/images/large-previews/c72/banana-2-1330039.jpg']")
         expect(page).to have_content("10")
       end
     end

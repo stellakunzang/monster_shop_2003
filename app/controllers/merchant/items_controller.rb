@@ -27,6 +27,9 @@ class Merchant::ItemsController < ApplicationController
   def update
     @item = Item.find(params[:id])
     @item.update(item_params)
+    if @item.image == ""
+      @item.default_image
+    end
     if @item.save
       flash[:notice] = "#{@item.name} has been updated!"
       redirect_to "/merchant/items"
