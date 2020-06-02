@@ -24,7 +24,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@tire.description)
+        expect(page).to have_content(@tire.description)
         expect(page).to have_content("Inventory: #{@tire.inventory}")
       end
 
@@ -33,7 +33,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@chain.price}")
         expect(page).to have_css("img[src*='#{@chain.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@chain.description)
+        expect(page).to have_content(@chain.description)
         expect(page).to have_content("Inventory: #{@chain.inventory}")
       end
 
@@ -42,7 +42,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@shifter.price}")
         expect(page).to have_css("img[src*='#{@shifter.image}']")
         expect(page).to have_content("Inactive")
-        expect(page).to_not have_content(@shifter.description)
+        expect(page).to have_content(@shifter.description)
         expect(page).to have_content("Inventory: #{@shifter.inventory}")
       end
     end
@@ -61,7 +61,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@tire.price}")
         expect(page).to have_css("img[src*='#{@tire.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@tire.description)
+        expect(page).to have_content(@tire.description)
         expect(page).to have_content("Inventory: #{@tire.inventory}")
         expect(page).to_not have_content("Delete")
       end
@@ -71,7 +71,7 @@ RSpec.describe "Merchant Items Index Page" do
         expect(page).to have_content("Price: $#{@chain.price}")
         expect(page).to have_css("img[src*='#{@chain.image}']")
         expect(page).to have_content("Active")
-        expect(page).to_not have_content(@chain.description)
+        expect(page).to have_content(@chain.description)
         expect(page).to have_content("Inventory: #{@chain.inventory}")
         expect(page).to have_content("Delete")
       end
@@ -92,27 +92,29 @@ RSpec.describe "Merchant Items Index Page" do
       expect(page).not_to have_content("Disco Ball")
       expect(page).not_to have_content("Has a ghost from the 70s trapped inside")
       expect(page).not_to have_css("img[src*='https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg']")
-      expect(page).not_to have_content("$100.00")
-      expect(page).not_to have_content("Current inventory count:" 1)
+      expect(page).not_to have_content("$991.00")
+      expect(page).not_to have_content("Inventory:999999")
       click_link("Create new item")
 
       expect(current_path).to eq("/merchant/items/new")
 
       fill_in 'Name', with: "Disco Ball"
-      fill_in 'Price', with: 100.00
+      fill_in 'Price', with: 991
       fill_in 'Description', with: "Has a ghost from the 70s trapped inside"
       fill_in 'Image', with: "https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg"
       fill_in 'Inventory', with: 1
-      click_link("Create item")
+     
+      click_on("Create Item")
 
       expect(current_path).to eq("/merchant/items")
 
       expect(page).to have_content("Disco Ball")
       expect(page).to have_content("Has a ghost from the 70s trapped inside")
       expect(page).to have_css("img[src*='https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg']")
-      expect(page).to have_content("$100.00")
-      expect(page).to have_content("Current inventory count:" 1)
+      expect(page).to have_content("$991.00")
+      expect(page).to have_content("Inventory: 1")
       expect(page).to have_content("Create new item")
+      expect(page).to have_content("Nailed it!")
 
     end
   end

@@ -25,6 +25,8 @@ Rails.application.routes.draw do
     patch '/orders/:order_id', to: 'orders#update'
     get '/items', to: 'items#index'
     delete '/items/:id', to: 'items#destroy'
+    get '/items/new', to: 'items#new'
+    post '/items', to: 'items#create'
   end
 
   #merchants
