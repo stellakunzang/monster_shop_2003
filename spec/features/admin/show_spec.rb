@@ -50,5 +50,15 @@ RSpec.describe "Admin dashboard" do
     end
 
     it "packaged orders can be shipped and user can no longer cancel" do
-    end 
+      visit "/admin"
+
+      within "#packaged" do
+        click_link "Ship Order"
+      end
+
+      expect(current_path).to eq("/admin")
+      @order4.reload
+      expect(@order4.status).to eq("shipped")
+    end
+
   end
