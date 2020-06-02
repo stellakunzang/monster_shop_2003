@@ -36,4 +36,11 @@ class Order <ApplicationRecord
          .inject(0) {|result, (key, value)| result += (key * value)}
   end
 
+  def cancel_order
+    update(status: "cancelled")
+    item_orders.each do |item_order|
+      item_order.cancel_order
+    end
+  end
+
 end
