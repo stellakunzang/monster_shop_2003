@@ -1,11 +1,10 @@
-class OrdersController <ApplicationController
+class OrdersController < ApplicationController
 
   def index
     @orders = Order.where(user_id: current_user[:id])
   end
 
   def new
-
   end
 
   def show
@@ -25,13 +24,20 @@ class OrdersController <ApplicationController
       end
       flash[:success] = "Your order has been created"
       session.delete(:cart)
-      redirect_to "/orders/#{order.id}"
+      redirect_to "/profile/orders/#{order.id}"
     else
       flash[:notice] = "Please complete address form to create an order."
       render :new
     end
   end
 
+  def update
+    order = Order.find_by(id: params[:id])
+    order.cancel_order
+    order.update(status: "cancelled")
+    flash[:success] = "Order #{order.id} has been cancelled."
+    redirect_to "/profile"
+  end
 
   private
 

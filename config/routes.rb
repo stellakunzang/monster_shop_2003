@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get "/merchants/disable/:id", to: "merchants#disable"
     get "/merchants/enable/:id", to: "merchants#enable"
     get '/users', to: 'users#index'
+    get '/profile/:user_id', to: 'users#show'
   end
 
   get "/merchant", to: "merchant#show"
@@ -59,23 +60,25 @@ Rails.application.routes.draw do
   delete "/cart/:item_id", to: "cart#remove_item"
   post "/cart/update_quantity/:item_id", to: "cart#update_quantity"
 
-  #orders
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/orders/:id", to: "orders#show"
-  get "/profile/orders", to: "orders#index"
-
   #users
   get "/login", to: "users#login"
   get '/logout', to: "users#logout"
+
+  get "/profile", to: "users#show"
   get "/register", to: "users#new"
   post "/users", to: "users#create"
-  get "/profile", to: "users#show"
-
   get "/profile/edit", to: "users#edit"
   post "/profile", to: "users#update"
+
   get "/password/edit", to: "users#edit_pass"
   post "/password", to: "users#update_pass"
+
+  #orders
+  get "/orders/new", to: "orders#new"
+  post "/orders", to: "orders#create"
+  get "/profile/orders/:id", to: "orders#show"
+  get "/profile/orders", to: "orders#index"
+  patch "/profile/orders/:id", to: "orders#update"
 
   get "error404", to: "errors#show"
 end

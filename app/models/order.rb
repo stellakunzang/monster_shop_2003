@@ -20,6 +20,10 @@ class Order <ApplicationRecord
     item_orders.sum('price * quantity')
   end
 
+  def quantity_sum
+    item_orders.sum(:quantity)
+  end
+
   def quantity_sum_per_merchant(merchant)
     items.joins(:item_orders).where('items.merchant_id =?', merchant.id).sum('item_orders.quantity')
   end
@@ -30,6 +34,19 @@ class Order <ApplicationRecord
          .group('item_orders.quantity')
          .sum('item_orders.price')
          .inject(0) {|result, (key, value)| result += (key * value)}
+  end
+
+  def cancel_order
+    update(status: "cancelled")
+    item_orders.each do |item_order|
+      item_order.cancel_order
+    end
+  end
+
+  def totally_fulfilled?
+    item_orders.all? do |item_order|
+      item_order.fulfilled?
+    end
   end
 
 end

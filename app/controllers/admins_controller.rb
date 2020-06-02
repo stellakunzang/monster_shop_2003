@@ -4,9 +4,17 @@ class AdminsController < ApplicationController
     if current_user == nil || current_user.role != "admin"
       redirect_to "/error404"
     else
-      @user = User.find(session[:user_id])
+      @orders = Order.all
     end
   end
+  
+  # def show
+  #   if current_user == nil || current_user.role != "admin"
+  #     redirect_to "/error404"
+  #   else
+  #     @user = User.find(session[:user_id])
+  #   end
+  # end
 
   def create
     new_user = User.new(user_params)

@@ -86,4 +86,18 @@ RSpec.describe "Merchant employee view of order show page" do
     expect(page).to have_content("There is not enough inventory to fulfill this item")
   end
 
+  it "can update order status if all items are fulfilled" do
+    new_order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @maude.id)
+    ItemOrder.create!(order_id: new_order.id, price: 1.0, item_id: @dog_bone.id, quantity: 3)
+
+    visit "/merchant/orders/#{new_order.id}"
+
+    within "#item-#{@dog_bone.id}" do
+      click_on "fulfill item"
+    end
+    
+    new_order.reload
+    expect(new_order.status).to eq("packaged")
+  end
+
 end

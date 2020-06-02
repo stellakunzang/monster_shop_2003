@@ -1,1 +1,37 @@
-<h1>Welcome, <%=@user.name%>! You are now registered, and logged in.</h1>
+<h1>Admin Dashboard</h1>
+
+<section id = packaged>
+  <h3>Packaged Orders</h3>
+  <% @orders.packaged.each do |order| %>
+    <p>User: <%= link_to "#{order.user.name}", "/admin/profile/#{order.user.id}" %></p>
+    <p>Order Id: <%= "#{order.id}" %></p>
+    <p>Date Order Placed: <%=  "#{order.created_at.strftime('%m/%d/%Y')}" %><p>
+  <% end %>
+</section>
+
+<section id = pending>
+  <h3>Pending Orders</h3>
+  <% @orders.pending.each do |order| %>
+    <p>User: <%= link_to "#{order.user.name}", "/admin/profile/#{order.user.id}" %></p>
+    <p>Order Id: <%= "#{order.id}" %></p>
+    <p>Date Order Placed: <%=  "#{order.created_at.strftime('%m/%d/%Y')}" %><p>
+  <% end %>
+</section>
+
+<section id = shipped>
+  <h3>Shipped Orders</h3>
+  <% @orders.shipped.each do |order| %>
+    <p>User: <%= link_to "#{order.user.name}", "/admin/profile/#{order.user.id}" %></p>
+    <p>Order Id: <%= "#{order.id}" %></p>
+    <p>Date Order Placed: <%=  "#{order.created_at.strftime('%m/%d/%Y')}" %><p>
+  <% end %>
+</section>
+
+<section id = cancelled>
+  <h3>Cancelled Orders</h3>
+  <% @orders.cancelled.each do |order| %>
+    <p>User: <%= link_to "#{order.user.name}", "/admin/profile/#{order.user.id}" %></p>
+    <p>Order Id: <%= "#{order.id}" %></p>
+    <p>Date Order Placed: <%=  "#{order.created_at.strftime('%m/%d/%Y')}" %><p>
+  <% end %>
+</section>
