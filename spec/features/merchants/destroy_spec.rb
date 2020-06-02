@@ -25,7 +25,8 @@ RSpec.describe "As a visitor" do
       expect(page).to_not have_content("Brian's Bike Shop")
     end
 
-    xit "I can't delete a merchant that has orders" do
+    it "I can't delete a merchant that has orders" do
+      login_user
       mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       brian = Merchant.create(name: "Brian's Dog Shop", address: '123 Dog Rd.', city: 'Denver', state: 'CO', zip: 80204)
@@ -64,9 +65,6 @@ RSpec.describe "As a visitor" do
 
       visit "/merchants/#{meg.id}"
       expect(page).to_not have_link("Delete Merchant")
-
-      # visit "/merchants/#{brian.id}"
-      # expect(page).to have_link("Delete Merchant")
     end
   end
 end
