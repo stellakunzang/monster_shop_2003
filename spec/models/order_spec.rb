@@ -46,6 +46,10 @@ describe Order, type: :model do
       expect(@order_1.value_sum_per_merchant(@meg)).to eq(200)
     end
 
+    it "#quantity_sum" do
+      expect(@order_1.quantity_sum).to eq(5)
+    end
+
   end
 
   describe 'class methods' do
@@ -68,7 +72,7 @@ describe Order, type: :model do
       expect(Order.find_order(@order_1.id)).to eq(@order_1)
     end
 
-    it ".pending_orders" do 
+    it ".pending_orders" do
       expect(Order.pending_orders).to eq([@order_1])
     end
   end
