@@ -4,7 +4,7 @@ class Merchant::ItemsController < ApplicationController
     @merchant = Merchant.find(current_user[:merchant_id])
   end
 
-  def update
+  def status
     if current_user == nil || current_user.role != "merchant"
       redirect_to "/error404"
     else
@@ -19,4 +19,8 @@ class Merchant::ItemsController < ApplicationController
       redirect_to "/merchant/items"
     end
   end
+
+  # def update
+  #
+  # end
 end
