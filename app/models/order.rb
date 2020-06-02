@@ -43,4 +43,10 @@ class Order <ApplicationRecord
     end
   end
 
+  def totally_fulfilled?
+    item_orders.all? do |item_order|
+      item_order.fulfilled?
+    end
+  end
+
 end
