@@ -17,11 +17,12 @@
         <% end %>
         <% if item.active? %>
           <p>Active</p>
-          <%= link_to "disable", "/merchant/items/#{item.id}/update" %>
+          <%= link_to "disable", "/merchant/items/#{item.id}/status" %>
         <% else %>
           <p>Inactive</p>
-          <%= link_to "enable", "/merchant/items/#{item.id}/update" %>
+          <%= link_to "enable", "/merchant/items/#{item.id}/status" %>
         <% end %>
+        <%= link_to "edit", "/merchant/items/#{item.id}/edit" %>
       </section>
   <% end %>
 </section>
