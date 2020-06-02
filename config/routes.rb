@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get "/merchants/disable/:id", to: "merchants#disable"
     get "/merchants/enable/:id", to: "merchants#enable"
     get '/users', to: 'users#index'
+    get '/profile/:user_id', to: 'users#show'
   end
 
   get "/merchant", to: "merchant#show"
