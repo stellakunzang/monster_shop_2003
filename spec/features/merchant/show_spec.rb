@@ -13,7 +13,7 @@ RSpec.describe "Merchant employee dashboard show page" do
     fill_in :email, with: @maude.email
     fill_in :password, with: @maude.password
     click_on "Login!"
-    
+
     @order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @maude.id)
 
     ItemOrder.create!(order_id: @order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
