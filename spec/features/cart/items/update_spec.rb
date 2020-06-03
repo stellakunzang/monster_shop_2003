@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Cart item update' do
   describe "When I have items in my cart" do
     before(:each) do
+      login_user
       @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
 
@@ -68,4 +69,4 @@ RSpec.describe 'Cart item update' do
     expect(page).to have_content(@pencil.name)
     expect(page).to_not have_content(@tire.name)
   end
-end 
+end
