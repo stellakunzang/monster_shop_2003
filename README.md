@@ -1,17 +1,16 @@
 # Monster Shop: Back End Mod 2 Group Project
 
-
 ## Introduction
 
 *Monster Shop* is a web application created by [Sage Lee](https://github.com/sagemlee), [Danny Ramos](https://github.com/muydanny), [Michael Gallup](https://github.com/Gallup93), & [Stella Bonnie](https://github.com/stellakunzang), students at Turing School of Software and Design. It was our final project for Mod 2 (of 4), completed 5 weeks after first encountering Rails, MVC, ActiveRecord, and RSpec.
 
 The "Monster Shop" itself is a fictitious e-commerce platform, specializing in silly items. It is something akin to a digital flea market, hosting many different merchants who are each responsible for fulfilling their part of a customer's order. Vistors to the site must be logged-in in order to checkout. Once they enter shipping information and checkout, a merchant user is able to then fulfill their items in the order. Once all of the items from the various merchants have been marked as fulfilled, the order status is changed to "packaged." This status is visible to the customer. A third type of user, an admin or "super user", is then able to mark the order as "shipped."
 
-This project was completed remotely, with team members utilizing Slack, Zoom, Github, and Github projects in order to collaborate and accomplish the 54 assigned user stories in a mere 10-days. As is encouraged by Turing, we relied heavily on Test Driven Design and ActiveRecord, strived to create RESTful routes and slim controllers, and utilized Action Helper Tags in the views. Our tests are written in RSpec with Orderly, Capybara, and Should Matchers gems.
+This project was completed remotely, with team members utilizing Slack, Zoom, Github, and Github projects in order to collaborate and accomplish the 54 assigned user stories in a mere 10-days. As is encouraged by Turing, we relied heavily on Test Driven Development(TDD) and ActiveRecord, strived to create RESTful routes and slim controllers, and utilized Action Helper Tags in the views. Our tests are written in RSpec with Orderly, Capybara, and Should Matchers gems.
 
 ## Schema Design
 
-When we began the project, we were pleasantly surprised to find that the schema was already populated with merchants, items, reviews, and orders. A joins table for the many-to-many relationship between items and orders was also already created. Our first addition was users, which included columns for name, address, city, state, zip code, email, password digest, and role. This was our first project with authentication and authorization, and we utilized the BCrypt gem in order to create the password digests. The role utilized an enum association, with a default setting of 0 to denote a basic user.
+When we began the project, we were pleasantly surprised to find that the schema was already populated with merchants, items, reviews, and orders. A joins table for the many-to-many relationship between items and orders was also already created. Our first addition was users, which included columns for name, address, city, state, zip code, email, password digest, and role. This was our first project with authentication and authorization, and we utilized the BCrypt gem in order to create the password digests(i.e. encrypted passwords stored in database instead of user passwords). The role utilized an enum association, with a default setting of 0 to denote a basic user.
 
 Once we started working on the merchant user functionality (role 1), we needed a migration to associate a user with a merchant. We created a one-to-many relationship (one merchant, many employees) and a foreign_key of merchant id on the users table.
 
