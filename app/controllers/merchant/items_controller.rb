@@ -10,7 +10,6 @@ class Merchant::ItemsController < ApplicationController
     redirect_to merchant_items_path
   end
 
-
   def new
     @merchant = Merchant.find(current_user[:merchant_id])
   end
@@ -23,9 +22,9 @@ class Merchant::ItemsController < ApplicationController
       redirect_to "/merchant/items"
     else
       flash[:error] = item.errors.full_messages.to_sentence
-      render :new
+      redirect_to "/merchant/items/new"
     end
-  end 
+  end
 
   def status
     if current_user == nil || current_user.role != "merchant"
@@ -68,6 +67,5 @@ class Merchant::ItemsController < ApplicationController
   def item_params
 
     params.permit(:name,:description,:price,:inventory,:image,:active?)
-
   end
 end

@@ -173,6 +173,44 @@ RSpec.describe "Merchant Items Index Page" do
       expect(page).to have_content("Nailed it!")
 
     end
+    it "If any of my data is incorrect or missing (except image) returned to form" do 
+      visit '/merchant/items/new'
+
+      within ".form" do
+        fill_in 'Name', with: ""
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Name can't be blank")
+
+      within ".form" do
+        fill_in 'Name', with: "Shifty Shift"
+        fill_in 'Description', with: ""
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Description can't be blank")
+
+      within ".form" do
+        fill_in 'Description', with: "Tastes kinda good..."
+        fill_in 'Price', with: "-3"
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Price must be greater than -1")
+
+      within ".form" do
+        fill_in 'Price', with: "3"
+        fill_in 'Inventory', with: "-1"
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Inventory must be greater than -1")
+    end
   end
 end
 
