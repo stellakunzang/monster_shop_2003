@@ -215,13 +215,3 @@ RSpec.describe "Merchant Items Index Page" do
 end
 
 
-
-
-# User Story 46, Merchant cannot add an item if details are bad/missing
-
-# As a merchant employee
-# When I try to add a new item
-# If any of my data is incorrect or missing (except image)
-# Then I am returned to the form
-# I see one or more flash messages indicating each error I caused
-# All fields are re-populated with my previous data
