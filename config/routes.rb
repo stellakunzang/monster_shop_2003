@@ -33,8 +33,6 @@ Rails.application.routes.draw do
     post '/items', to: 'items#create'
   end
 
-
-
   #merchants
   get "/merchants", to: "merchants#index"
   get "/merchants/new", to: "merchants#new"
@@ -74,6 +72,8 @@ Rails.application.routes.draw do
 
   #users
   get "/login", to: "users#login"
+  #we have 2 "/login" that route to different controllers...I think that means one of them isn't functioning? 
+
   get '/logout', to: "users#logout"
 
   get "/profile", to: "users#show"
@@ -82,7 +82,7 @@ Rails.application.routes.draw do
   get "/profile/edit", to: "users#edit"
   post "/profile", to: "users#update"
 
-# add to a user password controller 
+# add to a user password controller
   get "/password/edit", to: "users#edit_pass"
   post "/password", to: "users#update_pass"
 

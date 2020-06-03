@@ -47,7 +47,7 @@ class ItemsController < ApplicationController
 
   def destroy
     item = Item.find(params[:id])
-    # Review.where(item_id: item.id).destroy_all
+    Review.where(item_id: item.id).destroy_all
     item.destroy
 
     redirect_to '/items'
