@@ -142,7 +142,7 @@ RSpec.describe "Merchant Items Index Page" do
 
       expect(page).to_not have_css("#item-#{@chain.id}")
     end
-    it "I see a link to add a new item" do 
+    it "I see a link to add a new item" do
       visit "/merchant/items"
 
       expect(page).not_to have_content("Disco Ball")
@@ -159,7 +159,7 @@ RSpec.describe "Merchant Items Index Page" do
       fill_in 'Description', with: "Has a ghost from the 70s trapped inside"
       fill_in 'Image', with: "https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg"
       fill_in 'Inventory', with: 1
-     
+
       click_on("Create Item")
 
       expect(current_path).to eq("/merchant/items")
@@ -173,7 +173,7 @@ RSpec.describe "Merchant Items Index Page" do
       expect(page).to have_content("Nailed it!")
 
     end
-    it "If any of my data is incorrect or missing (except image) returned to form" do 
+    it "If any of my data is incorrect or missing (except image) returned to form" do
       visit '/merchant/items/new'
 
       within ".form" do
@@ -213,15 +213,3 @@ RSpec.describe "Merchant Items Index Page" do
     end
   end
 end
-
-
-
-
-# User Story 46, Merchant cannot add an item if details are bad/missing
-
-# As a merchant employee
-# When I try to add a new item
-# If any of my data is incorrect or missing (except image)
-# Then I am returned to the form
-# I see one or more flash messages indicating each error I caused
-# All fields are re-populated with my previous data

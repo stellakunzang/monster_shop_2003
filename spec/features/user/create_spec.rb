@@ -2,16 +2,10 @@ require 'rails_helper'
 
 RSpec.describe "User registration form" do
   it "creates new user" do
-
-    # click_on "Register as a User"
-    # expect(current_path).to eq("/register")
-
     visit "/register"
-
 
     email =  "georgef@gmail.com"
     password = "grillingiscool"
-
 
     fill_in :name, with: "George"
     fill_in :address, with: "3 Main st."
@@ -61,7 +55,6 @@ RSpec.describe "User registration form" do
   it "will not create user with incorrect info" do
 
     User.create(name: "Cardi", address: '123 Dog Rd.', city: 'Denver', state: 'CO', zip: 80204, email: 'coronavirusitsgettingreal@gmail.com', password: "iloveoffset")
-
 
     visit "/register"
 
