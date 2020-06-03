@@ -35,6 +35,7 @@ class Item <ApplicationRecord
 
   def self.top_5
     Item.joins(:item_orders)
+        .where(active?: true)
         .group('items.name')
         .order('sum(item_orders.quantity) desc')
         .limit(5)
@@ -43,6 +44,7 @@ class Item <ApplicationRecord
 
   def self.worst_5
     Item.joins(:item_orders)
+        .where(active?: true)
         .group('items.name')
         .order('sum(item_orders.quantity)')
         .limit(5)
