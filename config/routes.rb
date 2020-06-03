@@ -60,12 +60,14 @@ Rails.application.routes.draw do
   delete "/reviews/:id", to: "reviews#destroy"
 
   #cart
-  # make more restful.
-  post "/cart/:item_id", to: "cart#add_item"
   get "/cart", to: "cart#show"
-  delete "/cart", to: "cart#empty"
-  delete "/cart/:item_id", to: "cart#remove_item"
-  post "/cart/update_quantity/:item_id", to: "cart#update_quantity"
+  delete "/cart", to: "cart#destroy"
+
+  namespace :cart do
+    post "/:item_id", to: "items#new"
+    delete "/:item_id", to: "items#destroy"
+    patch "/:item_id", to: "items#update"
+  end
 
   #users
   get "/login", to: "users#login"
