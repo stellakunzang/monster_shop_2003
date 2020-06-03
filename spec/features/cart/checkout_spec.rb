@@ -53,6 +53,57 @@ RSpec.describe 'Cart checkout' do
       @items_in_cart = [@paper,@tire,@pencil]
     end
 
+    it "I see a button or link to increment the count of items I want to purchase" do
+      visit "/cart"
+
+      within(".cart-#{@tire.id}") do
+        click_link "+"
+      end
+
+      expect(page).to have_content("You have changed your cart quantity.")
+      expect(page).to have_content("2")
+    end
+
+    it "cannot add more to the cart than there is inventory for" do
+      visit "/cart"
+
+      expect(page).to have_link("Empty Cart")
+
+      within(".cart-#{@tire.id}") do
+        click_link "+"
+      end
+
+      expect(page).to have_content("You have changed your cart quantity.")
+      expect(page).to have_content("2")
+
+      within(".cart-#{@tire.id}") do
+        click_link "+"
+      end
+
+      expect(page).to have_content("Not enough in inventory")
+      expect(page).to have_content("2")
+
+    end
+
+    it "Decreasing Item Quantity from Cart and hit 0 item removed from cart" do
+      visit "/cart"
+
+      expect(page).to have_link("Empty Cart")
+
+      within(".cart-#{@tire.id}") do
+        click_link "-"
+      end
+
+      within(".cart-#{@tire.id}") do
+        click_link "-"
+      end
+
+      expect(page).to have_content("You have changed your cart quantity.")
+      expect(page).to have_content(@paper.name)
+      expect(page).to have_content(@pencil.name)
+      expect(page).to_not have_content(@tire.name)
+    end
+
     it "Visitors must register or log in to check out" do
       visit "/cart"
 

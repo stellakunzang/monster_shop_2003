@@ -33,6 +33,11 @@ img{
   width: 50%;
 }
 
+img.center {
+    display: block;
+    margin: 0 auto;
+}
+
 #cart-image{
   width:50px;
 }
@@ -79,6 +84,7 @@ section[id*='review'] {
  .topnav {
    overflow: hidden;
    background-color: #002244;
+   color: white;
  }
 
  .topnav a {

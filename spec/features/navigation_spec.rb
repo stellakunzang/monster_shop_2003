@@ -74,7 +74,7 @@ RSpec.describe 'Site Navigation' do
         expect(page).to have_content("Cart: 0")
       end
     end
-    
+
     it "gives a 404 when accessing /profile, /merchant, or /admin" do
 
       visit "/"
@@ -93,7 +93,9 @@ RSpec.describe 'Site Navigation' do
 
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
@@ -127,7 +129,9 @@ RSpec.describe 'Site Navigation' do
       default_1 = User.create(name: "Hank Hill", address: "801 N Alamo St", city: "Arlen", state: "Texas", zip: "61109", email: "ProPAIN@aol.com", password: "W33dWacker", role: 0)
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
@@ -152,7 +156,9 @@ RSpec.describe 'Site Navigation' do
 
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
@@ -190,7 +196,9 @@ RSpec.describe 'Site Navigation' do
       merchant_1 = dog_shop.users.create(name: "Maude Sloggett", address: "17 Sun Rise St", city: "El Paso", state: "Illinois", zip: "56726", email: "M.Slogget@yahoo.com", password: "Forever27", role: 1)
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
@@ -211,7 +219,9 @@ RSpec.describe 'Site Navigation' do
       admin_1 = User.create(name: "Kurt Cobain", address: "666 Lake Washington Bldv", city: "Seattle", state: "Washington", zip: "32786", email: "GrungeIsDead@gmail.com", password: "Forever27", role: 2)
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
@@ -250,7 +260,9 @@ RSpec.describe 'Site Navigation' do
       admin_1 = User.create(name: "Kurt Cobain", address: "666 Lake Washington Bldv", city: "Seattle", state: "Washington", zip: "32786", email: "GrungeIsDead@gmail.com", password: "Forever27", role: 2)
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
