@@ -12,8 +12,7 @@ Rails.application.routes.draw do
   namespace :admin do
     get '/merchants/:merchant_id', to: "merchants#show"
     get '/merchants', to: "merchants#index"
-    get "/merchants/disable/:id", to: "merchants#disable" # merchant update (or put in a new status controller for merchant and updating there)
-    get "/merchants/enable/:id", to: "merchants#enable" # merchant update (or put in a new status controller for merchant and updating there)
+    get "/merchants/status/:id", to: "merchants#update"
     get '/users', to: 'users#index'
     get '/profile/:user_id', to: 'users#show'
     patch '/orders/:order_id', to: 'orders#update'
@@ -32,8 +31,6 @@ Rails.application.routes.draw do
     get '/items/new', to: 'items#new'
     post '/items', to: 'items#create'
   end
-
-
 
   #merchants
   get "/merchants", to: "merchants#index"
@@ -82,7 +79,7 @@ Rails.application.routes.draw do
   get "/profile/edit", to: "users#edit"
   post "/profile", to: "users#update"
 
-# add to a user password controller 
+# add to a user password controller
   get "/password/edit", to: "users#edit_pass"
   post "/password", to: "users#update_pass"
 
