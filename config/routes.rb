@@ -46,10 +46,11 @@ Rails.application.routes.draw do
   get "/items/:id", to: "items#show"
   get "/items/:id/edit", to: "items#edit"
   patch "/items/:id", to: "items#update"
-  get "/merchants/:merchant_id/items", to: "items#index"
-  get "/merchants/:merchant_id/items/new", to: "items#new"
-  post "/merchants/:merchant_id/items", to: "items#create"
   delete "/items/:id", to: "items#destroy"
+
+  get "/merchants/:merchant_id/items", to: "merchants_items#index"
+  get "/merchants/:merchant_id/items/new", to: "merchants_items#new"
+  post "/merchants/:merchant_id/items", to: "merchants_items#create"
 
   #reviews
   get "/items/:item_id/reviews/new", to: "reviews#new"
@@ -71,7 +72,7 @@ Rails.application.routes.draw do
 
   #users
   get "/login", to: "users#login"
-  #we have 2 "/login" that route to different controllers...I think that means one of them isn't functioning? 
+  #we have 2 "/login" that route to different controllers...I think that means one of them isn't functioning?
 
   get '/logout', to: "users#logout"
 
