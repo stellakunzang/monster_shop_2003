@@ -5,10 +5,13 @@ class MerchantsController <ApplicationController
   end
 
   def show
-    @merchant = Merchant.find_by(id: params[:id]) 
+    @merchant = Merchant.find_by(id: params[:id])
   end
 
   def new
+    if current_user == nil || current_user.role != "admin"
+      redirect_to "/error404"
+    end
   end
 
   def create
