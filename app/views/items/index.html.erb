@@ -28,18 +28,18 @@
 
 <div class=top_5>
   <h1><%= "Top 5 Most Popular Items:" %></h1>
-  <section align ="center">
+  <section align ="center" class ="grid-item" >
     <% @items.top_5.each do |name, quantity| %>
-      <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
+      <p style="font-family:verdana"><%= "#{name} - Total Purchased: #{quantity}\n" %></p>
     <% end %>
   </section>
 </div>
 
 <div class=worst_5>
   <h1><%= "5 Least Popular Items:" %></h1>
-  <section align ="center">
+  <section align ="center" class ="grid-item">
     <% @items.worst_5.each do |name, quantity| %>
-      <p><%= "#{name} => Total Purchased: #{quantity}\n" %></p>
+      <p style="font-family:verdana"><%= "#{name} - Total Purchased: #{quantity}\n" %></p>
     <% end %>
   </section>
 </div>
