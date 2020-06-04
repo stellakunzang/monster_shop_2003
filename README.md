@@ -172,8 +172,8 @@ root 'welcome#index'
  get "/profile/edit", to: "users#edit"
  post "/profile", to: "users#update"
 
- get "/password/edit", to: "users#edit_pass"
- post "/password", to: "users#update_pass"
+ get "/password/edit", to: "password#edit"
+ post "/password", to: "password#update"
 
  get "/orders/new", to: "orders#new"
  post "/orders", to: "orders#create"
