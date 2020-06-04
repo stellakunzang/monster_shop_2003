@@ -1,10 +1,14 @@
 require 'rails_helper'
 
-RSpec.describe "As a Visitor" do
+RSpec.describe "As a Merchant" do
   describe "After visiting a merchants show page and clicking on updating that merchant" do
     before :each do
+      login_merchant
       @bike_shop = Merchant.create(name: "Brian's Bike Shop", address: '123 Bike Rd.', city: 'Richmond', state: 'VA', zip: 11234)
+      @m_user.update(merchant_id: @bike_shop.id)
+      @chain = @bike_shop.items.create(name: "Chain", description: "It'll never break!", price: 50, image: "https://www.rei.com/media/b61d1379-ec0e-4760-9247-57ef971af0ad?size=784x588", inventory: 5)
     end
+
     it 'I can see prepopulated info on that user in the edit form' do
       visit "/merchants/#{@bike_shop.id}"
       click_on "Update Merchant"

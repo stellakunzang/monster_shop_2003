@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Cart show' do
+RSpec.describe 'Cart checkout' do
   describe 'When I have added items to my cart' do
     before(:each) do
       login_user
@@ -21,7 +21,6 @@ RSpec.describe 'Cart show' do
 
     it 'Theres a link to checkout' do
       visit "/cart"
-
 
       click_on "Checkout"
 
@@ -87,6 +86,8 @@ RSpec.describe 'Cart show' do
     end
 
     it "Decreasing Item Quantity from Cart and hit 0 item removed from cart" do
+      visit "/items/#{@tire.id}"
+      click_on "Add To Cart"
       visit "/cart"
 
       expect(page).to have_link("Empty Cart")
@@ -95,14 +96,16 @@ RSpec.describe 'Cart show' do
         click_link "-"
       end
 
+      expect(page).to have_content("You have changed your cart quantity.")
+      expect(page).to have_content(@paper.name)
+      expect(page).to have_content(@pencil.name)
+
       within(".cart-#{@tire.id}") do
         click_link "-"
       end
 
-      expect(page).to have_content("You have changed your cart quantity.")
-      expect(page).to have_content(@paper.name)
-      expect(page).to have_content(@pencil.name)
-      expect(page).to_not have_content(@tire.name)
+      expect(page).to have_content("Item removed")
+      expect(page).to_not have_content("@tire.name")
     end
 
     it "Visitors must register or log in to check out" do
@@ -122,4 +125,3 @@ RSpec.describe 'Cart show' do
     end
   end
 end
-

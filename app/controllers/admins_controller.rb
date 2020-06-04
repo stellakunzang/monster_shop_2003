@@ -1,3 +1,4 @@
+
 class AdminsController < ApplicationController
 
   def show
@@ -7,4 +8,5 @@ class AdminsController < ApplicationController
       @orders = Order.all
     end
   end
+
 end

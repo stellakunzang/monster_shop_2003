@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Cart creation' do
+RSpec.describe 'Cart item new' do
   describe 'When I visit an items show page' do
 
     before(:each) do
