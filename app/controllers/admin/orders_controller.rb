@@ -6,4 +6,11 @@ class Admin::OrdersController < ApplicationController
     redirect_to "/admin"
   end
 
+  def show
+    if current_user == nil || current_user.role != "admin"
+      redirect_to "/error404"
+    end
+    @order = Order.find(params[:order_id])
+  end
+
 end

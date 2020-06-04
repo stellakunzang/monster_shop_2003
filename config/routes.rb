@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     get '/users', to: 'users#index'
     get '/profile/:user_id', to: 'users#show'
     patch '/orders/:order_id', to: 'orders#update'
+    get "/users/:user_id/orders/:order_id", to: "orders#show"
   end
 
   get "/merchant", to: "merchant#show"

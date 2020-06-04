@@ -61,4 +61,16 @@ RSpec.describe "Admin dashboard" do
       expect(@order4.status).to eq("shipped")
     end
 
+    it "displays order ID as link to admin-only view of order" do
+      visit "/admin"
+      within "#packaged" do
+        click_link "#{@order4.id}"
+      end
+
+      expect(current_path).to eq("/admin/users/#{@regular_user.id}/orders/#{@order4.id}")
+      click_link 'Log out'
+      login_user
+      visit "/admin/users/#{@regular_user.id}/orders/#{@order4.id}"
+      expect(current_path).to eq("/error404")
+    end
   end
