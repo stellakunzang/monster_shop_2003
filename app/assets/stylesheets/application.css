@@ -15,23 +15,23 @@
  */
 
  body {
- background-color: #E8DAEF;
+ background-color: #ffde22;
  }
 
  .center_photo {
   padding: 100px;
-  margin-left: 140px;
+  margin-left: 160px;
  }
 
  h1 {
   text-align: center;
-  font-family: var(--Futura);
+  font-family: "Marker Felt", fantasy;
   margin: 24px 0px;
   text-transform: uppercase;
-  color: green;
+  color: 	#ff414e;
   font-size: 72px;
   line-height: 78px;
-  text-shadow: -2px -2px #000, -1px -1px #000, 0px -1px #000, 1px 0px #000, -1px 0px #000, 1px 1px #000, 2px 2px #000, 3px 3px #000, 4px 4px #000, 5px 5px
+  text-shadow: 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 2px 2px #f95d9b, 3px 3px #f95d9b, 4px 4px #f95d9b, 0px 0px
  }
 
 ul{
@@ -92,7 +92,7 @@ section[id*='review'] {
 
  .topnav {
    overflow: hidden;
-   background-color: #002244;
+   background-color: #ff8928;
    color: white;
  }
 
@@ -106,7 +106,7 @@ section[id*='review'] {
  }
 
  .topnav a:hover {
-   background-color: #17BEBB;
+   background-color: #ffffff;
    color: black;
  }
 
