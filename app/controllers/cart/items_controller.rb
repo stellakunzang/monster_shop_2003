@@ -32,15 +32,14 @@ class Cart::ItemsController < ApplicationController
       item.update(inventory: item_inventory - 1)
     elsif params[:add] == "true" && !has_inventory
       flash[:error] = "Not enough in inventory"
-    elsif params[:add] == "false"
-      flash[:success] = "You have changed your cart quantity."
+    elsif params[:add] == "false" 
+      cart.contents[item_id] -= 1
+      item.update(inventory: item_inventory + 1)
       if cart.contents[item_id] == 0
         session[:cart].delete(params[:item_id])
         flash[:error] = "Item removed"
-      else
+      else 
         flash[:success] = "You have changed your cart quantity."
-        cart.contents[item_id] -= 1
-        item.update(inventory: item_inventory + 1)
       end
     end
 
