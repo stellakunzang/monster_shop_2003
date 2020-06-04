@@ -20,7 +20,7 @@
 
  .center_photo {
   padding: 100px;
-  margin-left: 180px;
+  margin-left: 200px;
  }
 
  h1 {
@@ -139,6 +139,7 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 form {
+  display: inline-block;
   align-content: center;
   background-color: #f2f2f2;
   padding: 20px;
@@ -170,4 +171,12 @@ td, th {
 
 tr:nth-child(even) {
   background-color: #F0F8FF;
+}
+
+.form_login {
+  display: inline-block;
+  align-content: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 60%;
 }
