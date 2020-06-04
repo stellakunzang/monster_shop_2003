@@ -58,7 +58,6 @@ RSpec.describe "Items Index Page" do
       expect(page).to_not have_content("Inactive")
       expect(page).to_not have_content("Inventory: #{@dog_bone.inventory}")
       expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
-
     end
 
     it "All users can click image and link to item's show page" do
@@ -68,20 +67,21 @@ RSpec.describe "Items Index Page" do
     end
 
     it "All users can see top 5 most popular, including quantity purchased" do
+      dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:true, inventory: 21)
 
-      bone = @brian.items.create(name: "A Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      bone = @brian.items.create(name: "A Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:true, inventory: 21)
 
       toy = @brian.items.create(name: "A Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
       order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
       order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
 
-      ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
+      ItemOrder.create!(order_id: order.id, price: 1.0, item_id: dog_bone.id, quantity: 5)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 4)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: toy.id, quantity: 3)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: bone.id, quantity: 2)
-      ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: @dog_bone.id, quantity: 3)
+      ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: dog_bone.id, quantity: 3)
       ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: @pull_toy.id, quantity: 4)
 
       visit "/items"
@@ -89,7 +89,7 @@ RSpec.describe "Items Index Page" do
       within ".top_5" do
         expect(page).to have_content("Top 5 Most Popular Items:")
 
-        expect(@dog_bone.name).to appear_before(@pull_toy.name)
+        expect(dog_bone.name).to appear_before(@pull_toy.name)
         expect(page).to have_content("Total Purchased: 8")
 
         expect(@pull_toy.name).to appear_before(@tire.name)
@@ -105,19 +105,21 @@ RSpec.describe "Items Index Page" do
     end
 
     it "All users can see 5 least popular, including quantity purchased" do
-      bone = @brian.items.create(name: "A Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
+      dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:true, inventory: 21)
+
+      bone = @brian.items.create(name: "A Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:true, inventory: 21)
 
       toy = @brian.items.create(name: "A Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 
       order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
       order2 = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: @user.id)
 
-      ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @dog_bone.id, quantity: 5)
+      ItemOrder.create!(order_id: order.id, price: 1.0, item_id: dog_bone.id, quantity: 5)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @pull_toy.id, quantity: 1)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 4)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: toy.id, quantity: 3)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: bone.id, quantity: 2)
-      ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: @dog_bone.id, quantity: 3)
+      ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: dog_bone.id, quantity: 3)
       ItemOrder.create!(order_id: order2.id, price: 1.0, item_id: @pull_toy.id, quantity: 4)
 
       visit "/items"
@@ -134,7 +136,7 @@ RSpec.describe "Items Index Page" do
         expect(@tire.name).to appear_before(@pull_toy.name)
         expect(page).to have_content("Total Purchased: 4")
 
-        expect(@pull_toy.name).to appear_before(@dog_bone.name)
+        expect(@pull_toy.name).to appear_before(dog_bone.name)
         expect(page).to have_content("Total Purchased: 5")
         expect(page).to have_content("Total Purchased: 8")
       end
