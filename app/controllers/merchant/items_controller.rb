@@ -65,7 +65,6 @@ class Merchant::ItemsController < ApplicationController
   private
 
   def item_params
-
     params.permit(:name,:description,:price,:inventory,:image,:active?)
   end
 end
