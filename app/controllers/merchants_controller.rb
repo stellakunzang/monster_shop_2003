@@ -9,9 +9,6 @@ class MerchantsController <ApplicationController
   end
 
   def new
-    if current_user == nil || current_user.role != "admin"
-      redirect_to "/error404"
-    end
   end
 
   def create
