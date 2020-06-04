@@ -22,44 +22,191 @@ Our final migration was to add fulfillment to the item orders joins table, denot
 
 Of note, we refactored some of our model methods which were relying heavily on SQL, to simplified, streamlined ActiveRecord methods.
 
-SQL => AR refactoring
+#### Before (SQL)
 
-We also went back once the project was completed to refactor our routes, utilizing namespacing to make them more RESTful. In accordance with this refactor, we restructured our controller, view, and test file structure to incorporate more nested directories.
+```
+def self.top_5
+    top_5_data = ItemOrder.find_by_sql ["SELECT items.name, item_id, SUM(quantity) AS total_purchased FROM item_orders JOIN items ON item_orders.item_id = items.id GROUP BY item_id, items.name ORDER BY total_purchased DESC LIMIT 5"]
+    keys = top_5_data.pluck(:name)
+    values = top_5_data.pluck(:total_purchased)
+    top_5 = Hash[keys.zip(values)]
+  end
+```
 
-RESTful routes refactor
+#### After (ActiveRecord)
+```
+def self.top_5
+  Item.joins(:item_orders)
+      .where(active?: true)
+      .group('items.name')
+      .order('sum(item_orders.quantity) desc')
+      .limit(5)
+      .sum('item_orders.quantity')
+end
+```
+
+We also went back once the project was completed to refactor our routes and make them more RESTful by utilizing namespacing and creating new controllers. In accordance with this refactor, we restructured our controller, view, and test file structure to incorporate more nested directories.
+
+#### Before
+
+```
+  root 'welcome#index'
+
+  get "/login", to: "sessions#new"
+  post "/login", to: "sessions#create"
+
+  get "/merchants", to: "merchants#index"
+  get "/merchants/new", to: "merchants#new"
+  get "/merchants/:id", to: "merchants#show"
+  post "/merchants", to: "merchants#create"
+  get "/merchants/:id/edit", to: "merchants#edit"
+  patch "/merchants/:id", to: "merchants#update"
+  delete "/merchants/:id", to: "merchants#destroy"
+
+  get "/items", to: "items#index"
+  get "/items/:id", to: "items#show"
+  get "/items/:id/edit", to: "items#edit"
+  patch "/items/:id", to: "items#update"
+  get "/merchants/:merchant_id/items", to: "items#index"
+  get "/merchants/:merchant_id/items/new", to: "items#new"
+  post "/merchants/:merchant_id/items", to: "items#create"
+  delete "/items/:id", to: "items#destroy"
+
+  get "/items/:item_id/reviews/new", to: "reviews#new"
+  post "/items/:item_id/reviews", to: "reviews#create"
+
+  get "/reviews/:id/edit", to: "reviews#edit"
+  patch "/reviews/:id", to: "reviews#update"
+  delete "/reviews/:id", to: "reviews#destroy"
+
+  post "/cart/:item_id", to: "cart#add_item"
+  get "/cart", to: "cart#show"
+  delete "/cart", to: "cart#empty"
+  delete "/cart/:item_id", to: "cart#remove_item"
+
+  get "/orders/new", to: "orders#new"
+  post "/orders", to: "orders#create"
+  get "/orders/:id", to: "orders#show"
+
+
+  get "/login", to: "users#login"
+
+  get "/register", to: "users#new"
+  post "/users", to: "users#create"
+  get "/profile", to: "users#show"
+
+end
+```
+
+#### After
+
+```
+root 'welcome#index'
+
+ get "/login", to: "sessions#new"
+ post "/login", to: "sessions#create"
+ delete "/logout", to: "sessions#destroy"
+
+ get "/admin", to: "admins#show"
+
+ namespace :admin do
+   get '/merchants/:merchant_id', to: "merchants#show"
+   get '/merchants', to: "merchants#index"
+   get "/merchants/status/:id", to: "merchants#update"
+   get '/users', to: 'users#index'
+   get '/profile/:user_id', to: 'users#show'
+   patch '/orders/:order_id', to: 'orders#update'
+ end
+
+ get "/merchant", to: "merchant#show"
+
+ namespace :merchant do
+   get '/orders/:order_id', to: 'orders#show'
+   patch '/orders/:order_id', to: 'orders#update'
+   get '/items', to: 'items#index'
+   get '/items/:id/status', to: 'items#status'
+   get '/items/:id/edit', to: 'items#edit'
+   patch '/items/:id', to: 'items#update'
+   delete '/items/:id', to: 'items#destroy'
+   get '/items/new', to: 'items#new'
+   post '/items', to: 'items#create'
+ end
+
+ get "/merchants", to: "merchants#index"
+ get "/merchants/new", to: "merchants#new"
+ get "/merchants/:id", to: "merchants#show"
+ post "/merchants", to: "merchants#create"
+ get "/merchants/:id/edit", to: "merchants#edit"
+ patch "/merchants/:id", to: "merchants#update"
+ delete "/merchants/:id", to: "merchants#destroy"
+
+ get "/items", to: "items#index"
+ get "/items/:id", to: "items#show"
+ get "/items/:id/edit", to: "items#edit"
+ patch "/items/:id", to: "items#update"
+ delete "/items/:id", to: "items#destroy"
+
+ get "/merchants/:merchant_id/items", to: "merchants_items#index"
+ get "/merchants/:merchant_id/items/new", to: "merchants_items#new"
+ post "/merchants/:merchant_id/items", to: "merchants_items#create"
+
+ get "/items/:item_id/reviews/new", to: "reviews#new"
+ post "/items/:item_id/reviews", to: "reviews#create"
+
+ get "/reviews/:id/edit", to: "reviews#edit"
+ patch "/reviews/:id", to: "reviews#update"
+ delete "/reviews/:id", to: "reviews#destroy"
+
+ get "/cart", to: "cart#show"
+ delete "/cart", to: "cart#destroy"
+
+ namespace :cart do
+   post "/:item_id", to: "items#new"
+   delete "/:item_id", to: "items#destroy"
+   patch "/:item_id", to: "items#update"
+ end
+
+ get "/profile", to: "users#show"
+ get "/register", to: "users#new"
+ post "/users", to: "users#create"
+ get "/profile/edit", to: "users#edit"
+ post "/profile", to: "users#update"
+
+ get "/password/edit", to: "users#edit_pass"
+ post "/password", to: "users#update_pass"
+
+ get "/orders/new", to: "orders#new"
+ post "/orders", to: "orders#create"
+ get "/profile/orders/:id", to: "orders#show"
+ get "/profile/orders", to: "orders#index"
+ patch "/profile/orders/:id", to: "orders#update"
+
+ get "error404", to: "errors#show"
+
+end
+```
 
 ## Implementation Instructions
 
-### Rails
-* Create routes for namespaced routes
-* Implement partials to break a page into reusable components
-* Use Sessions to store information about a user and implement login/logout functionality
-* Use filters (e.g. `before_action`) in a Rails controller
-* Limit functionality to authorized users
-* Use BCrypt to hash user passwords before storing in the database
+So you want to use our Monster Shop?
 
-### ActiveRecord
-* Use built-in ActiveRecord methods to join multiple tables of data, calculate statistics and build collections of data grouped by one or more attributes
+First you'll need these installed:
 
-### Databases
-* Design and diagram a Database Schema
-* Write raw SQL queries (as a debugging tool for AR)
+- Rails 5.1.7
+_(to find out what version you are using, run `$ rails -v` in the command line)_
+- Ruby 2.5.x
+_(`$ ruby -v`)_
 
-## Requirements
+Next, clone down this repository onto your local machine.
+Run these commands in order to get required gems and database established.
+- `$ bundle install`
+- `$ bundle update`
+- `$ rake db:create`
+- `$ rake db:migrate`
+- `$ rake db:seed`
 
-- must use Rails 5.1.x
-- must use PostgreSQL
-- must use 'bcrypt' for authentication
-- all controller and model code must be tested via feature tests and model tests, respectively
-- must use good GitHub branching, team code reviews via GitHub comments, and use of a project planning tool like github projects
-- must include a thorough README to describe their project
+Once it this is all set up and you aren't getting any errors you can run our ~ * ~ adorable ~ * ~ test suite.
 
+- `$ bundle exec rspec`
 
-## Rubric
-
-| | **Feature Completeness** | **Rails** | **ActiveRecord** | **Testing and Debugging** | **Documentation** |
-| --- | --- | --- | --- | --- | --- |
-| **4: Exceptional**  | All User Stories 100% complete including all sad paths and edge cases, and some extension work completed | Students implement strategies not discussed in class to effectively organize code and adhere to MVC. | Highly effective and efficient use of ActiveRecord beyond what we've taught in class. Even `.each` calls will not cause additional database lookups. | Very clear Test Driven Development. Test files are extremely well organized and nested. Students utilize `before :each` blocks. 100% coverage for features and models. Close to all edge cases are accounted for.| Final project has a well written README with pictures, schema design, code snippets, contributors names linked to their github profile, heroku link, and implementation instructions. |
-
-| **3: Passing** | Students complete all User Stories. No more than 2 Stories fail to correctly implement sad path and edge case functionality. | Students use the principles of MVC to effectively organize code. Students can defend any of their design decisions. Students limit access to authorized users. | ActiveRecord is used in a clear and effective way to read/write data using no Ruby to process data. | 100% coverage for models. 98% coverage for features. Tests are well written and meaningful. | Students have a README with thorough implementation instructions and description of content. |
-|
+If you would rather enjoy the application on in its finished form without messing with the command line, we are hosted on Heroku [here](https://damp-hollows-38240.herokuapp.com/). You can either register as a new user and place an order, or use the login information for one of our existing test users located in our seeds (monster_shop_2003/db/seeds) to see the functionality of our merchant and admin users. Please excuse the absurdity of some of our seed items, merchants, and users. This project was executed by a team with varying backgrounds, including two graduates of film school whose creative urges and off-color sensibilities had to come out somewhere! 
