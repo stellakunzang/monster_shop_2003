@@ -1,10 +1,21 @@
-<h1>Welcome, <%=@user.name%>!</h1>
-<p>Name: <%=@user.name%></p>
-<p>Email: <%=@user.email%></p>
-<p>Address: <%=@user.address%></p>
-<p>City: <%=@user.city%></p>
-<p>State: <%=@user.state%></p>
-<p>Zip: <%=@user.zip%></p>
-<%=link_to "Edit My Profile", "/profile/edit" %>
-<%=link_to "Edit My Password", "/password/edit" %>
-<%=link_to "My Orders", "/profile/orders" %>
+<br>
+<section align ="center" class ="grid-item">  
+  <h1>Welcome, <%=@user.name%>!</h1>
+</section>
+<br>
+<br>
+<section align ="center" class ="grid-item">
+  <p style="font-family:verdana" >Name: <%=@user.name%></p>
+  <p style="font-family:verdana" >Email: <%=@user.email%></p>
+  <p style="font-family:verdana" >Address: <%=@user.address%></p>
+  <p style="font-family:verdana" >City: <%=@user.city%></p>
+  <p style="font-family:verdana" >State: <%=@user.state%></p>
+  <p style="font-family:verdana" >Zip: <%=@user.zip%></p>
+</section>
+<br>
+<br>
+<section align = "center">
+  <%=link_to "Edit My Profile", "/profile/edit" %>
+  <%=link_to "Edit My Password", "/password/edit" %>
+  <%=link_to "My Orders", "/profile/orders" %>
+</section>

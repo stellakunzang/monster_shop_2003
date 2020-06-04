@@ -15,14 +15,23 @@
  */
 
  body {
- background-color: white;
+ background-color: #ffde22;
+ }
+
+ .center_photo {
+  padding: 100px;
+  margin-left: 200px;
  }
 
  h1 {
   text-align: center;
- 	font-size: 40px;
- 	color: #002244;
- 	font-family: "Marker Felt", fantasy;
+  font-family: "Marker Felt", fantasy;
+  margin: 24px 0px;
+  text-transform: uppercase;
+  color: 	#ff414e;
+  font-size: 72px;
+  line-height: 78px;
+  text-shadow: 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 0px 0px #f95d9b, 2px 2px #f95d9b, 3px 3px #f95d9b, 4px 4px #f95d9b, 0px 0px
  }
 
 ul{
@@ -83,7 +92,7 @@ section[id*='review'] {
 
  .topnav {
    overflow: hidden;
-   background-color: #002244;
+   background-color: #ff8928;
    color: white;
  }
 
@@ -97,7 +106,7 @@ section[id*='review'] {
  }
 
  .topnav a:hover {
-   background-color: #17BEBB;
+   background-color: #ffffff;
    color: black;
  }
 
@@ -130,6 +139,7 @@ input[type=submit]:hover {
   background-color: #45a049;
 }
 form {
+  display: inline-block;
   align-content: center;
   background-color: #f2f2f2;
   padding: 20px;
@@ -154,11 +164,19 @@ table {
 }
 
 td, th {
-  border: 1px solid #f2f2f2;
+  border: 3px solid #17BEBB;
   text-align: center;
   padding: 8px;
 }
 
 tr:nth-child(even) {
   background-color: #F0F8FF;
+}
+
+.form_login {
+  display: inline-block;
+  align-content: center;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 60%;
 }
