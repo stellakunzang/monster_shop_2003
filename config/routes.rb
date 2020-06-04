@@ -80,7 +80,7 @@ Rails.application.routes.draw do
   post "/profile", to: "users#update"
 
 # add to a user password controller
-  get "/password/edit", to: "users#edit_pass"
+  get "/password/edit", to: "password#edit"
   post "/password", to: "users#update_pass"
 
   #orders
