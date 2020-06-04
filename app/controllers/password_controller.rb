@@ -6,10 +6,11 @@ class PasswordController < ApplicationController
   def update
     @user = User.find(session[:user_id])
     if @user.update(user_params)
-      flash[:notice]= "Your password has been updated."
+      flash[:success]= "Your password has been updated."
       redirect_to('/profile')
     else
      flash[:error]= "Your passwords do not match"
+     redirect_to('/password/edit')
     end
   end
 
