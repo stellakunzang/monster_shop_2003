@@ -9,9 +9,9 @@
       <p><%= merchant.city %></p>
       <p><%= merchant.state %></p>
     <% if merchant.active? == true %>
-        <h5><%=link_to "disable", "/admin/merchants/disable/#{merchant.id}"%></h5>
+        <h5><%=link_to "disable", "/admin/merchants/status/#{merchant.id}"%></h5>
     <% else %>
-        <h5><%=link_to "enable", "/admin/merchants/enable/#{merchant.id}"%></h5>
+        <h5><%=link_to "enable", "/admin/merchants/status/#{merchant.id}"%></h5>
     <% end %>
     </section>
   <% end %>

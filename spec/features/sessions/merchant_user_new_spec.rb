@@ -10,7 +10,9 @@ RSpec.describe "Logging in" do
 
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       expect(current_path).to eq('/login')
 
@@ -30,7 +32,9 @@ RSpec.describe "Logging in" do
 
       visit "/"
 
-      click_on "Sign in"
+      within 'nav' do
+        click_link "Login"
+      end
 
       fill_in :email, with: @regular_user.email
       fill_in :password, with: @regular_user.password

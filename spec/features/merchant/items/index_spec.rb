@@ -105,9 +105,7 @@ RSpec.describe "Merchant Items Index Page" do
       order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 1)
 
-
       visit "/merchant/items"
-
 
       within "#item-#{@tire.id}" do
         expect(page).to have_content(@tire.name)
@@ -142,7 +140,7 @@ RSpec.describe "Merchant Items Index Page" do
 
       expect(page).to_not have_css("#item-#{@chain.id}")
     end
-    it "I see a link to add a new item" do 
+    it "I see a link to add a new item" do
       visit "/merchant/items"
 
       expect(page).not_to have_content("Disco Ball")
@@ -159,7 +157,7 @@ RSpec.describe "Merchant Items Index Page" do
       fill_in 'Description', with: "Has a ghost from the 70s trapped inside"
       fill_in 'Image', with: "https://i.pinimg.com/originals/68/d1/5b/68d15b22b2b5aa18197a4578f5daf879.jpg"
       fill_in 'Inventory', with: 1
-     
+
       click_on("Create Item")
 
       expect(current_path).to eq("/merchant/items")
@@ -173,7 +171,43 @@ RSpec.describe "Merchant Items Index Page" do
       expect(page).to have_content("Nailed it!")
 
     end
+    it "If any of my data is incorrect or missing (except image) returned to form" do
+      visit '/merchant/items/new'
+
+      within ".form" do
+        fill_in 'Name', with: ""
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Name can't be blank")
+
+      within ".form" do
+        fill_in 'Name', with: "Shifty Shift"
+        fill_in 'Description', with: ""
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Description can't be blank")
+
+      within ".form" do
+        fill_in 'Description', with: "Tastes kinda good..."
+        fill_in 'Price', with: "-3"
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Price must be greater than -1")
+
+      within ".form" do
+        fill_in 'Price', with: "3"
+        fill_in 'Inventory', with: "-1"
+
+        click_button "Create Item"
+      end
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Inventory must be greater than -1")
+    end
   end
 end
-
-

@@ -1,3 +1,4 @@
+
 class AdminsController < ApplicationController
 
   def show
