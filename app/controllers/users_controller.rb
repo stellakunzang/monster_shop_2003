@@ -53,20 +53,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit_pass
-    @user = User.find(session[:user_id])
-  end
-
-  def update_pass
-    user = User.find(session[:user_id])
-    if user.update(user_params)
-      flash[:notice]= "Your password has been updated."
-      redirect_to('/profile')
-    else
-     flash[:error]= "Your passwords do not match"
-    end
-  end
-
   private
 
   def user_params
