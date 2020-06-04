@@ -105,9 +105,7 @@ RSpec.describe "Merchant Items Index Page" do
       order = Order.create!(name: "name", address: "address", city: "city", state: "state", zip: 23455, user_id: default_1.id)
       ItemOrder.create!(order_id: order.id, price: 1.0, item_id: @tire.id, quantity: 1)
 
-
       visit "/merchant/items"
-
 
       within "#item-#{@tire.id}" do
         expect(page).to have_content(@tire.name)

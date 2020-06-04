@@ -28,7 +28,7 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content("Cart is currently empty")
       end
 
-      it 'I see all items Ive added to my cart' do
+      it "I see all items I've added to my cart" do
         visit '/cart'
 
         @items_in_cart.each do |item|
@@ -41,6 +41,7 @@ RSpec.describe 'Cart show' do
             expect(page).to have_content("$#{item.price}")
           end
         end
+
         expect(page).to have_content("Total: $122")
 
         visit "/items/#{@pencil.id}"
@@ -57,8 +58,10 @@ RSpec.describe 'Cart show' do
       end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
+
       it "I see a message saying my cart is empty" do
         visit '/cart'
         expect(page).to_not have_css(".cart-items")
