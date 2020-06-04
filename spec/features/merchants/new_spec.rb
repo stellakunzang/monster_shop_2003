@@ -1,7 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe 'merchant new page', type: :feature do
-  describe 'As a user' do
+  describe 'As an admin' do
+    before(:each) do
+      login_admin
+    end
+
     it 'I can create a new merchant' do
       visit '/merchants/new'
 

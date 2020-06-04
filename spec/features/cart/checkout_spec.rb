@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Cart show' do
+RSpec.describe 'Cart checkout' do
   describe 'When I have added items to my cart' do
     before(:each) do
       login_user
@@ -21,7 +21,6 @@ RSpec.describe 'Cart show' do
 
     it 'Theres a link to checkout' do
       visit "/cart"
-
 
       click_on "Checkout"
 
@@ -122,4 +121,3 @@ RSpec.describe 'Cart show' do
     end
   end
 end
-
