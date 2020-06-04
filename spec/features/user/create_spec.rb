@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe "User registration form" do
   it "creates new user" do
+
     visit "/register"
 
     email =  "georgef@gmail.com"

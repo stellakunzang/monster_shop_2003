@@ -3,7 +3,9 @@ require 'rails_helper'
 RSpec.describe "Create Merchant Items" do
   describe "When I visit the merchant items index page" do
     before(:each) do
+      login_merchant
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+      @m_user.update(merchant_id: @brian.id)
     end
 
     it 'I see a link to add a new item for that merchant' do

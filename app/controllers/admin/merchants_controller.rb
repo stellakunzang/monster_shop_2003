@@ -11,12 +11,12 @@ class Admin::MerchantsController < ApplicationController
   def update
     @merchant = Merchant.find(params[:id])
     if @merchant.active? == true
-      @merchant.items.each {|item| item.update_attribute(:active?, false)}
+      Item.where(merchant_id: params[:id]).update(active?: false)
       @merchant.update_attribute(:active?, false)
       redirect_to "/admin/merchants"
       flash[:notice] = "disabled #{@merchant.name}"
     else
-      @merchant.items.each {|item| item.update_attribute(:active?, true)}
+      Item.where(merchant_id: params[:id]).update(active?: true)
       @merchant.update_attribute(:active?, true)
       redirect_to "/admin/merchants"
       flash[:notice] = "enabled #{@merchant.name}"

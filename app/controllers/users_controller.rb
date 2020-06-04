@@ -5,19 +5,6 @@ class UsersController < ApplicationController
     @users = User.all
   end
 
-  def login
-  end
-
-  def logout
-    redirect_to "/"
-  end
-
-  def new
-  end
-
-  def destroy
-  end
-
   def create
     new_user = User.new(user_params)
     if new_user.save
@@ -53,24 +40,9 @@ class UsersController < ApplicationController
     end
   end
 
-  def edit_pass
-    @user = User.find(session[:user_id])
-  end
-
-  def update_pass
-    user = User.find(session[:user_id])
-    if user.update(user_params)
-      flash[:notice]= "Your password has been updated."
-      redirect_to('/profile')
-    else
-     flash[:error]= "Your passwords do not match"
-    end
-  end
-
   private
 
   def user_params
     params.permit(:name, :address, :city, :state, :zip, :email, :password, :password_confirmation)
-
   end
 end
