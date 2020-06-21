@@ -33,13 +33,7 @@ Rails.application.routes.draw do
     post '/items', to: 'items#create'
   end
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
 
   resources :items, only: [:index, :show, :edit, :update, :destroy]
 
