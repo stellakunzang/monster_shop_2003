@@ -1,7 +1,7 @@
 class Admin::OrdersController < ApplicationController
 
   def update
-    order = Order.find_by(id: params[:order_id])
+    order = Order.find_by(id: params[:id])
     order.update(status: "shipped")
     redirect_to "/admin"
   end
@@ -10,7 +10,7 @@ class Admin::OrdersController < ApplicationController
     if current_user == nil || current_user.role != "admin"
       redirect_to "/error404"
     end
-    @order = Order.find(params[:order_id])
+    @order = Order.find(params[:id])
   end
 
 end

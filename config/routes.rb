@@ -3,84 +3,73 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  get "/login", action: :new, controller: "sessions"
+  post "/login", action: :create, controller: "sessions"
+  delete "/logout", action: :destroy, controller: "sessions"
 
-  get "/admin", to: "admins#show"
+  get "/admin", action: :show, controller: "admins"
 
   namespace :admin do
-    get '/merchants/:merchant_id', to: "merchants#show"
-    get '/merchants', to: "merchants#index"
-    get "/merchants/status/:id", to: "merchants#update"
-    get '/users', to: 'users#index'
-    get '/profile/:user_id', to: 'users#show'
-    patch '/orders/:order_id', to: 'orders#update'
-    get "/users/:user_id/orders/:order_id", to: "orders#show"
+    resources :merchants, only: [:show, :index]
+    resources :users, only: [:index]
+    resources :orders, only: [:update]
+
+    resources :users, only: [:show] do
+      resources :orders, only: [:show]
+    end
+
+    get '/profile/:user_id', action: :show, controller: "users"
+    get "/merchants/status/:id", action: :update, controller: "merchants"
   end
 
-  get "/merchant", to: "merchant#show"
+  get "/merchant", action: :show, controller: "merchant" 
 
   namespace :merchant do
-    get '/orders/:order_id', to: 'orders#show'
-    patch '/orders/:order_id', to: 'orders#update'
-    get '/items', to: 'items#index'
-    get '/items/:id/status', to: 'items#status'
-    get '/items/:id/edit', to: 'items#edit'
-    patch '/items/:id', to: 'items#update'
-    delete '/items/:id', to: 'items#destroy'
-    get '/items/new', to: 'items#new'
-    post '/items', to: 'items#create'
+    resources :orders, only: [:show, :update]
+    resources :items, except: [:show]
+    get '/items/:id/status', action: :status, controller: "items"
   end
 
-  get "/merchants", to: "merchants#index"
-  get "/merchants/new", to: "merchants#new"
-  get "/merchants/:id", to: "merchants#show"
-  post "/merchants", to: "merchants#create"
-  get "/merchants/:id/edit", to: "merchants#edit"
-  patch "/merchants/:id", to: "merchants#update"
-  delete "/merchants/:id", to: "merchants#destroy"
+  resources :merchants
 
-  get "/items", to: "items#index"
-  get "/items/:id", to: "items#show"
-  get "/items/:id/edit", to: "items#edit"
-  patch "/items/:id", to: "items#update"
-  delete "/items/:id", to: "items#destroy"
+  resources :merchants, only: [:show] do
+    get 'items', action: :index, controller: 'merchants_items'
+    get 'items/new', action: :new, controller: 'merchants_items'
+    post 'items', action: :create, controller: 'merchants_items'
+  end
 
-  get "/merchants/:merchant_id/items", to: "merchants_items#index"
-  get "/merchants/:merchant_id/items/new", to: "merchants_items#new"
-  post "/merchants/:merchant_id/items", to: "merchants_items#create"
+  resources :items, only: [:index, :show, :edit, :update, :destroy]
 
-  get "/items/:item_id/reviews/new", to: "reviews#new"
-  post "/items/:item_id/reviews", to: "reviews#create"
+  resources :items, only: [:show] do
+    resources :reviews, only: [:new, :create]
+  end
 
-  get "/reviews/:id/edit", to: "reviews#edit"
-  patch "/reviews/:id", to: "reviews#update"
-  delete "/reviews/:id", to: "reviews#destroy"
+  resources :reviews, only: [:edit, :update, :destroy]
 
-  get "/cart", to: "cart#show"
-  delete "/cart", to: "cart#destroy"
+  get "/cart", action: :show, controller: "cart"
+  delete "/cart", action: :destroy, controller: "cart"
 
   namespace :cart do
-    post "/:item_id", to: "items#new"
-    delete "/:item_id", to: "items#destroy"
-    patch "/:item_id", to: "items#update"
+    post "/:item_id", action: :new, controller: "items"
+    delete "/:item_id", action: :destroy, controller: "items"
+    patch "/:item_id", action: :update, controller: "items"
   end
 
-  get "/profile", to: "users#show"
-  get "/register", to: "users#new"
-  post "/users", to: "users#create"
-  get "/profile/edit", to: "users#edit"
-  post "/profile", to: "users#update"
+  resources :users, only: [:create]
 
-  get "/password/edit", to: "password#edit"
-  post "/password", to: "password#update"
+  get 'profile', action: :show, controller: 'users'
+  get 'profile/edit', action: :edit, controller: 'users'
+  post 'profile', action: :update, controller: 'users'
+  get 'register', action: :new, controller: 'users'
 
-  get "/orders/new", to: "orders#new"
-  post "/orders", to: "orders#create"
-  get "/profile/orders/:id", to: "orders#show"
-  get "/profile/orders", to: "orders#index"
-  patch "/profile/orders/:id", to: "orders#update"
+  get "/password/edit", action: :edit, controller: "password"
+  post "/password", action: :update, controller: "password"
 
-  get "error404", to: "errors#show"
+  resources :orders, only: [:new, :create]
+
+  resource :profile, only: [:index] do
+    resources :orders, only: [:show, :index, :update]
+  end
+
+  get "error404", action: :show, controller: "errors"
 end
