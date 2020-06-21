@@ -3,32 +3,35 @@ Rails.application.routes.draw do
 
   root 'welcome#index'
 
-  get "/login", to: "sessions#new"
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+  get "/login", action: :new, controller: "sessions"
+  post "/login", action: :create, controller: "sessions"
+  delete "/logout", action: :destroy, controller: "sessions"
 
-  get "/admin", to: "admins#show"
+  get "/admin", action: :show, controller: "admins"
 
   namespace :admin do
     resources :merchants, only: [:show, :index]
-    get "/merchants/status/:id", to: "merchants#update"
     resources :users, only: [:index]
-    get '/profile/:user_id', to: 'users#show'
     resources :orders, only: [:update]
+
     resources :users, only: [:show] do
       resources :orders, only: [:show]
     end
+
+    get '/profile/:user_id', action: :show, controller: "users"
+    get "/merchants/status/:id", action: :update, controller: "merchants"
   end
 
-  get "/merchant", to: "merchant#show"
+  get "/merchant", action: :show, controller: "merchant" 
 
   namespace :merchant do
     resources :orders, only: [:show, :update]
     resources :items, except: [:show]
-    get '/items/:id/status', to: 'items#status'
+    get '/items/:id/status', action: :status, controller: "items"
   end
 
   resources :merchants
+
   resources :merchants, only: [:show] do
     get 'items', action: :index, controller: 'merchants_items'
     get 'items/new', action: :new, controller: 'merchants_items'
@@ -36,19 +39,20 @@ Rails.application.routes.draw do
   end
 
   resources :items, only: [:index, :show, :edit, :update, :destroy]
+
   resources :items, only: [:show] do
     resources :reviews, only: [:new, :create]
   end
 
   resources :reviews, only: [:edit, :update, :destroy]
 
-  get "/cart", to: "cart#show"
-  delete "/cart", to: "cart#destroy"
+  get "/cart", action: :show, controller: "cart"
+  delete "/cart", action: :destroy, controller: "cart"
 
   namespace :cart do
-    post "/:item_id", to: "items#new"
-    delete "/:item_id", to: "items#destroy"
-    patch "/:item_id", to: "items#update"
+    post "/:item_id", action: :new, controller: "items"
+    delete "/:item_id", action: :destroy, controller: "items"
+    patch "/:item_id", action: :update, controller: "items"
   end
 
   resources :users, only: [:create]
@@ -58,8 +62,8 @@ Rails.application.routes.draw do
   post 'profile', action: :update, controller: 'users'
   get 'register', action: :new, controller: 'users'
 
-  get "/password/edit", to: "password#edit"
-  post "/password", to: "password#update"
+  get "/password/edit", action: :edit, controller: "password"
+  post "/password", action: :update, controller: "password"
 
   resources :orders, only: [:new, :create]
 
@@ -67,5 +71,5 @@ Rails.application.routes.draw do
     resources :orders, only: [:show, :index, :update]
   end
 
-  get "error404", to: "errors#show"
+  get "error404", action: :show, controller: "errors"
 end
